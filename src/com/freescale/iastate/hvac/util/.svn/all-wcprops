@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/freescale/!svn/ver/88/HVAC/src/com/freescale/iastate/hvac/util
+END
+FSHVACState.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/freescale/!svn/ver/88/HVAC/src/com/freescale/iastate/hvac/util/FSHVACState.java
+END
+FSHVACEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/freescale/!svn/ver/88/HVAC/src/com/freescale/iastate/hvac/util/FSHVACEvent.java
+END
+FSHVACStateInterface.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/freescale/!svn/ver/88/HVAC/src/com/freescale/iastate/hvac/util/FSHVACStateInterface.java
+END
+FSHVACEventInterface.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/freescale/!svn/ver/88/HVAC/src/com/freescale/iastate/hvac/util/FSHVACEventInterface.java
+END

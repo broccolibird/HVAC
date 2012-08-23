@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/WeatherLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <ImageButton
+            android:id="@+id/WeatherRefreshButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/WeatherText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/TempLayout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/tempUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Adjust Temp Up" />
+
+        <TextView
+            android:id="@+id/currentSysTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="XX"
+            android:textSize="92pt" />
+
+        <Button
+            android:id="@+id/tempDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Adjust Temp Down" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/SystemLayout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:layout_weight="1"
+        android:gravity="left"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/sys_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/sys_mode"
+            android:textSize="20pt" />
+
+        <LinearLayout
+            android:id="@+id/sys_mode_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/sys_mode_heat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/sys_mode_heat" />
+
+            <Button
+                android:id="@+id/sys_mode_fan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/sys_mode_fan" />
+
+            <Button
+                android:id="@+id/sys_mode_cool"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/sys_mode_cool" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/sys_fan_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/sys_fan"
+            android:textSize="20pt" />
+
+        <LinearLayout
+            android:id="@+id/sys_fan_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/sys_fan_on"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/sys_fan_on" />
+
+            <Button
+                android:id="@+id/sys_fan_auto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/sys_fan_auto" />
+
+            <Button
+                android:id="@+id/sys_fan_off"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/sys_fan_off" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

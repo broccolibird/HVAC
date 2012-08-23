@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string-array name="buttonSize">
+ <item>Small</item>
+ <item>@string/button_size_default</item>
+ <item>Large</item>
+</string-array>
+
+<string-array name="colorScheme">
+ <item>@string/color_scheme_default</item>
+ <item>Green</item>
+ <item>Blue</item>
+ <item>Orange</item>
+ <item>Pink</item>
+</string-array>
+
+<string-array name="timeZones">
+ <item>EST</item>
+ <item>@string/time_zone_default</item>
+ <item>MST</item>
+ <item>PST</item>
+ <item>HAST</item>	
+</string-array>
+
+</resources>

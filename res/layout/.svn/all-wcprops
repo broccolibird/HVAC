@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/freescale/!svn/ver/139/HVAC/res/layout
+END
+settings.xml
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/freescale/!svn/ver/30/HVAC/res/layout/settings.xml
+END
+calendar_tabs.xml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/freescale/!svn/ver/137/HVAC/res/layout/calendar_tabs.xml
+END
+main.xml
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/freescale/!svn/ver/49/HVAC/res/layout/main.xml
+END
+calendar_day_header_view.xml
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/freescale/!svn/ver/137/HVAC/res/layout/calendar_day_header_view.xml
+END
+timeview_cell.xml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/freescale/!svn/ver/137/HVAC/res/layout/timeview_cell.xml
+END
+energy.xml
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/freescale/!svn/ver/139/HVAC/res/layout/energy.xml
+END
+fsday_view_layout.xml
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/freescale/!svn/ver/125/HVAC/res/layout/fsday_view_layout.xml
+END
+calendar_listview_cell.xml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/freescale/!svn/ver/137/HVAC/res/layout/calendar_listview_cell.xml
+END
+weather.xml
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/freescale/!svn/ver/18/HVAC/res/layout/weather.xml
+END

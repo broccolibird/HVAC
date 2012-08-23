@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/freescale/!svn/ver/22/HVAC/src/com/freescale/iastate/hvac/weather
+END
+WeatherUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/freescale/!svn/ver/8/HVAC/src/com/freescale/iastate/hvac/weather/WeatherUtils.java
+END
+WeatherCurrentCondition.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/freescale/!svn/ver/8/HVAC/src/com/freescale/iastate/hvac/weather/WeatherCurrentCondition.java
+END
+GoogleHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/freescale/!svn/ver/22/HVAC/src/com/freescale/iastate/hvac/weather/GoogleHandler.java
+END
+WeatherSet.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/freescale/!svn/ver/22/HVAC/src/com/freescale/iastate/hvac/weather/WeatherSet.java
+END
+WeatherForecastCondition.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/freescale/!svn/ver/8/HVAC/src/com/freescale/iastate/hvac/weather/WeatherForecastCondition.java
+END

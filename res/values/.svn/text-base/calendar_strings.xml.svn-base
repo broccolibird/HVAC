@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="calendar_action_cancel">Cancel</string>
+    <string name="calendar_action_continue_label">Continue…</string>
+    <string name="calendar_programview_label">PROGRAM</string>
+    <string name="calendar_eventview_startdate_button_label">Start Date…</string>
+    <string name="calendar_eventview_startdate_label">Click \"Start Date…\" to select a time</string>
+    <string name="calendar_eventview_stopdate_button_label">End Date…</string>
+    <string name="calendar_eventview_stopdate_label">Click \"End Date…\" to select a time</string>
+    <string name="calendar_eventview_singleevent_label">Schedule a single event:</string>
+    <string name="calendar_eventview_recurringevent_label">Create recurring event:</string>
+    <string name="calendar_dayview_label">DAY</string>
+    <string name="calendar_weekview_label">WEEK</string>
+     <string name="calendar_weekview_padding">5dp</string>
+    <string name="calendar_monthview_label">MONTH</string>
+    <string name="calendar_eventview_label">EVENT</string>
+   
+
+    <string-array name="calendar_eventview_top_tab_text">
+        <item>Start Date…</item>
+        <item>Start Date:</item>
+    </string-array>
+    <string-array name="calendar_eventview_bottom_tab_text">
+        <item>End Date…</item>
+        <item>End Date:</item>
+    </string-array>
+	<string-array name="calendar_dayview_array">
+        <item>Period 1</item>
+        <item>Period 2</item>
+        <item>Period 3</item>
+        <item>Period 4</item>
+    </string-array>
+    <string-array name="calendar_timeview_array">
+        <item>12:00 AM</item>
+        <item>1:00 AM</item>
+        <item>2:00 AM</item>
+        <item>3:00 AM</item>
+        <item>4:00 AM</item>
+        <item>5:00 AM</item>
+        <item>6:00 AM</item>
+        <item>7:00 AM</item>
+        <item>8:00 AM</item>
+        <item>9:00 AM</item>
+        <item>10:00 AM</item>
+        <item>11:00 AM</item>
+        <item>12:00 PM</item>
+        <item>1:00 PM</item>
+        <item>2:00 PM</item>
+        <item>3:00 PM</item>
+        <item>4:00 PM</item>
+        <item>5:00 PM</item>
+        <item>6:00 PM</item>
+        <item>7:00 PM</item>
+        <item>8:00 PM</item>
+        <item>9:00 PM</item>
+        <item>10:00 PM</item>
+        <item>11:00 PM</item>
+    </string-array>
+    
+</resources>

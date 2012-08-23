@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    
+    <string name="app_name">HVAC</string>
+    
+    <string name="sys_fan">System Fan</string>
+    <string name="sys_fan_on">On</string>
+    <string name="sys_fan_auto">Auto</string>
+    <string name="sys_fan_off">Off</string>
+
+    <string name="sys_mode">System Mode</string>
+    <string name="sys_mode_heat">Heat</string>
+    <string name="sys_mode_cool">Cool</string>
+    <string name="sys_mode_fan">Fan Only</string>
+    
+    <string name="help_string">Stuff about how to use HVAC interface.</string>
+    
+	<string name="settings">Settings</string>    
+    <string name="button_size">Button Size</string>
+    <string name="brightness">Brightness</string>
+    <string name="city">City</string>
+    <string name="color">Color Scheme</string>          
+    <string name="time_zone">Time Zone</string>
+    
+    <string name="color_scheme_default">Black</string>
+    <string name="button_size_default">Medium</string>
+   	<string name="brightness_default">100</string>
+    <string name="zip_code_default">50014</string>
+    <string name="time_zone_default">CST</string>
+    
+
+</resources>

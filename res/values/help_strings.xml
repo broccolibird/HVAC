@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_help">&quot;Refresh the current weather by touching the weather image.\n\nAdjust system operating temperature up and down by touching the Adjust Up or Adjust Down buttons.\n\nChange system mode and fan operation by touching your preferred selections.</string>
+    <string name="weather_help">Displays three day forecast. Your current location may be adjusted in the Settings menu.</string>
+    <string name="settings_help">Adjust your HVAC application settings here.</string>
+    <string name="calendar_help">Please fill me in!</string>
+	    
+</resources>

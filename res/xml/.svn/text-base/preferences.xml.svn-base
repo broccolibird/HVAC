@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <PreferenceCategory
+                android:title="Display Settings">
+        		<ListPreference
+                    android:title="Color Scheme"
+                    android:summary="Select a color scheme"
+                    android:key="color_scheme_key"
+        			android:entries="@array/colorScheme" 
+        			android:entryValues="@array/colorScheme" />
+        		<ListPreference
+        			android:title="Button Size"
+        			android:summary="Select a button size"
+        			android:key="button_size_key"
+        			android:entries="@array/buttonSize"
+        			android:entryValues="@array/buttonSize" />
+        		<Preference
+                	android:title="Brightness"
+                	android:summary="Change Screen Brightness"
+                	android:key="b_key"/>
+        		
+        </PreferenceCategory>
+        <PreferenceCategory
+                android:title="Location Settings">
+        <EditTextPreference
+                android:summary="Current Zip Code"
+                android:title="Set current zip code"
+                android:key="zip_code_key"/>
+        <ListPreference
+                android:title="Time Zone"
+                android:summary="Select time zone"
+                android:key="time_zone_key"
+                android:entries="@array/timeZones"
+                android:entryValues="@array/timeZones"/>
+        </PreferenceCategory>
+</PreferenceScreen>
