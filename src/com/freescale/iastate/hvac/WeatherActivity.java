@@ -62,8 +62,8 @@ public class WeatherActivity extends Activity implements MenuInterface {
 		protected String doInBackground(Void... params) {
 			try {
 				SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-				int zip = settings.getInt("zip_code_key", 50014);
-				URL url = new URL("http://www.google.com/ig/api?weather="+zip);
+				String zipurl = "http://www.google.com/ig/api?weather=" + settings.getString("zip_code_key", "50014");
+				URL url = new URL(zipurl);
 
 				/* Get a SAXParser from the SAXPArserFactory. */
 				SAXParserFactory spf = SAXParserFactory.newInstance();

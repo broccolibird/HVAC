@@ -123,8 +123,8 @@ public class HVACActivity extends Activity implements MenuInterface {
 				SharedPreferences settings = PreferenceManager
 						.getDefaultSharedPreferences(getBaseContext());
 				String zip = settings.getString("zip_code_key", "50014");
-
-				URL url = new URL("http://www.google.com/ig/api?weather=" + zip);
+				String urlstring = new String("http://www.google.com/ig/api?weather="+zip);
+				URL url = new URL(urlstring);
 
 				/* Get a SAXParser from the SAXPArserFactory. */
 				SAXParserFactory spf = SAXParserFactory.newInstance();
