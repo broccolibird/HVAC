@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.freescale.iastate.hvac.weather.JSONParser;
+import com.freescale.iastate.hvac.weather.WeatherObject;
 
 public class WeatherActivity extends Activity implements MenuInterface {
 	final char degree = 0x00B0;
@@ -65,24 +66,27 @@ public class WeatherActivity extends Activity implements MenuInterface {
 				String readable = json.toString(5);
 				
 				JSONObject forecast = json.getJSONObject("forecast");
-				JSONObject txt_forecast = forecast.getJSONObject("txt_forecast");
+				JSONObject simpleForecast = forecast.getJSONObject("simpleforecast");
 				JSONArray forecastDay = null;
-				forecastDay = txt_forecast.getJSONArray("forecastday");
+				forecastDay = simpleForecast.getJSONArray("forecastday");
 				
-				String[] dayArray = new String[12];
+				WeatherObject[] dayArray = new WeatherObject[6];
 				for (int i=0; i<forecastDay.length(); i++){
 					JSONObject day = forecastDay.getJSONObject(i);
-					dayArray[i] = day.getString("title")+": "+day.getString("fcttext")+"\n";
+					dayArray[i].weekday = day.getString("weekday");
+					dayArray[i].high = day.getString("high");
+					dayArray[i].low = day.getString("low");
+					dayArray[i].conditions = day.getString("conditions");
 				}
 				
 				
-				day1Text = dayArray[0]+dayArray[1];
+				day1Text = dayArray[0].conditions;
 				day1Image = weatherImage(day1Text);
 
-				day2Text = dayArray[2]+dayArray[3];
+				day2Text = dayArray[1].conditions;
 				day2Image = weatherImage(day2Text);
 
-				day3Text = dayArray[4]+dayArray[5];;
+				day3Text = dayArray[2].conditions;
 				day3Image = weatherImage(day3Text);
 				return null;
 
@@ -137,6 +141,7 @@ public class WeatherActivity extends Activity implements MenuInterface {
 		return conditionDrawable;
 
 	}
+	
 
 
 }
