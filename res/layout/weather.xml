@@ -6,52 +6,55 @@
 
     <LinearLayout
         android:id="@+id/day1Layout"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/day1text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageView
+		<ImageView
             android:id="@+id/day1image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
+		<TextView
+            android:id="@+id/day1text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/day2Layout"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:orientation="vertical" >
-                <TextView
-            android:id="@+id/day2text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
         <ImageView
             android:id="@+id/day2image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </LinearLayout>
-    
-        <LinearLayout
-        android:id="@+id/day3Layout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
-                <TextView
-            android:id="@+id/day3text"
+        <TextView
+            android:id="@+id/day2text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
+        
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/day3Layout"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical" >
         <ImageView
             android:id="@+id/day3image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/day3text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        
+        
     </LinearLayout>
 
 </LinearLayout>
