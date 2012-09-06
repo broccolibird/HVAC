@@ -1,38 +1,29 @@
 package com.freescale.iastate.hvac;
 
-import java.net.URL;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import com.freescale.iastate.hvac.weather.*;
-
+import org.json.JSONArray;
 import org.json.JSONObject;
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.freescale.iastate.hvac.weather.JSONParser;
 
 public class WeatherActivity extends Activity implements MenuInterface {
 	final char degree = 0x00B0;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		final char degree = 0x00B0;
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.weather);
@@ -73,38 +64,26 @@ public class WeatherActivity extends Activity implements MenuInterface {
 						.getJSONFromUrl(JSONParser.threedayURL);
 				String readable = json.toString(5);
 				
+				JSONObject forecast = json.getJSONObject("forecast");
+				JSONObject txt_forecast = forecast.getJSONObject("txt_forecast");
+				JSONArray forecastDay = null;
+				forecastDay = txt_forecast.getJSONArray("forecastday");
 				
-//				SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-//				String zipurl = "http://www.google.com/ig/api?weather=" + settings.getString("zip_code_key", "50014");
-//				URL url = new URL(zipurl);
-//
-//				/* Get a SAXParser from the SAXPArserFactory. */
-//				SAXParserFactory spf = SAXParserFactory.newInstance();
-//				SAXParser sp = spf.newSAXParser();
-//
-//				/* Get the XMLReader of the SAXParser we created. */
-//				XMLReader xr = sp.getXMLReader();
-//
-//				/*
-//				 * Create a new ContentHandler and apply it to the XML-Reader
-//				 */
-////				GoogleHandler gwh = new GoogleHandler();
-//				xr.setContentHandler(gwh);
-//
-//				/* Parse the xml-data our URL-call returned. */
-//				xr.parse(new InputSource(url.openStream()));
-//
-//				/* Our Handler now provides the parsed weather-data to us. */
-//				WeatherSet ws = gwh.getWeatherSet();
-//
-//				day1Text = weatherString(ws, 1);
-//				day1Image = weatherImage(day1Text);
-//
-//				day2Text = weatherString(ws, 2);
-//				day2Image = weatherImage(day2Text);
-//
-//				day3Text = weatherString(ws, 3);
-//				day3Image = weatherImage(day3Text);
+				String[] dayArray = new String[12];
+				for (int i=0; i<forecastDay.length(); i++){
+					JSONObject day = forecastDay.getJSONObject(i);
+					dayArray[i] = day.getString("title")+": "+day.getString("fcttext")+"\n";
+				}
+				
+				
+				day1Text = dayArray[0]+dayArray[1];
+				day1Image = weatherImage(day1Text);
+
+				day2Text = dayArray[2]+dayArray[3];
+				day2Image = weatherImage(day2Text);
+
+				day3Text = dayArray[4]+dayArray[5];;
+				day3Image = weatherImage(day3Text);
 				return null;
 
 			} catch (Exception e) {
@@ -159,18 +138,5 @@ public class WeatherActivity extends Activity implements MenuInterface {
 
 	}
 
-//	public String weatherString(WeatherSet ws, int i) {
-//		return ws.getWeatherForecastConditions().get(i).getDayofWeek()
-//				+ "\n"
-//				+ ws.getWeatherForecastConditions().get(i).getCondition()
-//				+ "\n High: "
-//				+ WeatherUtils.celsiusToFahrenheit(ws
-//						.getWeatherForecastConditions().get(i)
-//						.getTempMaxCelsius())
-//				+ degree
-//				+ "\n Low: "
-//				+ WeatherUtils.celsiusToFahrenheit(ws
-//						.getWeatherForecastConditions().get(i)
-//						.getTempMinCelsius()) + degree;
-//	}
+
 }
