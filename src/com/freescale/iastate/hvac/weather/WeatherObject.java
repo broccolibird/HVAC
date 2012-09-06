@@ -5,4 +5,7 @@ public class WeatherObject {
 	public String high;
 	public String low;
 	public String conditions;
+	
+
+	
 }

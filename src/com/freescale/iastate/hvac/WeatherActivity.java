@@ -70,12 +70,17 @@ public class WeatherActivity extends Activity implements MenuInterface {
 				JSONArray forecastDay = null;
 				forecastDay = simpleForecast.getJSONArray("forecastday");
 				
-				WeatherObject[] dayArray = new WeatherObject[6];
+				WeatherObject[] dayArray = new WeatherObject [12];
 				for (int i=0; i<forecastDay.length(); i++){
 					JSONObject day = forecastDay.getJSONObject(i);
-					dayArray[i].weekday = day.getString("weekday");
-					dayArray[i].high = day.getString("high");
-					dayArray[i].low = day.getString("low");
+					JSONObject date = day.getJSONObject("date");
+					JSONObject high = day.getJSONObject("high");
+					JSONObject low = day.getJSONObject("low");
+				//	String readable2 = day.toString(5);
+					dayArray[i] = new WeatherObject();
+					dayArray[i].weekday = date.getString("weekday");
+					dayArray[i].high = high.getString("fahrenheit");
+					dayArray[i].low = low.getString("fahrenheit");
 					dayArray[i].conditions = day.getString("conditions");
 				}
 				
