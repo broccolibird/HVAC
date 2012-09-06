@@ -34,7 +34,7 @@ import android.widget.Toast;
 //import android.widget.ImageView;
 import android.widget.TextView;
 
-public class HVACActivity extends Activity implements MenuInterface {
+public class HVACActivity extends Activity implements MenuInterface, DisplayInterface{
 	final char degree = 0x00B0;
 
 	/** Called when the activity is first created. */
@@ -53,6 +53,11 @@ public class HVACActivity extends Activity implements MenuInterface {
 		edit.putInt("brightness_key", 100);
 		edit.putInt("temp_key", 70);
 		edit.commit();
+		
+		//Finds view, then uses DisplayInterface to change background color
+		View view = findViewById(R.id.TempLayout);
+		ColorDisplay background_color = new ColorDisplay();
+		background_color.setBackgroundColor(view, getBaseContext());
 
 		int temp = settings.getInt("temp_key", 0);
 		String displayTemp = "" + temp;
@@ -105,6 +110,11 @@ public class HVACActivity extends Activity implements MenuInterface {
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
 		
+		//Finds view, then uses DisplayInterface to change background color
+		View view = findViewById(R.id.TempLayout);
+		ColorDisplay background_color = new ColorDisplay();
+		background_color.setBackgroundColor(view, getBaseContext());
+
 		int temp = settings.getInt("temp_key", 0);
 		String displayTemp = "" + temp;
 		TextView textView = (TextView) findViewById(R.id.currentSysTemp);
@@ -123,8 +133,8 @@ public class HVACActivity extends Activity implements MenuInterface {
 				SharedPreferences settings = PreferenceManager
 						.getDefaultSharedPreferences(getBaseContext());
 				String zip = settings.getString("zip_code_key", "50014");
-
-				URL url = new URL("http://www.google.com/ig/api?weather=" + zip);
+				String urlstring = new String("http://www.google.com/ig/api?weather="+zip);
+				URL url = new URL(urlstring);
 
 				/* Get a SAXParser from the SAXPArserFactory. */
 				SAXParserFactory spf = SAXParserFactory.newInstance();

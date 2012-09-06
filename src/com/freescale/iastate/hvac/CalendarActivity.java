@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import com.freescale.iastate.hvac.DisplayInterface.ColorDisplay;
 import com.freescale.iastate.hvac.calendar.DayViewAdapter;
 import com.freescale.iastate.hvac.calendar.DayWrapper;
 import com.freescale.iastate.hvac.calendar.TimeViewAdapter;
@@ -17,10 +18,12 @@ import android.app.ActionBar;
 //import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 //import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -63,6 +66,12 @@ public class CalendarActivity extends TabActivity implements MenuInterface {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.calendar_tabs);
+		
+		//Finds view, then uses DisplayInterface to change background color
+		View calendarView = findViewById(R.id.calendar_eventview_startdate_value);
+		View view = calendarView.getRootView();
+		ColorDisplay background_color = new ColorDisplay();
+		background_color.setBackgroundColor(view, getBaseContext());
 
 		res = getResources();
 

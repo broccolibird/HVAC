@@ -22,11 +22,12 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class WeatherActivity extends Activity implements MenuInterface {
+public class WeatherActivity extends Activity implements MenuInterface, DisplayInterface {
 	final char degree = 0x00B0;
 
 	@Override
@@ -35,6 +36,11 @@ public class WeatherActivity extends Activity implements MenuInterface {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.weather);
+		
+		//Finds view, then uses DisplayInterface to change background color
+		View view = findViewById(R.id.day1Layout);
+		ColorDisplay background_color = new ColorDisplay();
+		background_color.setBackgroundColor(view, getBaseContext());
 
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
@@ -62,8 +68,8 @@ public class WeatherActivity extends Activity implements MenuInterface {
 		protected String doInBackground(Void... params) {
 			try {
 				SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-				int zip = settings.getInt("zip_code_key", 50014);
-				URL url = new URL("http://www.google.com/ig/api?weather="+zip);
+				String zipurl = "http://www.google.com/ig/api?weather=" + settings.getString("zip_code_key", "50014");
+				URL url = new URL(zipurl);
 
 				/* Get a SAXParser from the SAXPArserFactory. */
 				SAXParserFactory spf = SAXParserFactory.newInstance();
