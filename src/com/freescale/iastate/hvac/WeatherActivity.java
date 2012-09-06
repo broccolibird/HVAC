@@ -6,6 +6,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import com.freescale.iastate.hvac.weather.*;
 
+import org.json.JSONObject;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
@@ -61,37 +62,49 @@ public class WeatherActivity extends Activity implements MenuInterface {
 
 		protected String doInBackground(Void... params) {
 			try {
-				SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-				String zipurl = "http://www.google.com/ig/api?weather=" + settings.getString("zip_code_key", "50014");
-				URL url = new URL(zipurl);
+				
+				SharedPreferences settings = PreferenceManager
+						.getDefaultSharedPreferences(getBaseContext());
+				String zip = settings.getString("zip_code_key", "50014");
 
-				/* Get a SAXParser from the SAXPArserFactory. */
-				SAXParserFactory spf = SAXParserFactory.newInstance();
-				SAXParser sp = spf.newSAXParser();
-
-				/* Get the XMLReader of the SAXParser we created. */
-				XMLReader xr = sp.getXMLReader();
-
-				/*
-				 * Create a new ContentHandler and apply it to the XML-Reader
-				 */
-				GoogleHandler gwh = new GoogleHandler();
-				xr.setContentHandler(gwh);
-
-				/* Parse the xml-data our URL-call returned. */
-				xr.parse(new InputSource(url.openStream()));
-
-				/* Our Handler now provides the parsed weather-data to us. */
-				WeatherSet ws = gwh.getWeatherSet();
-
-				day1Text = weatherString(ws, 1);
-				day1Image = weatherImage(day1Text);
-
-				day2Text = weatherString(ws, 2);
-				day2Image = weatherImage(day2Text);
-
-				day3Text = weatherString(ws, 3);
-				day3Image = weatherImage(day3Text);
+				JSONParser parser = new JSONParser();
+				JSONParser.zip = zip;
+				JSONObject json = parser
+						.getJSONFromUrl(JSONParser.threedayURL);
+				String readable = json.toString(5);
+				
+				
+//				SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+//				String zipurl = "http://www.google.com/ig/api?weather=" + settings.getString("zip_code_key", "50014");
+//				URL url = new URL(zipurl);
+//
+//				/* Get a SAXParser from the SAXPArserFactory. */
+//				SAXParserFactory spf = SAXParserFactory.newInstance();
+//				SAXParser sp = spf.newSAXParser();
+//
+//				/* Get the XMLReader of the SAXParser we created. */
+//				XMLReader xr = sp.getXMLReader();
+//
+//				/*
+//				 * Create a new ContentHandler and apply it to the XML-Reader
+//				 */
+////				GoogleHandler gwh = new GoogleHandler();
+//				xr.setContentHandler(gwh);
+//
+//				/* Parse the xml-data our URL-call returned. */
+//				xr.parse(new InputSource(url.openStream()));
+//
+//				/* Our Handler now provides the parsed weather-data to us. */
+//				WeatherSet ws = gwh.getWeatherSet();
+//
+//				day1Text = weatherString(ws, 1);
+//				day1Image = weatherImage(day1Text);
+//
+//				day2Text = weatherString(ws, 2);
+//				day2Image = weatherImage(day2Text);
+//
+//				day3Text = weatherString(ws, 3);
+//				day3Image = weatherImage(day3Text);
 				return null;
 
 			} catch (Exception e) {
@@ -146,18 +159,18 @@ public class WeatherActivity extends Activity implements MenuInterface {
 
 	}
 
-	public String weatherString(WeatherSet ws, int i) {
-		return ws.getWeatherForecastConditions().get(i).getDayofWeek()
-				+ "\n"
-				+ ws.getWeatherForecastConditions().get(i).getCondition()
-				+ "\n High: "
-				+ WeatherUtils.celsiusToFahrenheit(ws
-						.getWeatherForecastConditions().get(i)
-						.getTempMaxCelsius())
-				+ degree
-				+ "\n Low: "
-				+ WeatherUtils.celsiusToFahrenheit(ws
-						.getWeatherForecastConditions().get(i)
-						.getTempMinCelsius()) + degree;
-	}
+//	public String weatherString(WeatherSet ws, int i) {
+//		return ws.getWeatherForecastConditions().get(i).getDayofWeek()
+//				+ "\n"
+//				+ ws.getWeatherForecastConditions().get(i).getCondition()
+//				+ "\n High: "
+//				+ WeatherUtils.celsiusToFahrenheit(ws
+//						.getWeatherForecastConditions().get(i)
+//						.getTempMaxCelsius())
+//				+ degree
+//				+ "\n Low: "
+//				+ WeatherUtils.celsiusToFahrenheit(ws
+//						.getWeatherForecastConditions().get(i)
+//						.getTempMinCelsius()) + degree;
+//	}
 }
