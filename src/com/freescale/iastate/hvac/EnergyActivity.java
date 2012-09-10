@@ -3,13 +3,19 @@ package com.freescale.iastate.hvac;
 
 import java.util.Random;
 
+import com.freescale.iastate.hvac.DisplayInterface.ColorDisplay;
+
 //import org.achartengine.model.XYMultipleSeriesDataset;
 //import org.achartengine.model.XYSeries;
 
+import android.R.color;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,13 +32,18 @@ import android.widget.Toast;
 //import org.achartengine.renderer.XYMultipleSeriesRenderer;
 //import org.achartengine.renderer.XYSeriesRenderer;
 
-public class EnergyActivity extends Activity implements MenuInterface {
+public class EnergyActivity extends Activity implements MenuInterface, DisplayInterface {
 	private static final int SERIES_NR = 2;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.energy);
+
+		//Finds view, then uses DisplayInterface to change background color
+		View view = findViewById(R.id.energy);
+		ColorDisplay background_color = new ColorDisplay();
+		background_color.setBackgroundColor(view, getBaseContext());
 
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
@@ -77,6 +88,7 @@ public class EnergyActivity extends Activity implements MenuInterface {
 				Toast.LENGTH_LONG).show();
 	}
 	
+
 //	private XYMultipleSeriesDataset getDemoDataset() {
 //		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 //		final int nr = 10;

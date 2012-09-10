@@ -10,8 +10,8 @@
  <item>@string/color_scheme_default</item>
  <item>Green</item>
  <item>Blue</item>
- <item>Orange</item>
- <item>Pink</item>
+ <item>Gray</item>
+ <item>Red</item>
 </string-array>
 
 <string-array name="timeZones">

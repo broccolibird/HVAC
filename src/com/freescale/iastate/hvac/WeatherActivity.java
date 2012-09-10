@@ -14,6 +14,7 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ import com.freescale.iastate.hvac.weather.JSONParser;
 import com.freescale.iastate.hvac.weather.WeatherFragment;
 import com.freescale.iastate.hvac.weather.WeatherObject;
 
-public class WeatherActivity extends Activity implements MenuInterface {
+public class WeatherActivity extends Activity implements MenuInterface, DisplayInterface {
 	final char degree = 0x00B0;
 	WeatherObject[] dayArray = new WeatherObject[12];
 
@@ -30,6 +31,11 @@ public class WeatherActivity extends Activity implements MenuInterface {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.weather);
+		
+		//Finds view, then uses DisplayInterface to change background color
+		View view = findViewById(R.id.day1Layout);
+		ColorDisplay background_color = new ColorDisplay();
+		background_color.setBackgroundColor(view, getBaseContext());
 
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
