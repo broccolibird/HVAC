@@ -22,10 +22,6 @@ import com.freescale.iastate.hvac.weather.JSONParser;
 import com.freescale.iastate.hvac.weather.WeatherFragment;
 import com.freescale.iastate.hvac.weather.WeatherObject;
 
-import com.freescale.iastate.hvac.weather.JSONParser;
-import com.freescale.iastate.hvac.weather.WeatherFragment;
-import com.freescale.iastate.hvac.weather.WeatherObject;
-
 public class WeatherActivity extends Activity implements MenuInterface, DisplayInterface {
 	final char degree = 0x00B0;
 	WeatherObject[] dayArray = new WeatherObject[12];
@@ -37,9 +33,9 @@ public class WeatherActivity extends Activity implements MenuInterface, DisplayI
 		setContentView(R.layout.weather);
 		
 		//Finds view, then uses DisplayInterface to change background color
-		View view = findViewById(R.id.day1Layout);
-		ColorDisplay background_color = new ColorDisplay();
-		background_color.setBackgroundColor(view, getBaseContext());
+//		View view = findViewById(R.id.day1Layout);
+//		ColorDisplay background_color = new ColorDisplay();
+//		background_color.setBackgroundColor(view, getBaseContext());
 
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
