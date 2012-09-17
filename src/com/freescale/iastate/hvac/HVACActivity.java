@@ -9,6 +9,7 @@ import javax.xml.parsers.SAXParserFactory;
 import com.freescale.iastate.hvac.weather.*;
 import com.freescale.iastate.hvac.*;
 
+import org.json.JSONObject;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
@@ -43,7 +44,7 @@ public class HVACActivity extends Activity implements MenuInterface {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
+
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, true);
 
 		SharedPreferences settings = PreferenceManager
@@ -58,7 +59,7 @@ public class HVACActivity extends Activity implements MenuInterface {
 		String displayTemp = "" + temp;
 		TextView textView = (TextView) findViewById(R.id.currentSysTemp);
 		textView.setText(displayTemp);
-		
+
 		// execute background weather gathering
 		CurrentWeatherTask task = new CurrentWeatherTask();
 		task.execute();
@@ -99,19 +100,19 @@ public class HVACActivity extends Activity implements MenuInterface {
 	}
 
 	@Override
-	protected void onResume(){
+	protected void onResume() {
 		super.onResume();
-		
+
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
-		
+
 		int temp = settings.getInt("temp_key", 0);
 		String displayTemp = "" + temp;
 		TextView textView = (TextView) findViewById(R.id.currentSysTemp);
 		textView.setText(displayTemp);
-		
+
 	}
-	
+
 	private class CurrentWeatherTask extends AsyncTask<Void, Void, String> {
 		ImageButton currentWeatherImageView = (ImageButton) findViewById(R.id.WeatherRefreshButton);
 		TextView currentWeatherTextView = (TextView) findViewById(R.id.WeatherText);
@@ -124,39 +125,28 @@ public class HVACActivity extends Activity implements MenuInterface {
 						.getDefaultSharedPreferences(getBaseContext());
 				String zip = settings.getString("zip_code_key", "50014");
 
-				URL url = new URL("http://www.google.com/ig/api?weather=" + zip);
+				JSONParser parser = new JSONParser();
+				JSONParser.zip = zip;
+				JSONObject json = parser
+						.getJSONFromUrl(JSONParser.conditionsURL);
 
-				/* Get a SAXParser from the SAXPArserFactory. */
-				SAXParserFactory spf = SAXParserFactory.newInstance();
-				SAXParser sp = spf.newSAXParser();
+				//String readable = json.toString(5);
 
-				/* Get the XMLReader of the SAXParser we created. */
-				XMLReader xr = sp.getXMLReader();
-
-				/*
-				 * Create a new ContentHandler and apply it to the XML-Reader
-				 */
-				GoogleHandler gwh = new GoogleHandler();
-				xr.setContentHandler(gwh);
-
-				/* Parse the xml-data our URL-call returned. */
-				xr.parse(new InputSource(url.openStream()));
-
-				/* Our Handler now provides the parsed weather-data to us. */
-				WeatherSet ws = gwh.getWeatherSet();
-
-				String currentTime = (String) DateFormat.format(
-						"MM/dd/yy hh:mm:ss", new Date());
-
-				currentWeatherText = "Weather for: " + zip + "\n"
-						+ ws.getWeatherCurrentCondition().getCondition() + "\n"
-						+ ws.getWeatherCurrentCondition().getTempFahrenheit()
-						+ degree + " Fahrenheit\n"
-						+ ws.getWeatherCurrentCondition().getWindCondition()
-						+ "\n" + ws.getWeatherCurrentCondition().getHumidity()
-						+ "\nLast updated: " + currentTime;
-
+				JSONObject currentObservation = json
+						.getJSONObject("current_observation");
+				String weather = currentObservation.getString("weather");
+				String tempString = currentObservation
+						.getString("temperature_string");
+				String windString = currentObservation.getString("wind_string");
+				String relativeHumidity = currentObservation
+						.getString("relative_humidity");
+				String obsTime = currentObservation
+						.getString("observation_time");
+				currentWeatherText = "Weather for: " + zip + "\n" + weather
+						+ "\n" + tempString + "\n" + windString + "\n"
+						+ relativeHumidity + "\n" + obsTime;
 				currentWeatherImage = weatherImage(currentWeatherText);
+
 				return currentWeatherText;
 
 			} catch (Exception e) {

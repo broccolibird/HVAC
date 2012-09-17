@@ -16,16 +16,23 @@ import com.freescale.iastate.hvac.calendar.EventWrapper;
 import com.freescale.iastate.hvac.calendar.TimeAdapter;
 import com.freescale.iastate.util.FSEvent.RecurrenceType;
 
+import com.freescale.iastate.hvac.DisplayInterface.ColorDisplay;e.iastate.hvac.calendar.DayViewAdapter;
+import com.freescale.iastate.hvac.calendar.DayWrapper;
+import com.freescale.iastate.hvac.calendar.TimeViewAdapter;
+>>>>>>> branch 'master' of https://github.com/broccolibird/HVAC.git
+
 import android.app.ActionBar;
 //import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 //import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -62,23 +69,24 @@ public class CalendarActivity extends TabActivity implements MenuInterface {
 	Resources res;
 	TabHost tabHost;
 
-	private enum TabState {
-		TAB_OPEN,
-		TAB_CLOSED;
-	}
-
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.calendar_tabs);
+		
+		//Finds view, then uses DisplayInterface to change background color
+		View calendarView = findViewById(R.id.calendar_eventview_startdate_value);
+		View view = calendarView.getRootView();
+		ColorDisplay background_color = new ColorDisplay();
+		background_color.setBackgroundColor(view, getBaseContext());
 
 		res = getResources();
 
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-
+		
 		//this sets the help string for the current activity.
 		//copy paste 
 		rootIntent.setHelpText(getText(R.string.calendar_help));

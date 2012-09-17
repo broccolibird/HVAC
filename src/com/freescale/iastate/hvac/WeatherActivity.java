@@ -1,46 +1,51 @@
 package com.freescale.iastate.hvac;
 
-import java.net.URL;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import com.freescale.iastate.hvac.weather.*;
-
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class WeatherActivity extends Activity implements MenuInterface {
+import com.freescale.iastate.hvac.weather.JSONParser;
+import com.freescale.iastate.hvac.weather.WeatherFragment;
+import com.freescale.iastate.hvac.weather.WeatherObject;
+
+import com.freescale.iastate.hvac.weather.JSONParser;
+import com.freescale.iastate.hvac.weather.WeatherFragment;
+import com.freescale.iastate.hvac.weather.WeatherObject;
+
+public class WeatherActivity extends Activity implements MenuInterface, DisplayInterface {
 	final char degree = 0x00B0;
+	WeatherObject[] dayArray = new WeatherObject[12];
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		final char degree = 0x00B0;
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.weather);
+		
+		//Finds view, then uses DisplayInterface to change background color
+		View view = findViewById(R.id.day1Layout);
+		ColorDisplay background_color = new ColorDisplay();
+		background_color.setBackgroundColor(view, getBaseContext());
 
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		
-		//this sets the help string for the current activity.
-		//copy paste 
+
+		// this sets the help string for the current activity.
+		// copy paste
 		rootIntent.setHelpText(getText(R.string.weather_help));
 
 		ForecastWeatherTask task = new ForecastWeatherTask();
@@ -49,49 +54,43 @@ public class WeatherActivity extends Activity implements MenuInterface {
 	}
 
 	private class ForecastWeatherTask extends AsyncTask<Void, Void, String> {
-		ImageView dayOneImageView = (ImageView) findViewById(R.id.day1image);
-		ImageView dayTwoImageView = (ImageView) findViewById(R.id.day2image);
-		ImageView dayThreeImageView = (ImageView) findViewById(R.id.day3image);
-		TextView dayOneTextView = (TextView) findViewById(R.id.day1text);
-		TextView dayTwoTextView = (TextView) findViewById(R.id.day2text);
-		TextView dayThreeTextView = (TextView) findViewById(R.id.day3text);
 
 		String day1Text, day2Text, day3Text;
 		Drawable day1Image, day2Image, day3Image;
 
 		protected String doInBackground(Void... params) {
 			try {
-				SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-				int zip = settings.getInt("zip_code_key", 50014);
-				URL url = new URL("http://www.google.com/ig/api?weather="+zip);
 
-				/* Get a SAXParser from the SAXPArserFactory. */
-				SAXParserFactory spf = SAXParserFactory.newInstance();
-				SAXParser sp = spf.newSAXParser();
+				SharedPreferences settings = PreferenceManager
+						.getDefaultSharedPreferences(getBaseContext());
+				String zip = settings.getString("zip_code_key", "50014");
 
-				/* Get the XMLReader of the SAXParser we created. */
-				XMLReader xr = sp.getXMLReader();
+				JSONParser parser = new JSONParser();
+				JSONParser.zip = zip;
+				JSONObject json = parser.getJSONFromUrl(JSONParser.threedayURL);
+				String readable = json.toString(5);
 
-				/*
-				 * Create a new ContentHandler and apply it to the XML-Reader
-				 */
-				GoogleHandler gwh = new GoogleHandler();
-				xr.setContentHandler(gwh);
+				JSONObject forecast = json.getJSONObject("forecast");
+				JSONObject simpleForecast = forecast
+						.getJSONObject("simpleforecast");
+				JSONArray forecastDay = null;
+				forecastDay = simpleForecast.getJSONArray("forecastday");
 
-				/* Parse the xml-data our URL-call returned. */
-				xr.parse(new InputSource(url.openStream()));
+				
+				for (int i = 0; i < forecastDay.length(); i++) {
+					JSONObject day = forecastDay.getJSONObject(i);
+					JSONObject date = day.getJSONObject("date");
+					JSONObject high = day.getJSONObject("high");
+					JSONObject low = day.getJSONObject("low");
+					// String readable2 = day.toString(5);
+					dayArray[i] = new WeatherObject();
+					dayArray[i].weekday = date.getString("weekday");
+					dayArray[i].high = high.getString("fahrenheit");
+					dayArray[i].low = low.getString("fahrenheit");
+					dayArray[i].conditions = day.getString("conditions");
+					dayArray[i].image = weatherImage(day.getString("conditions"));
+				}
 
-				/* Our Handler now provides the parsed weather-data to us. */
-				WeatherSet ws = gwh.getWeatherSet();
-
-				day1Text = weatherString(ws, 1);
-				day1Image = weatherImage(day1Text);
-
-				day2Text = weatherString(ws, 2);
-				day2Image = weatherImage(day2Text);
-
-				day3Text = weatherString(ws, 3);
-				day3Image = weatherImage(day3Text);
 				return null;
 
 			} catch (Exception e) {
@@ -102,12 +101,20 @@ public class WeatherActivity extends Activity implements MenuInterface {
 		}
 
 		protected void onPostExecute(String result) {
-			dayOneTextView.setText(day1Text);
-			dayOneImageView.setImageDrawable(day1Image);
-			dayTwoTextView.setText(day2Text);
-			dayTwoImageView.setImageDrawable(day2Image);
-			dayThreeTextView.setText(day3Text);
-			dayThreeImageView.setImageDrawable(day3Image);
+
+			
+			WeatherFragment day1 = (WeatherFragment) getFragmentManager().findFragmentById(
+					R.id.day1fragment);
+			day1.updateWeather(dayArray[0]);
+			
+			WeatherFragment frag2 = (WeatherFragment) getFragmentManager().findFragmentById(
+					R.id.day2fragment);
+			frag2.updateWeather(dayArray[1]);		
+
+			WeatherFragment frag3 = (WeatherFragment) getFragmentManager().findFragmentById(
+					R.id.day3fragment);
+			frag3.updateWeather(dayArray[2]);
+
 		}
 
 	}
@@ -119,7 +126,7 @@ public class WeatherActivity extends Activity implements MenuInterface {
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
-			return rootIntent.onOptionsItemSelected(this, item);
+		return rootIntent.onOptionsItemSelected(this, item);
 	}
 
 	public Drawable weatherImage(String condition) {
@@ -146,18 +153,4 @@ public class WeatherActivity extends Activity implements MenuInterface {
 
 	}
 
-	public String weatherString(WeatherSet ws, int i) {
-		return ws.getWeatherForecastConditions().get(i).getDayofWeek()
-				+ "\n"
-				+ ws.getWeatherForecastConditions().get(i).getCondition()
-				+ "\n High: "
-				+ WeatherUtils.celsiusToFahrenheit(ws
-						.getWeatherForecastConditions().get(i)
-						.getTempMaxCelsius())
-				+ degree
-				+ "\n Low: "
-				+ WeatherUtils.celsiusToFahrenheit(ws
-						.getWeatherForecastConditions().get(i)
-						.getTempMinCelsius()) + degree;
-	}
 }
