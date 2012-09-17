@@ -10,16 +10,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Vector;
 
+import com.freescale.iastate.hvac.DisplayInterface.ColorDisplay;
 import com.freescale.iastate.hvac.calendar.EventAdapter;
 import com.freescale.iastate.hvac.calendar.EventCommon;
 import com.freescale.iastate.hvac.calendar.EventWrapper;
 import com.freescale.iastate.hvac.calendar.TimeAdapter;
-import com.freescale.iastate.util.FSEvent.RecurrenceType;
-
-import com.freescale.iastate.hvac.DisplayInterface.ColorDisplay;e.iastate.hvac.calendar.DayViewAdapter;
-import com.freescale.iastate.hvac.calendar.DayWrapper;
-import com.freescale.iastate.hvac.calendar.TimeViewAdapter;
->>>>>>> branch 'master' of https://github.com/broccolibird/HVAC.git
 
 import android.app.ActionBar;
 //import android.app.Activity;
@@ -69,7 +64,7 @@ public class CalendarActivity extends TabActivity implements MenuInterface {
 	Resources res;
 	TabHost tabHost;
 
-	enum TabState {
+	public enum TabState {
 		TAB_OPEN,
 		TAB_CLOSED;
 	}
