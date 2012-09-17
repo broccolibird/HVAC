@@ -335,8 +335,8 @@ public class CalendarActivity extends TabActivity implements MenuInterface {
 		Vector<EventWrapper> event_data = new Vector<EventWrapper>();
 		event_data.add(new EventWrapper(0f,5f).setContents("Period #1"));
 		event_data.add(new EventWrapper(5f, 9f).setContents("Period #2"));
-		event_data.add(new EventWrapper(10f, 15f).setContents("Period #3"));
-		event_data.add(new EventWrapper(14f, 24f).setContents("Period #4"));
+		event_data.add(new EventWrapper(9f, 15f).setContents("Period #3"));
+		event_data.add(new EventWrapper(15f, 24f).setContents("Period #4"));
 		events_data.add(event_data);
 		
 		event_data = new Vector<EventWrapper>();
