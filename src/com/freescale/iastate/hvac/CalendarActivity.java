@@ -69,6 +69,11 @@ public class CalendarActivity extends TabActivity implements MenuInterface {
 	Resources res;
 	TabHost tabHost;
 
+	enum TabState {
+		TAB_OPEN,
+		TAB_CLOSED;
+	}
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
