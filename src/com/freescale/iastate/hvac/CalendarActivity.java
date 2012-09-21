@@ -49,7 +49,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-
 public class CalendarActivity extends Activity implements MenuInterface {
 	CalendarView monthCalendar;
 	CalendarView weekCalendar;
@@ -87,8 +86,6 @@ public class CalendarActivity extends Activity implements MenuInterface {
 		addTabs();
 
 	}
-
-
 
 	public class CalendarChangeListener implements DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener {
 		private TextView textToModify;
