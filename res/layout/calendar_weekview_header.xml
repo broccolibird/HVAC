@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/calendar_weekview_header"
+    android:layout_width="match_parent"
+    android:layout_height="12dp"
+    android:textSize="7dp" 
+    android:background="@drawable/list_header"
+    android:gravity="center" 
+    android:textColor="@android:color/black"
+    android:layout_marginBottom="2dp"
+    android:text="null">
+</TextView>

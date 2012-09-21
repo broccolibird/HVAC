@@ -7,7 +7,7 @@
     <!-- android:orientation="vertical" -->
 
     <TabHost
-        android:id="@android:id/tabhost"
+        android:id="@+id/calendar_tabhost"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
@@ -141,16 +141,6 @@
                             android:text="Event Override Info"
                             android:textSize="20dp" />
 
-                        <EditText
-                            android:id="@+id/editText1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:maxLength="200"
-                            android:paddingTop="5dp"
-                            android:text="Tap to enter a name"
-                            android:textSize="10dp" >
-                        </EditText>
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -202,7 +192,7 @@
             </TableLayout>
 
             <LinearLayout
-                android:id="@+id/day_tab"
+                android:id="@+id/calendar_day_tab"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:isScrollContainer="false"
@@ -221,72 +211,152 @@
                 android:id="@+id/week_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center" 
-                android:layout_marginTop="15dp">
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal" >
 
-                <ListView
-                    android:id="@+id/calendar_weekview_list_times"
+                <LinearLayout
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                </ListView>
+                    android:orientation="vertical" >
 
-                <ListView
-                    android:id="@+id/calendar_weekview_list_1"
-                    android:layout_width="75dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="2dp" >
-                </ListView>
+                    <include
+                        android:id="@+id/calendar_weekview_header"
+                        layout="@layout/calendar_weekview_header" />
 
-                <ListView
-                    android:id="@+id/calendar_weekview_list_2"
-                    android:layout_width="75dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="2dp" >
-                </ListView>
+                    <ListView
+                        android:id="@+id/calendar_weekview_list_times"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical" >
+                    </ListView>
+                </LinearLayout>
 
-                <ListView
-                    android:id="@+id/calendar_weekview_list_3"
+                <LinearLayout
                     android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingLeft="2dp" >
-                </ListView>
 
-                <ListView
-                    android:id="@+id/calendar_weekview_list_4"
-                    android:layout_width="75dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="2dp" >
-                </ListView>
+                    <include
+                        android:id="@+id/calendar_timeview_1"
+                        layout="@layout/calendar_weekview_header" />
 
-                <ListView
-                    android:id="@+id/calendar_weekview_list_5"
+                    <ListView
+                        android:id="@+id/calendar_weekview_list_1"
+                        android:layout_width="75dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical" >
+                    </ListView>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingLeft="2dp" >
-                </ListView>
-                
-                <ListView
-                    android:id="@+id/calendar_weekview_list_6"
+
+                    <include
+                        android:id="@+id/calendar_timeview_2"
+                        layout="@layout/calendar_weekview_header" />
+
+                    <ListView
+                        android:id="@+id/calendar_weekview_list_2"
+                        android:layout_width="75dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical" >
+                    </ListView>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingLeft="2dp" >
-                </ListView>
-                
-                <ListView
-                    android:id="@+id/calendar_weekview_list_7"
+
+                    <include
+                        android:id="@+id/calendar_timeview_3"
+                        layout="@layout/calendar_weekview_header" />
+
+                    <ListView
+                        android:id="@+id/calendar_weekview_list_3"
+                        android:layout_width="75dp"
+                       android:layout_height="match_parent"
+                        android:orientation="vertical" >
+                    </ListView>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingLeft="2dp" >
-                </ListView>
+
+                    <include
+                        android:id="@+id/calendar_timeview_4"
+                        layout="@layout/calendar_weekview_header" />
+
+                    <ListView
+                        android:id="@+id/calendar_weekview_list_4"
+                        android:layout_width="75dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical" >
+                    </ListView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="2dp" >
+
+                    <include
+                        android:id="@+id/calendar_timeview_5"
+                        layout="@layout/calendar_weekview_header" />
+
+                    <ListView
+                        android:id="@+id/calendar_weekview_list_5"
+                        android:layout_width="75dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical" >
+                    </ListView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="2dp" >
+
+                    <include
+                        android:id="@+id/calendar_timeview_6"
+                        layout="@layout/calendar_weekview_header" />
+
+                    <ListView
+                        android:id="@+id/calendar_weekview_list_6"
+                        android:layout_width="75dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical" >
+                    </ListView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="2dp" >
+
+                    <include
+                        android:id="@+id/calendar_timeview_7"
+                        layout="@layout/calendar_weekview_header" />
+
+                    <ListView
+                        android:id="@+id/calendar_weekview_list_7"
+                        android:layout_width="75dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical" >
+                    </ListView>
+                </LinearLayout>
             </LinearLayout>
 
             <RelativeLayout
@@ -305,7 +375,7 @@
                     android:paddingBottom="30dp"
                     android:paddingTop="30dp"
                     android:showWeekNumber="false"
-                    android:shownWeekCount="6" />
+                    android:shownWeekCount="1" />
 
                 <!--
                      <TextView
@@ -318,7 +388,7 @@
             </RelativeLayout>
         </FrameLayout>
     </TabHost>
-<!-- 
+    <!--
     <LinearLayout
         android:id="@+id/calendar_buttons"
         android:layout_width="fill_parent"
@@ -353,5 +423,6 @@
             android:gravity="center"
             android:text="@string/calendar_action_continue_label" />
     </LinearLayout>
--->
+    -->
+
 </RelativeLayout>
