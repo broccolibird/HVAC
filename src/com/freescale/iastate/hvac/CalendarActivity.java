@@ -50,7 +50,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 
-@SuppressWarnings("deprecation")
 public class CalendarActivity extends Activity implements MenuInterface {
 	CalendarView monthCalendar;
 	CalendarView weekCalendar;
