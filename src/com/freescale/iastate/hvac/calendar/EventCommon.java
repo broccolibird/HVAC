@@ -11,10 +11,6 @@ public interface EventCommon {
 		public void setScale(float scale){
 			this.SCALE = scale;
 		}
-	
-//		public int convertDpToPixels(int dpLength){
-//			return (int)((float)dpLength*SCALE + 0.5f);
-//		}
 		public int convertDpToPixels(float dpLength){
 			return (int)((float)dpLength*SCALE + 0.5f);
 		}
@@ -22,8 +18,8 @@ public interface EventCommon {
 	public class HeaderNumberInvalidException extends Exception {
 		private static final long serialVersionUID = 1L;
 		
-		public HeaderNumberInvalidException() {
-			super("The array supplied to the calendarview headers is not 7 elements long");
+		public HeaderNumberInvalidException(int count) {
+			super("The array supplied to the calendarview headers is not "+count+" element(s) long in its context.");
 		}
 		
 	}

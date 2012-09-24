@@ -40,6 +40,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CalendarView;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -86,94 +87,7 @@ public class CalendarActivity extends Activity implements MenuInterface {
 		addTabs();
 
 	}
-
-	public class CalendarChangeListener implements DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener {
-		private TextView textToModify;
-		private Calendar cal;
-		private int hourOfDay;
-		private int minute;
-		private int year;
-		private int monthOfYear;
-		private int dayOfMonth;
-
-		public CalendarChangeListener(TextView textToModify){
-			this.textToModify = textToModify;
-			this.cal = Calendar.getInstance();
-			hourOfDay = cal.get(Calendar.HOUR_OF_DAY);
-			minute = cal.get(Calendar.MINUTE);
-			year = cal.get(Calendar.YEAR);
-			monthOfYear = cal.get(Calendar.MONTH);
-			dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
-
-		}
-
-		public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-			this.hourOfDay = hourOfDay;
-			this.minute = minute;
-			updateTextView();
-
-		}
-
-		public void onDateChanged(DatePicker view, int year, int monthOfYear,
-				int dayOfMonth) {
-			this.year = year;
-			this.monthOfYear = monthOfYear;
-			this.dayOfMonth = dayOfMonth;
-			updateTextView();
-		}
-
-		public void updateTextView() {
-			cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
-			//			if(hourOfDay < 12) cal.set(Calendar.AM_PM,Calendar.AM);
-			//			else cal.set(Calendar.AM_PM,Calendar.PM);
-			cal.set(Calendar.MINUTE, minute);
-			cal.set(Calendar.YEAR,year);
-			cal.set(Calendar.MONTH,monthOfYear);
-			cal.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-
-			String s = DateFormat.getDateTimeInstance(
-					DateFormat.LONG, DateFormat.LONG).format(new Date(cal.getTimeInMillis()));
-			this.textToModify.setText(s);
-		}
-	}
-	public class TabClickListener implements OnClickListener {
-
-		private LinearLayout tableRow;
-		private TabState state;
-		private Button button;
-		private String stringOn;
-		private String stringOff;
-
-		public TabClickListener(LinearLayout tableRow, TabState state, Button button, String []string){
-			//setState(state);
-			this.state = state;
-			this.tableRow = tableRow;
-			this.button = button;
-			this.stringOff = string[0];
-			this.stringOn = string[1];
-		}
-		public void onClick(View view) {
-			switch(state){
-			case TAB_OPEN:
-				//Animation is dependent on LayoutParams for given layout; is very clunky
-				//			tableRow.startAnimation(new MyScaler(1.0f, 1.0f, 1.0f, 0.0f, 5000, tableRow, true));
-				tableRow.setVisibility(View.GONE);
-				setState(TabState.TAB_CLOSED);
-				button.setText(stringOff);
-				return;
-			case TAB_CLOSED:
-				tableRow.setVisibility(View.VISIBLE);
-				setState(TabState.TAB_OPEN);
-				button.setText(stringOn);
-				return;
-			}
-		}
-		public void setState(TabState tabState) {
-			this.state = tabState;
-		}
-
-	}
-	@SuppressWarnings("unchecked")
+	
 	public void addTabs() {
 		
 		TabHost.TabSpec programTabSpec = tabHost.newTabSpec("_program"); //move into strings.xml
@@ -186,38 +100,38 @@ public class CalendarActivity extends Activity implements MenuInterface {
 		TabState tabStateStart = TabState.TAB_CLOSED;
 		TabState tabStateStop = TabState.TAB_CLOSED;
 
-		LinearLayout tableRowStart = (LinearLayout) findViewById(R.id.calendar_eventview_startdate_drawer);
-		LinearLayout tableRowStop = (LinearLayout) findViewById(R.id.calendar_eventview_stopdate_drawer);
+	//	LinearLayout tableRowStart = (LinearLayout) findViewById(R.id.calendar_eventview_startdate_drawer);
+	//	LinearLayout tableRowStop = (LinearLayout) findViewById(R.id.calendar_eventview_stopdate_drawer);
 
-		tableRowStart.setVisibility(View.GONE);
-		tableRowStop.setVisibility(View.GONE);
+	//	tableRowStart.setVisibility(View.GONE);
+	//	tableRowStop.setVisibility(View.GONE);
 
-		Button eventviewTopDrawerButton = (Button) findViewById(R.id.calendar_eventview_top_drawer_button);
-		Button eventviewBottomDrawerButton = (Button) findViewById(R.id.calendar_eventview_bottom_drawer_button);
+//		Button eventviewTopDrawerButton = (Button) findViewById(R.id.calendar_eventview_top_drawer_button);
+//		Button eventviewBottomDrawerButton = (Button) findViewById(R.id.calendar_eventview_bottom_drawer_button);
+//
+//		String []startString = res.getStringArray(R.array.calendar_eventview_top_tab_text);
+//		String []endString = res.getStringArray(R.array.calendar_eventview_bottom_tab_text);
 
-		String []startString = res.getStringArray(R.array.calendar_eventview_top_tab_text);
-		String []endString = res.getStringArray(R.array.calendar_eventview_bottom_tab_text);
+//		DatePicker startDatePicker = (DatePicker) findViewById(R.id.calendar_eventview_startdate);
+//		DatePicker endDatePicker = (DatePicker) findViewById(R.id.calendar_eventview_enddate);
 
-		DatePicker startDatePicker = (DatePicker) findViewById(R.id.calendar_eventview_startdate);
-		DatePicker endDatePicker = (DatePicker) findViewById(R.id.calendar_eventview_enddate);
+//		final TimePicker startTimePicker = (TimePicker) findViewById(R.id.calendar_eventview_starttime);
+//		final TimePicker endTimePicker = (TimePicker) findViewById(R.id.calendar_eventview_endtime);
+//
+//		TextView textStartDate = (TextView) findViewById(R.id.calendar_eventview_stopdate_value);
+//		TextView textEndDate = (TextView) findViewById(R.id.calendar_eventview_startdate_value);
+//
+//		eventviewTopDrawerButton.setOnClickListener(new TabClickListener(tableRowStart,tabStateStart, eventviewTopDrawerButton, startString));
+//		eventviewBottomDrawerButton.setOnClickListener(new TabClickListener(tableRowStop,tabStateStop, eventviewBottomDrawerButton, endString));
 
-		final TimePicker startTimePicker = (TimePicker) findViewById(R.id.calendar_eventview_starttime);
-		final TimePicker endTimePicker = (TimePicker) findViewById(R.id.calendar_eventview_endtime);
+//		CalendarChangeListener listenerStartDate = new CalendarChangeListener(textStartDate);
+//		CalendarChangeListener listenerEndDate = new CalendarChangeListener(textEndDate);
 
-		TextView textStartDate = (TextView) findViewById(R.id.calendar_eventview_stopdate_value);
-		TextView textEndDate = (TextView) findViewById(R.id.calendar_eventview_startdate_value);
+//		startDatePicker.init(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),listenerStartDate);
+//		startTimePicker.setOnTimeChangedListener(listenerStartDate);
 
-		eventviewTopDrawerButton.setOnClickListener(new TabClickListener(tableRowStart,tabStateStart, eventviewTopDrawerButton, startString));
-		eventviewBottomDrawerButton.setOnClickListener(new TabClickListener(tableRowStop,tabStateStop, eventviewBottomDrawerButton, endString));
-
-		CalendarChangeListener listenerStartDate = new CalendarChangeListener(textStartDate);
-		CalendarChangeListener listenerEndDate = new CalendarChangeListener(textEndDate);
-
-		startDatePicker.init(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),listenerStartDate);
-		startTimePicker.setOnTimeChangedListener(listenerStartDate);
-
-		endDatePicker.init(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),listenerEndDate);
-		endTimePicker.setOnTimeChangedListener(listenerEndDate);
+//		endDatePicker.init(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),listenerEndDate);
+//		endTimePicker.setOnTimeChangedListener(listenerEndDate);
 
 
 		//======   START ANDROID SDK BUG FIX ======//
@@ -227,9 +141,11 @@ public class CalendarActivity extends Activity implements MenuInterface {
 
 		//======   END ANDROID SDK BUG FIX ======//
 
-		programTabSpec.setContent(R.id.calendar_event_tab);
+		programTabSpec.setContent(R.id.calendar_day_tab);
 		programTabSpec.setIndicator(res.getString(R.string.calendar_programview_label));
 		// === END PROGRAM TAB
+		
+		
 		TabHost.TabSpec dayTabSpec = tabHost.newTabSpec("_day");
 		dayTabSpec.setContent(R.id.calendar_day_tab);
 		dayTabSpec.setIndicator("DAY");
@@ -237,7 +153,7 @@ public class CalendarActivity extends Activity implements MenuInterface {
 		/**
 		 * This is the week view tab
 		 */
-		dayViewContainer = (LinearLayout) findViewById(R.id.week_tab);
+		dayViewContainer = (LinearLayout) findViewById(R.id.calendar_week_tab);
 
 
 
@@ -249,8 +165,9 @@ public class CalendarActivity extends Activity implements MenuInterface {
 		//		});
 
 		this.setupWeekTab();
+		this.setupDayTab();
 		TabHost.TabSpec weekTabSpec = tabHost.newTabSpec("_week");
-		weekTabSpec.setContent(R.id.week_tab);
+		weekTabSpec.setContent(R.id.calendar_week_tab);
 		weekTabSpec.setIndicator("WEEK");
 
 		TabHost.TabSpec monthTabSpec = tabHost.newTabSpec("_month");
@@ -258,22 +175,25 @@ public class CalendarActivity extends Activity implements MenuInterface {
 		monthTabSpec.setIndicator("MONTH");
 
 		TabHost.TabSpec eventTabSpec = tabHost.newTabSpec("_event");
-		eventTabSpec.setContent(R.id.calendar_event_tab);
+		eventTabSpec.setContent(R.id.calendar_day_tab);
 		eventTabSpec.setIndicator("EVENT");
 
 
-		tabHost.addTab(programTabSpec);
+	//	tabHost.addTab(programTabSpec);
 		tabHost.addTab(dayTabSpec);
 		tabHost.addTab(weekTabSpec);
-		tabHost.addTab(monthTabSpec);
-		tabHost.addTab(eventTabSpec);
+	//	tabHost.addTab(monthTabSpec);
+	//	tabHost.addTab(eventTabSpec);
 	}
+	
+	
 	LinearLayout dayViewContainer;
 	//Shared components
 	Vector<Vector<EventWrapper>> events_data;
 	TextView timesHeader;
 	ListView timesView;
-	
+	ListView dayViewPreview1;
+	ListView dayViewPreview2;
 	TextView day1Header;
 	TextView day2Header;
 	TextView day3Header;
@@ -286,8 +206,45 @@ public class CalendarActivity extends Activity implements MenuInterface {
 	Vector<ListView>dayViews = new Vector<ListView>();
 	Vector<DayClickListener> dayClickListeners = new Vector<DayClickListener>();
 
+	public void setupDayTab() {
 
+		Vector<EventWrapper> dayView_data = new Vector<EventWrapper>();
+		Vector<EventWrapper> time_data = new Vector<EventWrapper>();
+		
+		dayView_data.add(new EventWrapper(0f,5f).setContents("DayView Period #1"));
+		dayView_data.add(new EventWrapper(5f, 9f).setContents("DayView Period #2"));
+		dayView_data.add(new EventWrapper(10f, 15f).setContents("DayView Period #3"));
+		dayView_data.add(new EventWrapper(14f, 24f).setContents("DayView Period #4"));
+		
+		
+		//weekview list is used for day list header
+		timesHeader = (TextView)findViewById(R.id.calendar_weekview_header);
+		timesHeader.setText("Time:");
+		timesView = (ListView) findViewById(R.id.calendar_dayview_list_times);
+		dayViewPreview1 = (ListView)findViewById(R.id.calendar_dayview_list_day_actual);
+		dayViewPreview2 = (ListView)findViewById(R.id.calendar_dayview_list_day_preview);
+		
+		
+		
+		String[] times_arr = getResources().getStringArray(R.array.calendar_timeview_array);
+		for(int k= 0; k < times_arr.length; k++){
+			time_data.add(new EventWrapper(k*1f,(k+1)*1f).setContents(times_arr[k]));
+		}
+		
+		//weekview_cell is copied for day 12:00AM - 11:00PM time cells
+		emptyview = new TextView(this);
+		
+		timesView.setEmptyView(emptyview);
+		timesView.setAdapter(new TimeAdapter(this, R.id.calendar_dayview_list_times, time_data));
+		
+		//dayViewPreview1.setEmptyView(emptyview);
+		dayViewPreview1.setAdapter(new EventAdapter(this, R.id.calendar_dayview_list_day_actual, dayView_data));
+		
+		//dayViewPreview2.setEmptyView(emptyview);
+		dayViewPreview2.setAdapter(new EventAdapter(this, R.id.calendar_dayview_list_day_preview, dayView_data));
+	}
 	public void setupWeekTab() {
+		dayViews = new Vector<ListView>();
 		timesHeader = (TextView) findViewById(R.id.calendar_weekview_header);
 		timesHeader.setText("Time:");
 
@@ -321,14 +278,11 @@ public class CalendarActivity extends Activity implements MenuInterface {
 
 		Vector<EventWrapper> time_data = new Vector<EventWrapper>();
 		String[] times_arr = getResources().getStringArray(R.array.calendar_timeview_array);
-		int k = 0;
 
 		//make the time cells in increments of 1f
-		for(k= 0; k < times_arr.length; k++){
+		for(int k= 0; k < times_arr.length; k++){
 			time_data.add(new EventWrapper(k*1f,(k+1)*1f).setContents(times_arr[k]));
 		}
-
-		//Toast.makeText(getBaseContext(), "Size of times_arr = " + k, Toast.LENGTH_SHORT).show();
 
 		events_data = new Vector<Vector<EventWrapper>>();
 
@@ -352,11 +306,10 @@ public class CalendarActivity extends Activity implements MenuInterface {
 		event_data.add(new EventWrapper(6f,18f).setContents("Vacation"));
 		event_data.add(new EventWrapper(18f,24f).setContents("Evening"));
 		events_data.add(event_data);
+		events_data.add(event_data);
+		events_data.add(event_data);
+		events_data.add(event_data);
 		
-		//
-		events_data.add(event_data);
-		events_data.add(event_data);
-		events_data.add(event_data);
 		event_data = new Vector<EventWrapper>();
 		event_data.add(new EventWrapper(0f,4f).setContents("Idle"));
 		event_data.add(new EventWrapper(4f,6f).setContents("High Heat"));
@@ -373,24 +326,20 @@ public class CalendarActivity extends Activity implements MenuInterface {
 
 		dayViews.get(0).setEmptyView(emptyview);
 		dayViews.get(0).setAdapter(new EventAdapter(this, R.id.calendar_weekview_list_1, events_data.get(0)));
-//		dayViews.get(0).setOnItemSelectedListener(dayClickListeners.get(0));
 		dayViews.get(0).setOnItemClickListener(dayClickListeners.get(0));
 
 		dayViews.get(1).setEmptyView(emptyview);
 		dayViews.get(1).setAdapter(new EventAdapter(this, R.id.calendar_weekview_list_2, events_data.get(1)));
-//		dayViews.get(1).setOnItemSelectedListener(dayClickListeners.get(1));
 		dayViews.get(1).setOnItemClickListener(dayClickListeners.get(1));
 
 
 		dayViews.get(2).setEmptyView(emptyview);
 		dayViews.get(2).setAdapter(new EventAdapter(this, R.id.calendar_weekview_list_3, events_data.get(2)));
-//		dayViews.get(2).setOnItemSelectedListener(dayClickListeners.get(2));
 		dayViews.get(2).setOnItemClickListener(dayClickListeners.get(2));
 
 
 		dayViews.get(3).setEmptyView(emptyview);
 		dayViews.get(3).setAdapter(new EventAdapter(this, R.id.calendar_weekview_list_4, events_data.get(3)));
-//		dayViews.get(3).setOnItemSelectedListener(dayClickListeners.get(3));
 		dayViews.get(3).setOnItemClickListener(dayClickListeners.get(3));
 
 
@@ -408,10 +357,11 @@ public class CalendarActivity extends Activity implements MenuInterface {
 
 	}
 	public void setHeaders(String []values){
-		if(values.length == 7)
+		int count = 7;
+		if(values.length == count)
 			for(int i = 0; i < values.length; i++) dayHeaders.get(i).setText(values[i]);
 		
-		else new EventCommon.HeaderNumberInvalidException();
+		else new EventCommon.HeaderNumberInvalidException(count);
 
 	}
 
@@ -554,5 +504,42 @@ public class CalendarActivity extends Activity implements MenuInterface {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return rootIntent.onOptionsItemSelected(this, item);
+	}
+	public class TabClickListener implements OnClickListener {
+
+		private LinearLayout tableRow;
+		private TabState state;
+		private Button button;
+		private String stringOn;
+		private String stringOff;
+
+		public TabClickListener(LinearLayout tableRow, TabState state, Button button, String []string){
+			//setState(state);
+			this.state = state;
+			this.tableRow = tableRow;
+			this.button = button;
+			this.stringOff = string[0];
+			this.stringOn = string[1];
+		}
+		public void onClick(View view) {
+			switch(state){
+			case TAB_OPEN:
+				//Animation is dependent on LayoutParams for given layout; is very clunky
+				//			tableRow.startAnimation(new MyScaler(1.0f, 1.0f, 1.0f, 0.0f, 5000, tableRow, true));
+				tableRow.setVisibility(View.GONE);
+				setState(TabState.TAB_CLOSED);
+				button.setText(stringOff);
+				return;
+			case TAB_CLOSED:
+				tableRow.setVisibility(View.VISIBLE);
+				setState(TabState.TAB_OPEN);
+				button.setText(stringOn);
+				return;
+			}
+		}
+		public void setState(TabState tabState) {
+			this.state = tabState;
+		}
+
 	}
 }
