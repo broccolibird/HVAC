@@ -1,6 +1,8 @@
 package com.freescale.iastate.hvac;
+//#####6:30
+//
 
-//import java.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 //import java.util.Calendar;
 //import com.freescale.iastate.hvac.calendar.MyScaler;
 
