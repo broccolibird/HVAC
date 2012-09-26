@@ -28,6 +28,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 //import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,6 +36,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.AdapterView.OnItemClickListener;
@@ -46,6 +48,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
@@ -218,12 +221,62 @@ public class CalendarActivity extends Activity implements MenuInterface {
 		dayView_data.add(new EventWrapper(10f, 15f).setContents("DayView Period #3"));
 		dayView_data.add(new EventWrapper(14f, 24f).setContents("DayView Period #4"));
 		
+		ScrollView dayViewMain = (ScrollView)findViewById(R.id.calendar_dayview_scollview);
+		int totalHeight = dayViewMain.getHeight();
+		Drawable background = res.getDrawable(R.drawable.list_background);
+		int count = 2;
+		TextView []previewView = new TextView[count];
+		TextView []timeView = new TextView[count];
+		LinearLayout []eventCell = new LinearLayout[count];
 		
+		LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LinearLayout eventCells = (LinearLayout)findViewById(R.id.calendar_dayview_linearlayout_deep);
+
+		for(int i = 0; i < dayView_data.size(); i++) {
+			View v = inflater.inflate(R.layout.calendar_dayview_shallow,null);
+			
+			//LinearLayout parent = (LinearLayout) inflater.inflate(R.layout.calendar_dayview_shallow, null);
+			
+			TextView time_textView = (TextView)v.findViewById(R.id.calendar_dayview_time_view);
+			TextView event_textView = (TextView)v.findViewById(R.id.calendar_dayview_event_view);
+			time_textView.setText(dayView_data.get(i).getTimeStart() + " - " + dayView_data.get(i).getTimeEnd());
+			event_textView.setText(dayView_data.get(i).getContents());
+			
+			eventCells.addView(v,i,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+			//parent.setText("asdfasdfasdf!!!!!");
+			
+//			previewView[i] = (TextView)parent.findViewById(R.id.calendar_dayview_time_preview);
+			//previewView[i].setText("asdfasdfasdf!!!!!");
+			//previewView[i].setText(dayView_data.get(i).getContents());
+//			eventCells.addView(previewView[i],0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//			timeView[i] = (TextView)v.findViewById(R.id.calendar_dayview_time_view);
+			//eventCell[i] = (LinearLayout)findViewById(R.id.calendar_dayview_linearlayout_shallow);
+//			previewView[i].setText(dayView_data.get(i).getContents());
+//			eventCell[i].addView(previewView[i]);
+//			timeView[i].setText(dayView_data.get(i).getTimeStart());
+		//	eventCell[i].addView(timeView[i]);
+		//	eventCells.addView(eventCell[i]);
+			
+		}
+		
+		//previewView.set
+		
+	//	dayViewContainer.setBackground(background);
+		
+		
+//		TextView testView = new TextView(this);
+//		testView.setText("eep!");
+//		TextView testView2 = new TextView(this);
+//		testView2.setText("bleep!");
+//		dayViewMain.addView(testView, 0);
+//		dayViewMain.addView(testView2,1);
+		
+	/*	
 		//weekview list is used for day list header
 		timesHeader = (TextView)findViewById(R.id.calendar_weekview_header);
 		timesHeader.setText("Time:");
 		timesView = (ListView) findViewById(R.id.calendar_dayview_list_times);
-		dayViewPreview1 = (ListView)findViewById(R.id.calendar_dayview_list_day_actual);
+		//dayViewPreview1 = (ListView)findViewById(R.id.calendar_dayview_list_day_actual);
 		dayViewPreview2 = (ListView)findViewById(R.id.calendar_dayview_list_day_preview);
 		
 		
@@ -240,11 +293,11 @@ public class CalendarActivity extends Activity implements MenuInterface {
 		timesView.setAdapter(new TimeAdapter(this, R.id.calendar_dayview_list_times, time_data));
 		
 		//dayViewPreview1.setEmptyView(emptyview);
-		dayViewPreview1.setAdapter(new EventAdapter(this, R.id.calendar_dayview_list_day_actual, dayView_data));
+		//dayViewPreview1.setAdapter(new EventAdapter(this, R.id.calendar_dayview_list_day_actual, dayView_data));
 		
 		//dayViewPreview2.setEmptyView(emptyview);
 		dayViewPreview2.setAdapter(new EventAdapter(this, R.id.calendar_dayview_list_day_preview, dayView_data));
-	}
+	*/}
 	public void setupWeekTab() {
 		dayViews = new Vector<ListView>();
 		timesHeader = (TextView) findViewById(R.id.calendar_weekview_header);

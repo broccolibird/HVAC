@@ -44,208 +44,73 @@
 
             <LinearLayout
                 android:id="@+id/calendar_day_tab"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_marginTop="70dp"
+                android:background="@drawable/list_background"
                 android:isScrollContainer="false"
                 android:orientation="horizontal" >
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="30dp"
-                    android:orientation="vertical" 
-                    android:background="@drawable/list_background">
-
-                    <TextView
+                <!--
+                         <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Selected Day"
                         android:textColor="@android:color/black" />
+                -->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal" >
-
-                        <LinearLayout
-                            android:layout_width="35dp"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical" >
-
-                            <include
-                                android:id="@+id/calendar_dayview_timeheader"
-                                layout="@layout/calendar_weekview_header" />
-
-                            <ListView
-                                android:id="@+id/calendar_dayview_list_times"
-                                android:layout_width="35dp"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical" >
-                            </ListView>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="150dp"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical" >
-
-                            <include
-                                android:id="@+id/calendar_dayview_dayheader1"
-                                layout="@layout/calendar_weekview_header" />
-
-                            <ListView
-                                android:id="@+id/calendar_dayview_list_day_actual"
-                                android:layout_width="150dp"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                 >
-                            </ListView>
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
+                <ScrollView
+                    android:id="@+id/calendar_dayview_scollview"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="40dp"
-                    android:orientation="vertical" 
-                   android:background="@drawable/list_background">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
 
-                    <TextView
-                        android:layout_width="match_parent"
+                    <RelativeLayout
+                        android:id="@+id/calendar_dayview_relativelayout"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Preview"
-                        android:textColor="@android:color/black" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:background="@drawable/list_background"
                         android:orientation="horizontal" >
 
                         <LinearLayout
-                            android:layout_width="150dp"
-                            android:layout_height="match_parent"
+                            android:id="@+id/calendar_dayview_linearlayout_deep"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:background="@drawable/list_background"
                             android:orientation="vertical" >
 
-                            <include
-                                android:id="@+id/calendar_dayview_dayheader2"
-                                layout="@layout/calendar_weekview_header" />
+                         <!--    <include layout="@layout/calendar_dayview_shallow" />
 
-                            <ListView
-                                android:id="@+id/calendar_dayview_list_day_preview"
-                                android:layout_width="150dp"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical" >
-                            </ListView>
+                            <include layout="@layout/calendar_dayview_shallow" />
+
+                            <include layout="@layout/calendar_dayview_shallow" /> -->
                         </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
-
-                    <TableRow
-                        android:id="@+id/tableRow5251"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" >
 
                         <TextView
-                            android:id="@+id/textView23521"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Large Text"
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                        <ListView
-                            android:id="@+id/listView12435a34"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" >
-                        </ListView>
-                    </TableRow>
-
-                    <TableRow
-                        android:id="@+id/tableRow523232"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
-
-                        <Button
-                            android:id="@+id/button5325321"
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Button" />
+                            android:id="@+id/calendar_dayview_preview_transparent"
+                            android:layout_width="200dp"
+                            android:layout_height="120dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_toRightOf="@+id/calendar_dayview_linearlayout_deep"
+                            android:background="#fd1146"
+                            android:text="Empty Space"
+                            android:textColor="#4eff00" />
+                        <!-- android:layout_toRightOf="@+id/calendar_dayview_linearlayout_deep" -->
 
                         <TextView
-                            android:id="@+id/textView2346"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Small Text"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
-                    </TableRow>
-
-                    <TableRow
-                        android:id="@+id/tableRow3346"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" >
-
-                        <Button
-                            android:id="@+id/button23462"
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Button" />
-
-                        <TextView
-                            android:id="@+id/textView35768"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Small Text"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
-                    </TableRow>
-
-                    <TableRow
-                        android:id="@+id/tableRow48568"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" >
-
-                        <Button
-                            android:id="@+id/calendar_day_add"
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Add" />
-                    </TableRow>
-
-                    <TableRow
-                        android:id="@+id/tableRow5234567"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" >
-
-                        <Button
-                            android:id="@+id/calendar_day_remove"
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Remove" />
-                    </TableRow>
-
-                    <TableRow
-                        android:id="@+id/tableRow634645"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" >
-
-                        <Button
-                            android:id="@+id/calendar_day_clear"
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Save as..." />
-                    </TableRow>
-                </TableLayout>
+                            android:id="@+id/calendar_dayview_time_preview"
+                            android:layout_width="200dp"
+                            android:layout_height="48dp"
+                            android:layout_alignLeft="@id/calendar_dayview_preview_transparent"
+                            android:layout_below="@id/calendar_dayview_preview_transparent"
+                            android:background="#ffffff"
+                            android:text="Preview part"
+                            android:textColor="#4eff00" />
+                    </RelativeLayout>
+                </ScrollView>
             </LinearLayout>
 
             <LinearLayout

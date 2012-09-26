@@ -46,8 +46,10 @@ public class TimeAdapter extends ArrayAdapter<EventWrapper> implements EventComm
 			
 		tv.setTextColor(Color.BLACK);
 		tv.setText(this.data.get(position).contents);
+		tv.setTextSize(eventToolbox.convertDpToPixels((10)));
 
-		tv.setHeight(eventToolbox.convertDpToPixels((individualHeight - 1f)));
+		//tv.setHeight(eventToolbox.convertDpToPixels((individualHeight - 1f)));
+	//	tv.setHeight(eventToolbox.convertDpToPixels(16));
 		}
 		return convertView;
 	}
