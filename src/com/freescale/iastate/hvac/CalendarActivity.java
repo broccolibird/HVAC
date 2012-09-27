@@ -28,6 +28,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 //import android.util.Log;
 import android.view.Menu;
@@ -55,7 +56,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-public class CalendarActivity extends Activity implements MenuInterface {
+public class CalendarActivity extends Activity implements MenuInterface, EventCommon {
 	CalendarView monthCalendar;
 	CalendarView weekCalendar;
 
@@ -82,7 +83,8 @@ public class CalendarActivity extends Activity implements MenuInterface {
 
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-
+		eventToolbox.SCALE = getResources().getDisplayMetrics().density;
+		
 		//this sets the help string for the current activity.
 		//copy paste 
 		rootIntent.setHelpText(getText(R.string.calendar_help));
@@ -169,8 +171,7 @@ public class CalendarActivity extends Activity implements MenuInterface {
 		//		    }
 		//		});
 
-		this.setupWeekTab();
-		this.setupDayTab();
+		
 		TabHost.TabSpec weekTabSpec = tabHost.newTabSpec("_week");
 		weekTabSpec.setContent(R.id.calendar_week_tab);
 		weekTabSpec.setIndicator("WEEK");
@@ -189,6 +190,8 @@ public class CalendarActivity extends Activity implements MenuInterface {
 		tabHost.addTab(weekTabSpec);
 	//	tabHost.addTab(monthTabSpec);
 	//	tabHost.addTab(eventTabSpec);
+		this.setupWeekTab();
+		this.setupDayTab();
 	}
 	
 	
@@ -217,25 +220,33 @@ public class CalendarActivity extends Activity implements MenuInterface {
 		Vector<EventWrapper> time_data = new Vector<EventWrapper>();
 		
 		dayView_data.add(new EventWrapper(0f,5f).setContents("DayView Period #1"));
-		dayView_data.add(new EventWrapper(5f, 9f).setContents("DayView Period #2"));
+		dayView_data.add(new EventWrapper(5f, 9f).setContents("DayView Period #2\nnewline1\nnewline2"));
 		dayView_data.add(new EventWrapper(10f, 15f).setContents("DayView Period #3"));
-		dayView_data.add(new EventWrapper(14f, 24f).setContents("DayView Period #4"));
+		dayView_data.add(new EventWrapper(14f, 24f).setContents("DayViewasdasd \nPeriod #4"));
 		
-		ScrollView dayViewMain = (ScrollView)findViewById(R.id.calendar_dayview_scollview);
-		int totalHeight = dayViewMain.getHeight();
+		ScrollView dayViewMain = (ScrollView)findViewById(R.id.calendar_day_tab);
 		Drawable background = res.getDrawable(R.drawable.list_background);
-		int count = 2;
-		TextView []previewView = new TextView[count];
-		TextView []timeView = new TextView[count];
-		LinearLayout []eventCell = new LinearLayout[count];
+
 		
 		LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		LinearLayout eventCells = (LinearLayout)findViewById(R.id.calendar_dayview_linearlayout_deep);
-
+		
+		TimePicker timePicker1 = (TimePicker)findViewById(R.id.calendar_dayview_sidebar_timepicker1);
+		timePicker1.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
+		
+		TextView transparentView = (TextView)findViewById(R.id.calendar_dayview_preview_transparent);
+		TextView sampleView = (TextView)findViewById(R.id.calendar_dayview_time_preview);
+		int hTrans = 0, h2 = 0;
+		Drawable bk1 = res.getDrawable(R.drawable.calendar_dayview_shallow_light);
+		Drawable bk2 = res.getDrawable(R.drawable.calendar_dayview_shallow_dark);
+		Vector<Integer> heights = new Vector<Integer>();
+		
 		for(int i = 0; i < dayView_data.size(); i++) {
-			View v = inflater.inflate(R.layout.calendar_dayview_shallow,null);
 			
-			//LinearLayout parent = (LinearLayout) inflater.inflate(R.layout.calendar_dayview_shallow, null);
+			LinearLayout v = (LinearLayout)inflater.inflate(R.layout.calendar_dayview_shallow,null);
+			
+			if(i%2 == 0) v.setBackground(bk1);
+			else v.setBackground(bk2);
 			
 			TextView time_textView = (TextView)v.findViewById(R.id.calendar_dayview_time_view);
 			TextView event_textView = (TextView)v.findViewById(R.id.calendar_dayview_event_view);
@@ -243,33 +254,19 @@ public class CalendarActivity extends Activity implements MenuInterface {
 			event_textView.setText(dayView_data.get(i).getContents());
 			
 			eventCells.addView(v,i,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-			//parent.setText("asdfasdfasdf!!!!!");
+			event_textView.measure(0, 0);
 			
-//			previewView[i] = (TextView)parent.findViewById(R.id.calendar_dayview_time_preview);
-			//previewView[i].setText("asdfasdfasdf!!!!!");
-			//previewView[i].setText(dayView_data.get(i).getContents());
-//			eventCells.addView(previewView[i],0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//			timeView[i] = (TextView)v.findViewById(R.id.calendar_dayview_time_view);
-			//eventCell[i] = (LinearLayout)findViewById(R.id.calendar_dayview_linearlayout_shallow);
-//			previewView[i].setText(dayView_data.get(i).getContents());
-//			eventCell[i].addView(previewView[i]);
-//			timeView[i].setText(dayView_data.get(i).getTimeStart());
-		//	eventCell[i].addView(timeView[i]);
-		//	eventCells.addView(eventCell[i]);
-			
+			heights.add(event_textView.getMeasuredHeight());
 		}
 		
-		//previewView.set
+		for(int i = 0; i < heights.size()-1; i++) hTrans += heights.get(i);
+		h2 += heights.get(heights.size()-1);
 		
-	//	dayViewContainer.setBackground(background);
-		
-		
-//		TextView testView = new TextView(this);
-//		testView.setText("eep!");
-//		TextView testView2 = new TextView(this);
-//		testView2.setText("bleep!");
-//		dayViewMain.addView(testView, 0);
-//		dayViewMain.addView(testView2,1);
+		transparentView.invalidate();
+		sampleView.invalidate();
+		transparentView.setHeight(hTrans);
+		sampleView.setHeight(h2);
+
 		
 	/*	
 		//weekview list is used for day list header

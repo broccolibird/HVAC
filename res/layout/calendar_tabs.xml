@@ -42,76 +42,76 @@
                 </TableRow>
             </TableLayout>
 
-            <LinearLayout
-                android:id="@+id/calendar_day_tab"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginTop="70dp"
-                android:background="@drawable/list_background"
-                android:isScrollContainer="false"
-                android:orientation="horizontal" >
-
-                <!--
+            <!--
                          <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Selected Day"
                         android:textColor="@android:color/black" />
-                -->
+            -->
 
-                <ScrollView
-                    android:id="@+id/calendar_dayview_scollview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+            <ScrollView
+                android:id="@+id/calendar_day_tab"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="60dp"
+                android:orientation="horizontal" >
+
+                <RelativeLayout
+                    android:id="@+id/calendar_dayview_relativelayout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal" >
 
-                    <RelativeLayout
-                        android:id="@+id/calendar_dayview_relativelayout"
-                        android:layout_width="fill_parent"
+                    <LinearLayout
+                        android:id="@+id/calendar_dayview_linearlayout_deep"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/list_background"
-                        android:orientation="horizontal" >
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:orientation="vertical" >
 
-                        <LinearLayout
-                            android:id="@+id/calendar_dayview_linearlayout_deep"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentTop="true"
-                            android:background="@drawable/list_background"
-                            android:orientation="vertical" >
-
-                         <!--    <include layout="@layout/calendar_dayview_shallow" />
+                        <!--
+                            <include layout="@layout/calendar_dayview_shallow" />
 
                             <include layout="@layout/calendar_dayview_shallow" />
 
-                            <include layout="@layout/calendar_dayview_shallow" /> -->
-                        </LinearLayout>
+                            <include layout="@layout/calendar_dayview_shallow" />
+                        -->
+                    </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/calendar_dayview_preview_transparent"
-                            android:layout_width="200dp"
-                            android:layout_height="120dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_toRightOf="@+id/calendar_dayview_linearlayout_deep"
-                            android:background="#fd1146"
-                            android:text="Empty Space"
-                            android:textColor="#4eff00" />
-                        <!-- android:layout_toRightOf="@+id/calendar_dayview_linearlayout_deep" -->
+                    <TextView
+                        android:id="@+id/calendar_dayview_preview_transparent"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/calendar_dayview_linearlayout_deep"
+                        android:background="#fd1146"
+                        android:text="Empty Space"
+                        android:textColor="#ffffff" />
+                    <!-- android:layout_toRightOf="@+id/calendar_dayview_linearlayout_deep" -->
 
-                        <TextView
-                            android:id="@+id/calendar_dayview_time_preview"
-                            android:layout_width="200dp"
-                            android:layout_height="48dp"
-                            android:layout_alignLeft="@id/calendar_dayview_preview_transparent"
-                            android:layout_below="@id/calendar_dayview_preview_transparent"
-                            android:background="#ffffff"
-                            android:text="Preview part"
-                            android:textColor="#4eff00" />
-                    </RelativeLayout>
-                </ScrollView>
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/calendar_dayview_time_preview"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@id/calendar_dayview_preview_transparent"
+                        android:layout_below="@id/calendar_dayview_preview_transparent"
+                        android:background="#ffffff"
+                        android:text="Preview part"
+                        android:textColor="#000000" />
+                    
+                    <include
+                        layout="@layout/calendar_dayview_sidebar"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/list_background"
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                       />
+                </RelativeLayout>
+            </ScrollView>
 
             <LinearLayout
                 android:id="@+id/calendar_week_tab"
