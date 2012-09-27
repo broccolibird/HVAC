@@ -318,12 +318,16 @@ public class HVACActivity extends Activity implements MenuInterface {
 		if (condition.contains("storm")) {
 			conditionDrawable = res.getDrawable(R.drawable.weather_storm);
 		}
+
 		if (condition.contains("cloudy") || condition.contains("Cloudy")
-				|| condition.contains("Overcast")) {
+				|| condition.contains("Overcast") || condition.contains("Haze") || condition.contains("haze")) {
 			conditionDrawable = res.getDrawable(R.drawable.weather_cloudy);
 		}
 		if (condition.contains("snow") || condition.contains("Snow")) {
 			conditionDrawable = res.getDrawable(R.drawable.weather_snow);
+		}
+		if (condition.contains("Partly")){
+			conditionDrawable = res.getDrawable(R.drawable.weather_partlycloudy);
 		}
 		return conditionDrawable;
 
