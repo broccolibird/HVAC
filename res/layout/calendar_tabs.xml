@@ -72,13 +72,7 @@
                         android:layout_alignParentTop="true"
                         android:orientation="vertical" >
 
-                        <!--
-                            <include layout="@layout/calendar_dayview_shallow" />
 
-                            <include layout="@layout/calendar_dayview_shallow" />
-
-                            <include layout="@layout/calendar_dayview_shallow" />
-                        -->
                     </LinearLayout>
 
                     <TextView

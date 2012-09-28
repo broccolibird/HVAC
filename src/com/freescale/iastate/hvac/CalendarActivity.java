@@ -220,9 +220,9 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		Vector<EventWrapper> time_data = new Vector<EventWrapper>();
 		
 		dayView_data.add(new EventWrapper(0f,5f).setContents("DayView Period #1"));
-		dayView_data.add(new EventWrapper(5f, 9f).setContents("DayView Period #2\nnewline1\nnewline2"));
+		dayView_data.add(new EventWrapper(5f, 9f).setContents("DayView Period #2\nnewline1\njjhfghc"));
 		dayView_data.add(new EventWrapper(10f, 15f).setContents("DayView Period #3"));
-		dayView_data.add(new EventWrapper(14f, 24f).setContents("DayViewasdasd \nPeriod #4"));
+		dayView_data.add(new EventWrapper(14f, 24f).setContents("DayView Period #4"));
 		
 		ScrollView dayViewMain = (ScrollView)findViewById(R.id.calendar_day_tab);
 		Drawable background = res.getDrawable(R.drawable.list_background);
@@ -237,23 +237,30 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		TextView transparentView = (TextView)findViewById(R.id.calendar_dayview_preview_transparent);
 		TextView sampleView = (TextView)findViewById(R.id.calendar_dayview_time_preview);
 		int hTrans = 0, h2 = 0;
-		Drawable bk1 = res.getDrawable(R.drawable.calendar_dayview_shallow_light);
-		Drawable bk2 = res.getDrawable(R.drawable.calendar_dayview_shallow_dark);
+
 		Vector<Integer> heights = new Vector<Integer>();
+	//	eventCells.setBackground(background);
+		
+		Vector<LinearLayout> v = new Vector<LinearLayout>();
 		
 		for(int i = 0; i < dayView_data.size(); i++) {
 			
-			LinearLayout v = (LinearLayout)inflater.inflate(R.layout.calendar_dayview_shallow,null);
+			v.add((LinearLayout)inflater.inflate(R.layout.calendar_dayview_shallow,null));
+			TextView time_textView = (TextView)v.get(i).findViewById(R.id.calendar_dayview_time_view);
+			TextView event_textView = (TextView)v.get(i).findViewById(R.id.calendar_dayview_event_view);
 			
-			if(i%2 == 0) v.setBackground(bk1);
-			else v.setBackground(bk2);
+			if(i%2 == 0) {
+				v.get(i).setBackgroundResource(R.drawable.calendar_dayview_shallow_light);
+			}
+			else {
+				v.get(i).setBackgroundResource(R.drawable.calendar_dayview_shallow_dark);
+			}
 			
-			TextView time_textView = (TextView)v.findViewById(R.id.calendar_dayview_time_view);
-			TextView event_textView = (TextView)v.findViewById(R.id.calendar_dayview_event_view);
+			
 			time_textView.setText(dayView_data.get(i).getTimeStart() + " - " + dayView_data.get(i).getTimeEnd());
 			event_textView.setText(dayView_data.get(i).getContents());
 			
-			eventCells.addView(v,i,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+			eventCells.addView(v.get(i),i,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 			event_textView.measure(0, 0);
 			
 			heights.add(event_textView.getMeasuredHeight());
@@ -284,7 +291,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		}
 		
 		//weekview_cell is copied for day 12:00AM - 11:00PM time cells
-		emptyview = new TextView(this);
+		emptyview = new (this);
 		
 		timesView.setEmptyView(emptyview);
 		timesView.setAdapter(new TimeAdapter(this, R.id.calendar_dayview_list_times, time_data));
