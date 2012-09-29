@@ -1,10 +1,13 @@
 package com.freescale.iastate.hvac.calendar;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
+import java.util.Vector;
 
+import android.util.FloatMath;
 import android.util.Log;
 
 public class EventWrapper {
@@ -20,9 +23,10 @@ public class EventWrapper {
 	//View and Data Parameters
 	public float startTime = 0f;
 	public float endTime = 0f;
-
+	DecimalFormat scannerFormat = new DecimalFormat("00.00");
+	public Vector<Integer> heights = new Vector<Integer>(); //? use
 	//Constructors
-	
+
 	public EventWrapper(float startTime, float endTime){
 		this.startTime = startTime;
 		this.endTime = endTime;
@@ -47,7 +51,7 @@ public class EventWrapper {
 		this.contents = Float.valueOf(getTimeDuration()).toString();
 		this.ID = id;
 	}
-	
+
 	//methods
 	public EventWrapper setContents(String s) {
 		this.contents = s;
@@ -77,16 +81,51 @@ public class EventWrapper {
 	}
 	private String getTime(float time) {
 		Calendar cal = new GregorianCalendar();
-		Scanner timeScan = new Scanner(Float.valueOf(time).toString().replace('.',' '));
-		
-		cal.set(Calendar.HOUR_OF_DAY, timeScan.nextInt());
-		cal.set(Calendar.MINUTE, timeScan.nextInt()/60);
-		
+
+		String output = scannerFormat.format(time);
+		Scanner s = new Scanner(output.replace('.',' '));
+		   
+	    int hour = s.nextInt();
+	    int minute = s.nextInt();
+	    int scaledMinute = (int)((float)minute/MINUTE_MULT_CONSTANT_T2F);
+	    
+		cal.set(Calendar.HOUR_OF_DAY, hour);
+		cal.set(Calendar.MINUTE, scaledMinute);
+
 		SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
 		sdf.setCalendar(cal);
 		return sdf.format(cal.getTime());
 	}
 	
+	public String expandTimes(boolean previousTime){
+		String s = new String();
+			s = getTime(this.startTime);
+			float index = this.startTime;
+			while(index < this.startTime + getTimeDuration()-1f) {
+				index += 1f;
+				index = (float) FloatMath.floor(index);
+				s += "\n"+getTime(index);
+			}
+
+		
+		return s;
+	}
+
+	/*public String expandTimes(){
+			String s = new String();
+		float duration = this.getTimeDuration();
+		float index = this.startTime;
+		float newTime = 0;
+		while(index < this.startTime + getTimeDuration()) {
+			newTime = index + 1f;
+//			String []times = Float.valueOf(newTime).toString().split(".");
+//			float minutes = Float.valueOf(times[1])/60;
+			index = (float) Math.floor(index);
+			s += getTime(index) + "\n";
+		}
+		return s;
+	}*/
+
 	public String getID() {
 		return this.ID;
 	}

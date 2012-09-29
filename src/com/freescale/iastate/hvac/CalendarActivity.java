@@ -213,7 +213,13 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	Vector<TextView> dayHeaders = new Vector<TextView>();
 	Vector<ListView>dayViews = new Vector<ListView>();
 	Vector<DayClickListener> dayClickListeners = new Vector<DayClickListener>();
-
+	Vector<Integer> heights = new Vector<Integer>();
+	
+	HashMap<EventWrapper,TextView> textMap = new HashMap<EventWrapper,TextView>();
+	Vector<EventWrapper> eventWrappers = new Vector<EventWrapper>();
+	
+	TextView transparentView;
+	TextView sampleView;
 	public void setupDayTab() {
 
 		Vector<EventWrapper> dayView_data = new Vector<EventWrapper>();
@@ -221,11 +227,10 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		
 		dayView_data.add(new EventWrapper(0f,5f).setContents("DayView Period #1"));
 		dayView_data.add(new EventWrapper(5f, 9f).setContents("DayView Period #2\nnewline1\njjhfghc"));
-		dayView_data.add(new EventWrapper(10f, 15f).setContents("DayView Period #3"));
+		dayView_data.add(new EventWrapper(9f, 14f).setContents("DayView Period #3"));
 		dayView_data.add(new EventWrapper(14f, 24f).setContents("DayView Period #4"));
 		
 		ScrollView dayViewMain = (ScrollView)findViewById(R.id.calendar_day_tab);
-		Drawable background = res.getDrawable(R.drawable.list_background);
 
 		
 		LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -233,12 +238,12 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		
 		TimePicker timePicker1 = (TimePicker)findViewById(R.id.calendar_dayview_sidebar_timepicker1);
 		timePicker1.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
+		timePicker1.setOnTimeChangedListener(new TimePickerListener());
 		
-		TextView transparentView = (TextView)findViewById(R.id.calendar_dayview_preview_transparent);
-		TextView sampleView = (TextView)findViewById(R.id.calendar_dayview_time_preview);
+		transparentView = (TextView)findViewById(R.id.calendar_dayview_preview_transparent);
+		sampleView = (TextView)findViewById(R.id.calendar_dayview_time_preview);
 		int hTrans = 0, h2 = 0;
 
-		Vector<Integer> heights = new Vector<Integer>();
 	//	eventCells.setBackground(background);
 		
 		Vector<LinearLayout> v = new Vector<LinearLayout>();
@@ -256,23 +261,24 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 				v.get(i).setBackgroundResource(R.drawable.calendar_dayview_shallow_dark);
 			}
 			
-			
-			time_textView.setText(dayView_data.get(i).getTimeStart() + " - " + dayView_data.get(i).getTimeEnd());
+			boolean timeIsPrefixed = false;
+			if(i == 0) timeIsPrefixed = true;
+			time_textView.setText(dayView_data.get(i).expandTimes(timeIsPrefixed));
 			event_textView.setText(dayView_data.get(i).getContents());
 			
 			eventCells.addView(v.get(i),i,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-			event_textView.measure(0, 0);
+			v.get(i).measure(0, 0);
 			
-			heights.add(event_textView.getMeasuredHeight());
+			heights.add(v.get(i).getMeasuredHeight());
 		}
 		
-		for(int i = 0; i < heights.size()-1; i++) hTrans += heights.get(i);
-		h2 += heights.get(heights.size()-1);
-		
-		transparentView.invalidate();
-		sampleView.invalidate();
-		transparentView.setHeight(hTrans);
-		sampleView.setHeight(h2);
+//		for(int i = 0; i < heights.size()-1; i++) hTrans += heights.get(i);
+//		h2 += heights.get(heights.size()-1);
+//		
+//		transparentView.invalidate();
+//		sampleView.invalidate();
+//		transparentView.setHeight(hTrans);
+//		sampleView.setHeight(h2);
 
 		
 	/*	
@@ -564,6 +570,51 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return rootIntent.onOptionsItemSelected(this, item);
 	}
+	public class TimePickerListener implements TimePicker.OnTimeChangedListener {
+
+		public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+//			if(hourOfDay == 0) {
+//				transparentView.invalidate();
+//				sampleView.invalidate();
+//				transparentView.setHeight(getTransparentHeight(hourOfDay));
+//				
+//			}
+			if(hourOfDay < heights.size()) {
+				transparentView.invalidate();
+				sampleView.invalidate();
+				transparentView.setHeight(getTransparentHeight(hourOfDay));
+				sampleView.setHeight(getSampleHeight(hourOfDay));
+//				Log.i("TimePicker","Hour/index = " + hourOfDay);
+////				Log.i("TimePicker", "index = " + hourOfDay);
+//				Log.i("transparentView",""+getTransparentHeight(hourOfDay));
+//				Log.i("sampleView",""+getSampleHeight(hourOfDay));
+				
+			} else  Toast.makeText(getBaseContext(), "Hour index is out of bounds.", Toast.LENGTH_SHORT).show();
+			
+		}
+		public int getTransparentHeight(int count) {
+			int value = 0;
+			for(int i = 0; i < count; i++){
+				value += heights.get(i);
+			}
+			return value;
+		}
+		public int getSampleHeight(int count){
+			int h2 =getTransparentHeight(count);
+			h2 = heights.get(count);
+			return h2;
+		}
+	}
+	/*
+	 * for(int i = 0; i < hourOfDay-1; i++) hTrans += heights.get(i);
+		h2 += heights.get(heights.size()-1);
+		
+		transparentView.invalidate();
+		sampleView.invalidate();
+		transparentView.setHeight(hTrans);
+		sampleView.setHeight(h2);
+	 */
+	
 	public class TabClickListener implements OnClickListener {
 
 		private LinearLayout tableRow;

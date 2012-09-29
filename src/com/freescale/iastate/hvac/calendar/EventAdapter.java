@@ -64,4 +64,5 @@ public class EventAdapter extends ArrayAdapter<EventWrapper> implements EventCom
 		return data.get(position);
 	}
 	
+	
 }
