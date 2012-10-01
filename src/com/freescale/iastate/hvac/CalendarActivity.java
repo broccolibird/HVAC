@@ -215,63 +215,72 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	Vector<DayClickListener> dayClickListeners = new Vector<DayClickListener>();
 	Vector<Integer> heights = new Vector<Integer>();
 	
-	HashMap<EventWrapper,TextView> textMap = new HashMap<EventWrapper,TextView>();
-	Vector<EventWrapper> eventWrappers = new Vector<EventWrapper>();
+	HashMap<EventWrapper,TextView> eventMap = new HashMap<EventWrapper,TextView>();
+	HashMap<EventWrapper,TextView> timeMap = new HashMap<EventWrapper,TextView>();
+	HashMap<EventWrapper,LinearLayout> viewMap = new HashMap<EventWrapper,LinearLayout>();
+	Vector<EventWrapper> eventWrapperKeys = new Vector<EventWrapper>();
 	
 	TextView transparentView;
 	TextView sampleView;
+	Button timeView1Button;
+	TimePicker timePicker1;
 	public void setupDayTab() {
 
 		Vector<EventWrapper> dayView_data = new Vector<EventWrapper>();
 		Vector<EventWrapper> time_data = new Vector<EventWrapper>();
 		
-		dayView_data.add(new EventWrapper(0f,5f).setContents("DayView Period #1"));
-		dayView_data.add(new EventWrapper(5f, 9f).setContents("DayView Period #2\nnewline1\njjhfghc"));
-		dayView_data.add(new EventWrapper(9f, 14f).setContents("DayView Period #3"));
-		dayView_data.add(new EventWrapper(14f, 24f).setContents("DayView Period #4"));
+		eventWrapperKeys.add(new EventWrapper(0f,5f).setContents("DayView Period #1"));
+		eventWrapperKeys.add(new EventWrapper(5f, 9f).setContents("DayView Period #2\nnewline1\njjhfghc"));
+		eventWrapperKeys.add(new EventWrapper(9f, 14f).setContents("DayView Period #3"));
+		eventWrapperKeys.add(new EventWrapper(14f, 24f).setContents("DayView Period #4"));
 		
+		for(int i = 0; i < eventWrapperKeys.size(); i++) {
+			
+		}
 		ScrollView dayViewMain = (ScrollView)findViewById(R.id.calendar_day_tab);
-
+		timeView1Button = (Button)findViewById(R.id.calendar_dayview_time1_button);
+		
+		String []toggleString = new String[2];
+		toggleString[0]="Select Time...";
+		toggleString[1]="Hide Selector";
+		TabState tabState = TabState.TAB_CLOSED;
+		DrawerClickListener dcl = new DrawerClickListener(timePicker1,tabState,timeView1Button,toggleString);
+		timeView1Button.setOnClickListener(dcl);
+		
 		
 		LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		LinearLayout eventCells = (LinearLayout)findViewById(R.id.calendar_dayview_linearlayout_deep);
 		
-		TimePicker timePicker1 = (TimePicker)findViewById(R.id.calendar_dayview_sidebar_timepicker1);
+		timePicker1 = (TimePicker)findViewById(R.id.calendar_dayview_sidebar_timepicker1);
 		timePicker1.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
 		timePicker1.setOnTimeChangedListener(new TimePickerListener());
 		
 		transparentView = (TextView)findViewById(R.id.calendar_dayview_preview_transparent);
 		sampleView = (TextView)findViewById(R.id.calendar_dayview_time_preview);
-		int hTrans = 0, h2 = 0;
 
-	//	eventCells.setBackground(background);
-		
 		Vector<LinearLayout> v = new Vector<LinearLayout>();
 		
-		for(int i = 0; i < dayView_data.size(); i++) {
+		for(int i = 0; i < eventWrapperKeys.size(); i++) {
 			
 			v.add((LinearLayout)inflater.inflate(R.layout.calendar_dayview_shallow,null));
 			TextView time_textView = (TextView)v.get(i).findViewById(R.id.calendar_dayview_time_view);
 			TextView event_textView = (TextView)v.get(i).findViewById(R.id.calendar_dayview_event_view);
 			
-			if(i%2 == 0) {
-				v.get(i).setBackgroundResource(R.drawable.calendar_dayview_shallow_light);
-			}
-			else {
-				v.get(i).setBackgroundResource(R.drawable.calendar_dayview_shallow_dark);
-			}
+			if(i%2 == 0) v.get(i).setBackgroundResource(R.drawable.calendar_dayview_shallow_light);
+			else v.get(i).setBackgroundResource(R.drawable.calendar_dayview_shallow_dark);
 			
-			boolean timeIsPrefixed = false;
-			if(i == 0) timeIsPrefixed = true;
-			time_textView.setText(dayView_data.get(i).expandTimes(timeIsPrefixed));
-			event_textView.setText(dayView_data.get(i).getContents());
+			time_textView.setText(eventWrapperKeys.get(i).collapseTimes());
+			event_textView.setText(eventWrapperKeys.get(i).getContents());
+			
+			timeMap.put(eventWrapperKeys.get(i), time_textView);
+			eventMap.put(eventWrapperKeys.get(i), event_textView);
+			viewMap.put(eventWrapperKeys.get(i), v.get(i));
 			
 			eventCells.addView(v.get(i),i,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 			v.get(i).measure(0, 0);
 			
 			heights.add(v.get(i).getMeasuredHeight());
 		}
-		
 //		for(int i = 0; i < heights.size()-1; i++) hTrans += heights.get(i);
 //		h2 += heights.get(heights.size()-1);
 //		
@@ -573,15 +582,27 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	public class TimePickerListener implements TimePicker.OnTimeChangedListener {
 
 		public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-//			if(hourOfDay == 0) {
-//				transparentView.invalidate();
-//				sampleView.invalidate();
-//				transparentView.setHeight(getTransparentHeight(hourOfDay));
-//				
-//			}
+//			timeMap
+//			eventMap
+//			viewMap
+			
 			if(hourOfDay < heights.size()) {
 				transparentView.invalidate();
 				sampleView.invalidate();
+				for(int i = 0; i < eventWrapperKeys.size(); i++) {
+					timeMap.get(eventWrapperKeys.get(i)).invalidate();
+					eventMap.get(eventWrapperKeys.get(i)).invalidate();
+					viewMap.get(eventWrapperKeys.get(i)).invalidate();
+					if(i != hourOfDay) {
+						
+						timeMap.get(eventWrapperKeys.get(i)).setText(eventWrapperKeys.get(i).collapseTimes());	
+					}
+					else {
+						timeMap.get(eventWrapperKeys.get(i)).setText(eventWrapperKeys.get(i).expandTimes());
+					}
+				}
+				
+				
 				transparentView.setHeight(getTransparentHeight(hourOfDay));
 				sampleView.setHeight(getSampleHeight(hourOfDay));
 //				Log.i("TimePicker","Hour/index = " + hourOfDay);
@@ -595,7 +616,10 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		public int getTransparentHeight(int count) {
 			int value = 0;
 			for(int i = 0; i < count; i++){
-				value += heights.get(i);
+				//value += heights.get(i);
+				viewMap.get(eventWrapperKeys.get(i)).measure(0, 0);
+				value += viewMap.get(eventWrapperKeys.get(i)).getMeasuredHeight();
+				
 			}
 			return value;
 		}
@@ -615,33 +639,38 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		sampleView.setHeight(h2);
 	 */
 	
-	public class TabClickListener implements OnClickListener {
+	public class DrawerClickListener implements OnClickListener {
 
-		private LinearLayout tableRow;
+		private TimePicker timePicker;
 		private TabState state;
 		private Button button;
 		private String stringOn;
 		private String stringOff;
-
-		public TabClickListener(LinearLayout tableRow, TabState state, Button button, String []string){
+		SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
+		public DrawerClickListener(TimePicker timePicker, TabState state, Button button, String []string){
 			//setState(state);
 			this.state = state;
-			this.tableRow = tableRow;
+			this.timePicker = timePicker;
 			this.button = button;
 			this.stringOff = string[0];
 			this.stringOn = string[1];
 		}
 		public void onClick(View view) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Calendar.HOUR_OF_DAY, timePicker1.getCurrentHour());
+			calendar.set(Calendar.MINUTE, timePicker1.getCurrentMinute());
+
+
 			switch(state){
 			case TAB_OPEN:
 				//Animation is dependent on LayoutParams for given layout; is very clunky
 				//			tableRow.startAnimation(new MyScaler(1.0f, 1.0f, 1.0f, 0.0f, 5000, tableRow, true));
-				tableRow.setVisibility(View.GONE);
+				timePicker1.setVisibility(View.GONE);
 				setState(TabState.TAB_CLOSED);
-				button.setText(stringOff);
+				button.setText(stringOff + " [" + timeFormatter.format(calendar.getTime())+"]");
 				return;
 			case TAB_CLOSED:
-				tableRow.setVisibility(View.VISIBLE);
+				timePicker1.setVisibility(View.VISIBLE);
 				setState(TabState.TAB_OPEN);
 				button.setText(stringOn);
 				return;

@@ -7,6 +7,11 @@ public interface EventCommon {
 	public EventLib eventToolbox = new EventLib();
 	public float DP_PER_HOUR = 14f;
 
+	//Base parameters
+	public final float HOURS = 24;
+	public final float MINUTE_MULT_CONSTANT_T2F = 60/100; // T2F = convert regular time to float
+	
+	
 	public class EventLib {
 		public float SCALE = 0f;
 		
