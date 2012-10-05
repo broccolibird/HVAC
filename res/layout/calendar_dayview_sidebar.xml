@@ -25,32 +25,39 @@
 
         <Button
             android:id="@+id/calendar_dayview_time1_button"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
             android:layout_height="wrap_content"
-            android:text="Select Time..." />
+            android:text="Select Start Time..." />
 
         <TimePicker
             android:id="@+id/calendar_dayview_sidebar_timepicker1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:visibility="gone" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
         <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
+            android:id="@+id/calendar_dayview_time2_button"
+            android:layout_width="fill_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
             android:layout_height="wrap_content"
-            android:text="Time 2" />
+            android:text="Select End Time..." />
 
         <TimePicker
-            android:id="@+id/timePickebjhbhr2"
-            android:layout_width="wrap_content"
+            android:id="@+id/calendar_dayview_sidebar_timepicker2"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
             android:visibility="gone" />
 
       <!--   <TextView
@@ -68,7 +75,7 @@
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
+             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Insert" />
 

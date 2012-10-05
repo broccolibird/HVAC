@@ -7,10 +7,10 @@
 
     <TextView
         android:id="@+id/calendar_dayview_time_view"
-        android:layout_width="160dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
-        android:textSize="14dp"
+        android:textSize="18dp"
         android:text="@string/nil"
         android:textColor="@android:color/white">
         
@@ -18,10 +18,10 @@
 
     <TextView
         android:id="@+id/calendar_dayview_event_view"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
-        android:textSize="14dp"
+        android:textSize="18dp"
         android:text="@string/nil" 
         android:textColor="@android:color/white">
     </TextView>

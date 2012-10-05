@@ -223,7 +223,9 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	TextView transparentView;
 	TextView sampleView;
 	Button timeView1Button;
+	Button timeView2Button;
 	TimePicker timePicker1;
+	TimePicker timePicker2;
 	public void setupDayTab() {
 
 		Vector<EventWrapper> dayView_data = new Vector<EventWrapper>();
@@ -239,21 +241,31 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		}
 		ScrollView dayViewMain = (ScrollView)findViewById(R.id.calendar_day_tab);
 		timeView1Button = (Button)findViewById(R.id.calendar_dayview_time1_button);
+		timeView2Button = (Button)findViewById(R.id.calendar_dayview_time2_button);
+		TabState tabState1 = TabState.TAB_CLOSED;
+		TabState tabState2 = TabState.TAB_CLOSED;
 		
 		String []toggleString = new String[2];
 		toggleString[0]="Select Time...";
 		toggleString[1]="Hide Selector";
-		TabState tabState = TabState.TAB_CLOSED;
-		DrawerClickListener dcl = new DrawerClickListener(timePicker1,tabState,timeView1Button,toggleString);
-		timeView1Button.setOnClickListener(dcl);
-		
-		
-		LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		LinearLayout eventCells = (LinearLayout)findViewById(R.id.calendar_dayview_linearlayout_deep);
 		
 		timePicker1 = (TimePicker)findViewById(R.id.calendar_dayview_sidebar_timepicker1);
 		timePicker1.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
 		timePicker1.setOnTimeChangedListener(new TimePickerListener());
+		
+		timePicker2 = (TimePicker)findViewById(R.id.calendar_dayview_sidebar_timepicker2);
+		timePicker2.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
+		timePicker2.setOnTimeChangedListener(new TimePickerListener());
+		
+		DrawerClickListener dcl1 = new DrawerClickListener(timePicker1,tabState1,timeView1Button,toggleString);
+		DrawerClickListener dcl2 = new DrawerClickListener(timePicker2,tabState2,timeView2Button,toggleString);
+		timeView1Button.setOnClickListener(dcl1);
+		timeView2Button.setOnClickListener(dcl2);
+		
+		LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		LinearLayout eventCells = (LinearLayout)findViewById(R.id.calendar_dayview_linearlayout_deep);
+		
+		
 		
 		transparentView = (TextView)findViewById(R.id.calendar_dayview_preview_transparent);
 		sampleView = (TextView)findViewById(R.id.calendar_dayview_time_preview);
@@ -581,11 +593,11 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	}
 	public class TimePickerListener implements TimePicker.OnTimeChangedListener {
 
-		public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-//			timeMap
-//			eventMap
-//			viewMap
-			
+		public void onTimeChanged(TimePicker timePicker, int hourOfDay, int minute) {
+			//			timeMap
+			//			eventMap
+			//			viewMap
+
 			if(hourOfDay < heights.size()) {
 				transparentView.invalidate();
 				sampleView.invalidate();
@@ -594,24 +606,24 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 					eventMap.get(eventWrapperKeys.get(i)).invalidate();
 					viewMap.get(eventWrapperKeys.get(i)).invalidate();
 					if(i != hourOfDay) {
-						
+
 						timeMap.get(eventWrapperKeys.get(i)).setText(eventWrapperKeys.get(i).collapseTimes());	
 					}
 					else {
 						timeMap.get(eventWrapperKeys.get(i)).setText(eventWrapperKeys.get(i).expandTimes());
 					}
 				}
-				
-				
-				transparentView.setHeight(getTransparentHeight(hourOfDay));
-				sampleView.setHeight(getSampleHeight(hourOfDay));
-//				Log.i("TimePicker","Hour/index = " + hourOfDay);
-////				Log.i("TimePicker", "index = " + hourOfDay);
-//				Log.i("transparentView",""+getTransparentHeight(hourOfDay));
-//				Log.i("sampleView",""+getSampleHeight(hourOfDay));
-				
-			} else  Toast.makeText(getBaseContext(), "Hour index is out of bounds.", Toast.LENGTH_SHORT).show();
-			
+
+				if(timePicker.equals(timePicker1)){
+
+					transparentView.setHeight(getTransparentHeight(hourOfDay));
+					
+
+				} else  Toast.makeText(getBaseContext(), "Hour index is out of bounds.", Toast.LENGTH_SHORT).show();
+				if(timePicker.equals(timePicker2)){
+					sampleView.setHeight(getSampleHeight(hourOfDay));
+				}
+			}
 		}
 		public int getTransparentHeight(int count) {
 			int value = 0;
@@ -619,7 +631,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 				//value += heights.get(i);
 				viewMap.get(eventWrapperKeys.get(i)).measure(0, 0);
 				value += viewMap.get(eventWrapperKeys.get(i)).getMeasuredHeight();
-				
+
 			}
 			return value;
 		}
@@ -657,20 +669,20 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		}
 		public void onClick(View view) {
 			Calendar calendar = Calendar.getInstance();
-			calendar.set(Calendar.HOUR_OF_DAY, timePicker1.getCurrentHour());
-			calendar.set(Calendar.MINUTE, timePicker1.getCurrentMinute());
+			calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
+			calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
 
 
 			switch(state){
 			case TAB_OPEN:
 				//Animation is dependent on LayoutParams for given layout; is very clunky
 				//			tableRow.startAnimation(new MyScaler(1.0f, 1.0f, 1.0f, 0.0f, 5000, tableRow, true));
-				timePicker1.setVisibility(View.GONE);
+				timePicker.setVisibility(View.GONE);
 				setState(TabState.TAB_CLOSED);
 				button.setText(stringOff + " [" + timeFormatter.format(calendar.getTime())+"]");
 				return;
 			case TAB_CLOSED:
-				timePicker1.setVisibility(View.VISIBLE);
+				timePicker.setVisibility(View.VISIBLE);
 				setState(TabState.TAB_OPEN);
 				button.setText(stringOn);
 				return;
