@@ -84,19 +84,19 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		eventToolbox.SCALE = getResources().getDisplayMetrics().density;
-		
+
 		//this sets the help string for the current activity.
 		//copy paste 
 		rootIntent.setHelpText(getText(R.string.calendar_help));
-		
+
 		tabHost = (TabHost)findViewById(R.id.calendar_tabhost);
 		tabHost.setup();
 		addTabs();
 
 	}
-	
+
 	public void addTabs() {
-		
+
 		TabHost.TabSpec programTabSpec = tabHost.newTabSpec("_program"); //move into strings.xml
 		Calendar cal = Calendar.getInstance();
 		/**
@@ -107,38 +107,38 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		TabState tabStateStart = TabState.TAB_CLOSED;
 		TabState tabStateStop = TabState.TAB_CLOSED;
 
-	//	LinearLayout tableRowStart = (LinearLayout) findViewById(R.id.calendar_eventview_startdate_drawer);
-	//	LinearLayout tableRowStop = (LinearLayout) findViewById(R.id.calendar_eventview_stopdate_drawer);
+		//	LinearLayout tableRowStart = (LinearLayout) findViewById(R.id.calendar_eventview_startdate_drawer);
+		//	LinearLayout tableRowStop = (LinearLayout) findViewById(R.id.calendar_eventview_stopdate_drawer);
 
-	//	tableRowStart.setVisibility(View.GONE);
-	//	tableRowStop.setVisibility(View.GONE);
+		//	tableRowStart.setVisibility(View.GONE);
+		//	tableRowStop.setVisibility(View.GONE);
 
-//		Button eventviewTopDrawerButton = (Button) findViewById(R.id.calendar_eventview_top_drawer_button);
-//		Button eventviewBottomDrawerButton = (Button) findViewById(R.id.calendar_eventview_bottom_drawer_button);
-//
-//		String []startString = res.getStringArray(R.array.calendar_eventview_top_tab_text);
-//		String []endString = res.getStringArray(R.array.calendar_eventview_bottom_tab_text);
+		//		Button eventviewTopDrawerButton = (Button) findViewById(R.id.calendar_eventview_top_drawer_button);
+		//		Button eventviewBottomDrawerButton = (Button) findViewById(R.id.calendar_eventview_bottom_drawer_button);
+		//
+		//		String []startString = res.getStringArray(R.array.calendar_eventview_top_tab_text);
+		//		String []endString = res.getStringArray(R.array.calendar_eventview_bottom_tab_text);
 
-//		DatePicker startDatePicker = (DatePicker) findViewById(R.id.calendar_eventview_startdate);
-//		DatePicker endDatePicker = (DatePicker) findViewById(R.id.calendar_eventview_enddate);
+		//		DatePicker startDatePicker = (DatePicker) findViewById(R.id.calendar_eventview_startdate);
+		//		DatePicker endDatePicker = (DatePicker) findViewById(R.id.calendar_eventview_enddate);
 
-//		final TimePicker startTimePicker = (TimePicker) findViewById(R.id.calendar_eventview_starttime);
-//		final TimePicker endTimePicker = (TimePicker) findViewById(R.id.calendar_eventview_endtime);
-//
-//		TextView textStartDate = (TextView) findViewById(R.id.calendar_eventview_stopdate_value);
-//		TextView textEndDate = (TextView) findViewById(R.id.calendar_eventview_startdate_value);
-//
-//		eventviewTopDrawerButton.setOnClickListener(new TabClickListener(tableRowStart,tabStateStart, eventviewTopDrawerButton, startString));
-//		eventviewBottomDrawerButton.setOnClickListener(new TabClickListener(tableRowStop,tabStateStop, eventviewBottomDrawerButton, endString));
+		//		final TimePicker startTimePicker = (TimePicker) findViewById(R.id.calendar_eventview_starttime);
+		//		final TimePicker endTimePicker = (TimePicker) findViewById(R.id.calendar_eventview_endtime);
+		//
+		//		TextView textStartDate = (TextView) findViewById(R.id.calendar_eventview_stopdate_value);
+		//		TextView textEndDate = (TextView) findViewById(R.id.calendar_eventview_startdate_value);
+		//
+		//		eventviewTopDrawerButton.setOnClickListener(new TabClickListener(tableRowStart,tabStateStart, eventviewTopDrawerButton, startString));
+		//		eventviewBottomDrawerButton.setOnClickListener(new TabClickListener(tableRowStop,tabStateStop, eventviewBottomDrawerButton, endString));
 
-//		CalendarChangeListener listenerStartDate = new CalendarChangeListener(textStartDate);
-//		CalendarChangeListener listenerEndDate = new CalendarChangeListener(textEndDate);
+		//		CalendarChangeListener listenerStartDate = new CalendarChangeListener(textStartDate);
+		//		CalendarChangeListener listenerEndDate = new CalendarChangeListener(textEndDate);
 
-//		startDatePicker.init(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),listenerStartDate);
-//		startTimePicker.setOnTimeChangedListener(listenerStartDate);
+		//		startDatePicker.init(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),listenerStartDate);
+		//		startTimePicker.setOnTimeChangedListener(listenerStartDate);
 
-//		endDatePicker.init(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),listenerEndDate);
-//		endTimePicker.setOnTimeChangedListener(listenerEndDate);
+		//		endDatePicker.init(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),listenerEndDate);
+		//		endTimePicker.setOnTimeChangedListener(listenerEndDate);
 
 
 		//======   START ANDROID SDK BUG FIX ======//
@@ -151,8 +151,8 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		programTabSpec.setContent(R.id.calendar_day_tab);
 		programTabSpec.setIndicator(res.getString(R.string.calendar_programview_label));
 		// === END PROGRAM TAB
-		
-		
+
+
 		TabHost.TabSpec dayTabSpec = tabHost.newTabSpec("_day");
 		dayTabSpec.setContent(R.id.calendar_day_tab);
 		dayTabSpec.setIndicator("DAY");
@@ -171,7 +171,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		//		    }
 		//		});
 
-		
+
 		TabHost.TabSpec weekTabSpec = tabHost.newTabSpec("_week");
 		weekTabSpec.setContent(R.id.calendar_week_tab);
 		weekTabSpec.setIndicator("WEEK");
@@ -185,16 +185,16 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		eventTabSpec.setIndicator("EVENT");
 
 
-	//	tabHost.addTab(programTabSpec);
+		//	tabHost.addTab(programTabSpec);
 		tabHost.addTab(dayTabSpec);
 		tabHost.addTab(weekTabSpec);
-	//	tabHost.addTab(monthTabSpec);
-	//	tabHost.addTab(eventTabSpec);
+		//	tabHost.addTab(monthTabSpec);
+		//	tabHost.addTab(eventTabSpec);
 		this.setupWeekTab();
 		this.setupDayTab();
 	}
-	
-	
+
+
 	LinearLayout dayViewContainer;
 	//Shared components
 	Vector<Vector<EventWrapper>> events_data;
@@ -214,12 +214,12 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	Vector<ListView>dayViews = new Vector<ListView>();
 	Vector<DayClickListener> dayClickListeners = new Vector<DayClickListener>();
 	Vector<Integer> heights = new Vector<Integer>();
-	
+
 	HashMap<EventWrapper,TextView> eventMap = new HashMap<EventWrapper,TextView>();
 	HashMap<EventWrapper,TextView> timeMap = new HashMap<EventWrapper,TextView>();
 	HashMap<EventWrapper,LinearLayout> viewMap = new HashMap<EventWrapper,LinearLayout>();
 	Vector<EventWrapper> eventWrapperKeys = new Vector<EventWrapper>();
-	
+
 	TextView transparentView;
 	TextView sampleView;
 	Button timeView1Button;
@@ -230,112 +230,120 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 
 		Vector<EventWrapper> dayView_data = new Vector<EventWrapper>();
 		Vector<EventWrapper> time_data = new Vector<EventWrapper>();
-		
+
 		eventWrapperKeys.add(new EventWrapper(0f,5f).setContents("DayView Period #1"));
 		eventWrapperKeys.add(new EventWrapper(5f, 9f).setContents("DayView Period #2\nnewline1\njjhfghc"));
 		eventWrapperKeys.add(new EventWrapper(9f, 14f).setContents("DayView Period #3"));
 		eventWrapperKeys.add(new EventWrapper(14f, 24f).setContents("DayView Period #4"));
-		
+
 		for(int i = 0; i < eventWrapperKeys.size(); i++) {
-			
+
 		}
 		ScrollView dayViewMain = (ScrollView)findViewById(R.id.calendar_day_tab);
 		timeView1Button = (Button)findViewById(R.id.calendar_dayview_time1_button);
 		timeView2Button = (Button)findViewById(R.id.calendar_dayview_time2_button);
 		TabState tabState1 = TabState.TAB_CLOSED;
 		TabState tabState2 = TabState.TAB_CLOSED;
-		
+
 		String []toggleString = new String[2];
 		toggleString[0]="Select Time...";
 		toggleString[1]="Hide Selector";
-		
+
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+
 		timePicker1 = (TimePicker)findViewById(R.id.calendar_dayview_sidebar_timepicker1);
+		timePicker1.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
+		timePicker1.setCurrentMinute(cal.get(Calendar.MINUTE));
 		timePicker1.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
 		timePicker1.setOnTimeChangedListener(new TimePickerListener());
-		
+
 		timePicker2 = (TimePicker)findViewById(R.id.calendar_dayview_sidebar_timepicker2);
+		timePicker2.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
+		timePicker2.setCurrentMinute(cal.get(Calendar.MINUTE));
 		timePicker2.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
 		timePicker2.setOnTimeChangedListener(new TimePickerListener());
-		
+
 		DrawerClickListener dcl1 = new DrawerClickListener(timePicker1,tabState1,timeView1Button,toggleString);
 		DrawerClickListener dcl2 = new DrawerClickListener(timePicker2,tabState2,timeView2Button,toggleString);
 		timeView1Button.setOnClickListener(dcl1);
 		timeView2Button.setOnClickListener(dcl2);
-		
+
 		LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		LinearLayout eventCells = (LinearLayout)findViewById(R.id.calendar_dayview_linearlayout_deep);
-		
-		
-		
+
+
+
 		transparentView = (TextView)findViewById(R.id.calendar_dayview_preview_transparent);
 		sampleView = (TextView)findViewById(R.id.calendar_dayview_time_preview);
 
 		Vector<LinearLayout> v = new Vector<LinearLayout>();
-		
+
 		for(int i = 0; i < eventWrapperKeys.size(); i++) {
-			
+
 			v.add((LinearLayout)inflater.inflate(R.layout.calendar_dayview_shallow,null));
 			TextView time_textView = (TextView)v.get(i).findViewById(R.id.calendar_dayview_time_view);
 			TextView event_textView = (TextView)v.get(i).findViewById(R.id.calendar_dayview_event_view);
-			
+
 			if(i%2 == 0) v.get(i).setBackgroundResource(R.drawable.calendar_dayview_shallow_light);
 			else v.get(i).setBackgroundResource(R.drawable.calendar_dayview_shallow_dark);
-			
+
 			time_textView.setText(eventWrapperKeys.get(i).collapseTimes());
 			event_textView.setText(eventWrapperKeys.get(i).getContents());
-			
+
 			timeMap.put(eventWrapperKeys.get(i), time_textView);
 			eventMap.put(eventWrapperKeys.get(i), event_textView);
 			viewMap.put(eventWrapperKeys.get(i), v.get(i));
-			
+
 			eventCells.addView(v.get(i),i,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 			v.get(i).measure(0, 0);
-			
+
 			heights.add(v.get(i).getMeasuredHeight());
 		}
-//		for(int i = 0; i < heights.size()-1; i++) hTrans += heights.get(i);
-//		h2 += heights.get(heights.size()-1);
-//		
-//		transparentView.invalidate();
-//		sampleView.invalidate();
-//		transparentView.setHeight(hTrans);
-//		sampleView.setHeight(h2);
+		//		for(int i = 0; i < heights.size()-1; i++) hTrans += heights.get(i);
+		//		h2 += heights.get(heights.size()-1);
+		//		
+		//		transparentView.invalidate();
+		//		sampleView.invalidate();
+		//		transparentView.setHeight(hTrans);
+		//		sampleView.setHeight(h2);
 
-		
-	/*	
+
+		/*	
 		//weekview list is used for day list header
 		timesHeader = (TextView)findViewById(R.id.calendar_weekview_header);
 		timesHeader.setText("Time:");
 		timesView = (ListView) findViewById(R.id.calendar_dayview_list_times);
 		//dayViewPreview1 = (ListView)findViewById(R.id.calendar_dayview_list_day_actual);
 		dayViewPreview2 = (ListView)findViewById(R.id.calendar_dayview_list_day_preview);
-		
-		
-		
+
+
+
 		String[] times_arr = getResources().getStringArray(R.array.calendar_timeview_array);
 		for(int k= 0; k < times_arr.length; k++){
 			time_data.add(new EventWrapper(k*1f,(k+1)*1f).setContents(times_arr[k]));
 		}
-		
+
 		//weekview_cell is copied for day 12:00AM - 11:00PM time cells
 		emptyview = new (this);
-		
+
 		timesView.setEmptyView(emptyview);
 		timesView.setAdapter(new TimeAdapter(this, R.id.calendar_dayview_list_times, time_data));
-		
+
 		//dayViewPreview1.setEmptyView(emptyview);
 		//dayViewPreview1.setAdapter(new EventAdapter(this, R.id.calendar_dayview_list_day_actual, dayView_data));
-		
+
 		//dayViewPreview2.setEmptyView(emptyview);
 		dayViewPreview2.setAdapter(new EventAdapter(this, R.id.calendar_dayview_list_day_preview, dayView_data));
-	*/}
+		 */}
 	public void setupWeekTab() {
 		dayViews = new Vector<ListView>();
 		timesHeader = (TextView) findViewById(R.id.calendar_weekview_header);
 		timesHeader.setText("Time:");
 
 		timesView = (ListView) findViewById(R.id.calendar_weekview_list_times);
-		
+
 		dayViews.add((ListView) findViewById(R.id.calendar_weekview_list_1));
 		dayViews.add((ListView) findViewById(R.id.calendar_weekview_list_2));
 		dayViews.add((ListView) findViewById(R.id.calendar_weekview_list_3));
@@ -344,7 +352,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		dayViews.add((ListView) findViewById(R.id.calendar_weekview_list_6));
 		dayViews.add((ListView) findViewById(R.id.calendar_weekview_list_7));
 
-		
+
 		//set the values for all the headers (Stand-alone TextViews) in the calendar
 		dayHeaders.add((TextView) findViewById(R.id.calendar_timeview_1));
 		dayHeaders.add((TextView) findViewById(R.id.calendar_timeview_2));
@@ -378,7 +386,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		event_data.add(new EventWrapper(10f, 15f).setContents("Period #3"));
 		event_data.add(new EventWrapper(14f, 24f).setContents("Period #4"));
 		events_data.add(event_data);
-		
+
 		event_data = new Vector<EventWrapper>();
 		event_data.add(new EventWrapper(0f,6f).setContents("Morning"));
 		event_data.add(new EventWrapper(6f,8f).setContents("Wake Up"));
@@ -386,7 +394,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		event_data.add(new EventWrapper(12f,18f).setContents("Cool"));
 		event_data.add(new EventWrapper(18f,24f).setContents("Evening"));
 		events_data.add(event_data);
-		
+
 		event_data = new Vector<EventWrapper>();
 		event_data.add(new EventWrapper(0f,6f).setContents("Morning"));
 		event_data.add(new EventWrapper(6f,18f).setContents("Vacation"));
@@ -395,7 +403,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		events_data.add(event_data);
 		events_data.add(event_data);
 		events_data.add(event_data);
-		
+
 		event_data = new Vector<EventWrapper>();
 		event_data.add(new EventWrapper(0f,4f).setContents("Idle"));
 		event_data.add(new EventWrapper(4f,6f).setContents("High Heat"));
@@ -446,7 +454,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		int count = 7;
 		if(values.length == count)
 			for(int i = 0; i < values.length; i++) dayHeaders.get(i).setText(values[i]);
-		
+
 		else new EventCommon.HeaderNumberInvalidException(count);
 
 	}
@@ -483,105 +491,105 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 			}
 		}
 	}
-			
-			
-			
-			
-			
-//			if(dayViews.get(index) == parent) {
-//				if(isSelected[position] == true) {
-//					v.setBackgroundResource(R.drawable.calendar_dayview_selected);
-//					isSelected[position] = false;
-//				}
-//				else if (isSelected[position] == false) {
-//					v.setBackgroundResource(R.drawable.calendar_dayview_deselected);			
-//					isSelected[position] = true;
-//				}
-//			}
-//			else {
-//			for(int i = 0; i < dayViews.size(); i++) {
-//				if(dayViews.get(i) != parent) {
-//					for(int j = 0; j < parent.getChildCount(); j++){
-//						parent.getChildAt(j).setBackgroundResource(R.drawable.calendar_dayview_deselected);
-//					}
-//				}
-//				else {
-//					for(int j = 0; j < parent.getChildCount(); j++){
-//						parent.getChildAt(j).setBackgroundResource(R.drawable.calendar_dayview_selected);
-//					}
-//				}
-//			}
 
-				//for(int j = 0; j < parent.getChildCount(); j++){
-					
-				
-//				v.setBackgroundResource(R.drawable.calendar_dayview_deselected);			
-//				isSelected[position] = true;
-//			}
-//				if(((EventAdapter)parent.getAdapter()).hasStableIds())Toast.makeText(getBaseContext(), "IDs are stable", Toast.LENGTH_SHORT).show();
-//				else  Toast.makeText(getBaseContext(), "IDs are unstable", Toast.LENGTH_SHORT).show();
-				
-			//	v.setVisibility(View.GONE);
-		//		ea.clear();
-		//		ea.remove(events_data.get(index).get(position));
+
+
+
+
+	//			if(dayViews.get(index) == parent) {
+	//				if(isSelected[position] == true) {
+	//					v.setBackgroundResource(R.drawable.calendar_dayview_selected);
+	//					isSelected[position] = false;
+	//				}
+	//				else if (isSelected[position] == false) {
+	//					v.setBackgroundResource(R.drawable.calendar_dayview_deselected);			
+	//					isSelected[position] = true;
+	//				}
+	//			}
+	//			else {
+	//			for(int i = 0; i < dayViews.size(); i++) {
+	//				if(dayViews.get(i) != parent) {
+	//					for(int j = 0; j < parent.getChildCount(); j++){
+	//						parent.getChildAt(j).setBackgroundResource(R.drawable.calendar_dayview_deselected);
+	//					}
+	//				}
+	//				else {
+	//					for(int j = 0; j < parent.getChildCount(); j++){
+	//						parent.getChildAt(j).setBackgroundResource(R.drawable.calendar_dayview_selected);
+	//					}
+	//				}
+	//			}
+
+	//for(int j = 0; j < parent.getChildCount(); j++){
+
+
+	//				v.setBackgroundResource(R.drawable.calendar_dayview_deselected);			
+	//				isSelected[position] = true;
+	//			}
+	//				if(((EventAdapter)parent.getAdapter()).hasStableIds())Toast.makeText(getBaseContext(), "IDs are stable", Toast.LENGTH_SHORT).show();
+	//				else  Toast.makeText(getBaseContext(), "IDs are unstable", Toast.LENGTH_SHORT).show();
+
+	//	v.setVisibility(View.GONE);
+	//		ea.clear();
+	//		ea.remove(events_data.get(index).get(position));
 	//			v.invalidate();
-		//		ea.notifyDataSetChanged();
-		//		parent.setEmptyView(emptyview);
-			
+	//		ea.notifyDataSetChanged();
+	//		parent.setEmptyView(emptyview);
 
-			//			Toast.makeText(getBaseContext(), "Count = " + av.getCount() + "\n" + 
-			//					"Selected Item Position = " + position, Toast.LENGTH_SHORT).show();
-			//			Toast.makeText(getBaseContext(), "ListID = " + av.getId() + "\n" + 
-			//					"Sunday = " + R.id.calendar_weekview_list_1, Toast.LENGTH_SHORT).show();
-			
-			//	((EventAdapter)parent.getAdapter()).remove(events_data.get(index).get(position));
-			//((EventAdapter)av.getAdapter()).notifyDataSetChanged();
-			
-//			EventAdapter ea = ((EventAdapter)parent.getAdapter());
-//			if(!isInitialized) {
-//				isSelected = new boolean[parent.getCount()];
-//				isInitialized =true;
-//
-//			}
-//			if(dayViews.get(index) == parent) {
-//				if(isSelected[position] == true) {
-//					for(int i = 0; i < parent.getChildCount(); i++) {
-//						parent.getChildAt(i).setBackgroundResource(R.drawable.calendar_dayview_selected);
-//						
-////					isSelected[position] = false;
-//							
-//				}
-//				else if (isSelected[position] == false) {
-//					for(int i = 0; i < parent.getChildCount(); i++)
-//						parent.getChildAt(i).setBackgroundResource(R.drawable.calendar_dayview_deselected);	
-////					for(int i = 0; i < parent.getChildCount(); i++)
-////						if(dayViews.get(i) != index) {
-////							parent.getChildAt(i).setBackgroundResource(R.drawable.calendar_dayview_deselected);
-////							isSelected[position] = false;
-////						}	else isSelected[position] = true;
-//						
-//				}
-////				if(((EventAdapter)parent.getAdapter()).hasStableIds())Toast.makeText(getBaseContext(), "IDs are stable", Toast.LENGTH_SHORT).show();
-//				else  Toast.makeText(getBaseContext(), "IDs are unstable", Toast.LENGTH_SHORT).show();
-			//	ea.clear();
-		//		ea.remove(events_data.get(index).get(position));
-				//v.invalidate();
-				//ea.notifyDataSetChanged();
-			//	parent.setEmptyView(emptyview);
-				//for(int i = 0; i < parent.getChildCount(); i++)
-				//parent.getChildAt(i).setVisibility(View.GONE);
-				
 
-			//			Toast.makeText(getBaseContext(), "Count = " + av.getCount() + "\n" + 
-			//					"Selected Item Position = " + position, Toast.LENGTH_SHORT).show();
-			//			Toast.makeText(getBaseContext(), "ListID = " + av.getId() + "\n" + 
-			//					"Sunday = " + R.id.calendar_weekview_list_1, Toast.LENGTH_SHORT).show();
-			
-			//	((EventAdapter)parent.getAdapter()).remove(events_data.get(index).get(position));
-			//((EventAdapter)av.getAdapter()).notifyDataSetChanged();
-			
-//		}
-//	}
+	//			Toast.makeText(getBaseContext(), "Count = " + av.getCount() + "\n" + 
+	//					"Selected Item Position = " + position, Toast.LENGTH_SHORT).show();
+	//			Toast.makeText(getBaseContext(), "ListID = " + av.getId() + "\n" + 
+	//					"Sunday = " + R.id.calendar_weekview_list_1, Toast.LENGTH_SHORT).show();
+
+	//	((EventAdapter)parent.getAdapter()).remove(events_data.get(index).get(position));
+	//((EventAdapter)av.getAdapter()).notifyDataSetChanged();
+
+	//			EventAdapter ea = ((EventAdapter)parent.getAdapter());
+	//			if(!isInitialized) {
+	//				isSelected = new boolean[parent.getCount()];
+	//				isInitialized =true;
+	//
+	//			}
+	//			if(dayViews.get(index) == parent) {
+	//				if(isSelected[position] == true) {
+	//					for(int i = 0; i < parent.getChildCount(); i++) {
+	//						parent.getChildAt(i).setBackgroundResource(R.drawable.calendar_dayview_selected);
+	//						
+	////					isSelected[position] = false;
+	//							
+	//				}
+	//				else if (isSelected[position] == false) {
+	//					for(int i = 0; i < parent.getChildCount(); i++)
+	//						parent.getChildAt(i).setBackgroundResource(R.drawable.calendar_dayview_deselected);	
+	////					for(int i = 0; i < parent.getChildCount(); i++)
+	////						if(dayViews.get(i) != index) {
+	////							parent.getChildAt(i).setBackgroundResource(R.drawable.calendar_dayview_deselected);
+	////							isSelected[position] = false;
+	////						}	else isSelected[position] = true;
+	//						
+	//				}
+	////				if(((EventAdapter)parent.getAdapter()).hasStableIds())Toast.makeText(getBaseContext(), "IDs are stable", Toast.LENGTH_SHORT).show();
+	//				else  Toast.makeText(getBaseContext(), "IDs are unstable", Toast.LENGTH_SHORT).show();
+	//	ea.clear();
+	//		ea.remove(events_data.get(index).get(position));
+	//v.invalidate();
+	//ea.notifyDataSetChanged();
+	//	parent.setEmptyView(emptyview);
+	//for(int i = 0; i < parent.getChildCount(); i++)
+	//parent.getChildAt(i).setVisibility(View.GONE);
+
+
+	//			Toast.makeText(getBaseContext(), "Count = " + av.getCount() + "\n" + 
+	//					"Selected Item Position = " + position, Toast.LENGTH_SHORT).show();
+	//			Toast.makeText(getBaseContext(), "ListID = " + av.getId() + "\n" + 
+	//					"Sunday = " + R.id.calendar_weekview_list_1, Toast.LENGTH_SHORT).show();
+
+	//	((EventAdapter)parent.getAdapter()).remove(events_data.get(index).get(position));
+	//((EventAdapter)av.getAdapter()).notifyDataSetChanged();
+
+	//		}
+	//	}
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.mainmenu, menu);
@@ -597,31 +605,34 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 			//			timeMap
 			//			eventMap
 			//			viewMap
+			transparentView.invalidate();
+			sampleView.invalidate();
+			for(int i = 0; i < eventWrapperKeys.size(); i++) {
+				
+//
 
-			if(hourOfDay < heights.size()) {
-				transparentView.invalidate();
-				sampleView.invalidate();
-				for(int i = 0; i < eventWrapperKeys.size(); i++) {
-					timeMap.get(eventWrapperKeys.get(i)).invalidate();
-					eventMap.get(eventWrapperKeys.get(i)).invalidate();
-					viewMap.get(eventWrapperKeys.get(i)).invalidate();
-					if(i != hourOfDay) {
-
-						timeMap.get(eventWrapperKeys.get(i)).setText(eventWrapperKeys.get(i).collapseTimes());	
-					}
-					else {
-						timeMap.get(eventWrapperKeys.get(i)).setText(eventWrapperKeys.get(i).expandTimes());
-					}
-				}
-
-				if(timePicker.equals(timePicker1)){
-
-					transparentView.setHeight(getTransparentHeight(hourOfDay));
-					
-
-				} else  Toast.makeText(getBaseContext(), "Hour index is out of bounds.", Toast.LENGTH_SHORT).show();
-				if(timePicker.equals(timePicker2)){
-					sampleView.setHeight(getSampleHeight(hourOfDay));
+//			for(int i = 0; i < eventWrapperKeys.size(); i++) {
+//				//					timeMap.get(eventWrapperKeys.get(i)).invalidate();
+//				//					eventMap.get(eventWrapperKeys.get(i)).invalidate();
+//				//					viewMap.get(eventWrapperKeys.get(i)).invalidate();
+//				int jcount = 0;
+//				for(jcount = 0; jcount < 24; jcount++)
+//					if(jcount < eventWrapperKeys.get(i).getEndTime())
+//						break;
+//				//transparentView.setHeight(getTransparentHeight(jcount));
+//				timeMap.get(eventWrapperKeys.get(i)).setText(eventWrapperKeys.get(i).collapseTimes());	
+//				for(int j = (int)eventWrapperKeys.get(i).getStartTime(); j <eventWrapperKeys.get(i).getEndTime() ; j++) {
+//					if(j < eventWrapperKeys.get(i).getEndTime() && j >= eventWrapperKeys.get(i).getStartTime()) {
+//						timeMap.get(eventWrapperKeys.get(i)).setText(eventWrapperKeys.get(i).expandTimes());
+//						//sampleView.setHeight(getSampleHeight(i));
+//					}
+//					else if(j < eventWrapperKeys.get(i).getEndTime() && eventWrapperKeys.get(i).getEndTime() < hourOfDay){
+//						timeMap.get(eventWrapperKeys.get(i)).setText(eventWrapperKeys.get(i).expandTimes());
+//						//	sampleView.setHeight(getSampleHeight(i));
+//					}
+//					else {
+//						timeMap.get(eventWrapperKeys.get(i)).setText(eventWrapperKeys.get(i).collapseTimes());
+//					}
 				}
 			}
 		}
@@ -635,22 +646,31 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 			}
 			return value;
 		}
-		public int getSampleHeight(int count){
-			int h2 =getTransparentHeight(count);
-			h2 = heights.get(count);
-			return h2;
-		}
+//		public int getSampleHeight(int i){
+//			int hour1 = timePicker1.getCurrentHour();
+//			int minute1 = timePicker1.getCurrentMinute();
+//			int hour2 = timePicker2.getCurrentHour();
+//			int minute2 = timePicker2.getCurrentMinute();
+//
+//			float time1 = hour1 + minute1*MINUTE_MULT_CONSTANT_T2F;
+//			float time2 = hour2 + minute2*MINUTE_MULT_CONSTANT_T2F;
+//			float delta_time = Math.abs(time2-time1);
+//			timeMap.get(eventWrapperKeys.get(i)).measure(0,0);
+//			float hourHeight = timeMap.get(eventWrapperKeys.get(i)).getMeasuredHeight();
+//			int newHeight = (int) (delta_time/hourHeight);
+//			return newHeight;
+//		}
 	}
 	/*
 	 * for(int i = 0; i < hourOfDay-1; i++) hTrans += heights.get(i);
 		h2 += heights.get(heights.size()-1);
-		
+
 		transparentView.invalidate();
 		sampleView.invalidate();
 		transparentView.setHeight(hTrans);
 		sampleView.setHeight(h2);
 	 */
-	
+
 	public class DrawerClickListener implements OnClickListener {
 
 		private TimePicker timePicker;

@@ -21,6 +21,7 @@ public class EventWrapper implements EventCommon {
 	DecimalFormat scannerFormat = new DecimalFormat("00.00");
 	public float startTime = 0f;
 	public float endTime = 0f;
+	public float height = 0;
 	
 	public Vector<Integer> heights = new Vector<Integer>(); //? use
 	
@@ -29,6 +30,7 @@ public class EventWrapper implements EventCommon {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.contents = Float.valueOf(getTimeDuration()).toString();
+		
 	}
 	public EventWrapper(float startTime, float endTime, boolean transparent){
 		this.startTime = startTime;
@@ -55,7 +57,13 @@ public class EventWrapper implements EventCommon {
 		this.contents = s;
 		return this;
 	}
-	
+	public void setHeight(float pixels) {
+		height =eventToolbox.convertDpToPixels(pixels);
+		
+	}
+	public float getHeight() {
+		return this.height;
+	}
 	public String getContents(){
 		return this.contents;
 	}
@@ -142,5 +150,11 @@ public class EventWrapper implements EventCommon {
 	
 	public EventWrapper getWrapperObject() {
 		return this;
+	}
+	public float getEndTime() {
+		return this.endTime;
+	}
+	public float getStartTime() {
+		return this.startTime;
 	}
 }
