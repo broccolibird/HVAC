@@ -31,7 +31,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 //import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -68,6 +70,8 @@ public class HVACActivity extends Activity implements MenuInterface {
 		ImageButton refreshWeather = (ImageButton) findViewById(R.id.WeatherRefreshButton);
 		refreshWeather.setOnClickListener(refreshWeatherListener);
 
+		((RadioGroup) findViewById(R.id.fanGroup)).setOnCheckedChangeListener(ToggleListener);
+		((RadioGroup) findViewById(R.id.modeGroup)).setOnCheckedChangeListener(ToggleListener);
 		// buttons for fan
 		Button fanOn = (Button) findViewById(R.id.sys_fan_on);
 		Button fanOff = (Button) findViewById(R.id.sys_fan_off);
@@ -113,6 +117,16 @@ public class HVACActivity extends Activity implements MenuInterface {
 
 	}
 
+	
+	static final RadioGroup.OnCheckedChangeListener ToggleListener = new RadioGroup.OnCheckedChangeListener() {
+        public void onCheckedChanged(final RadioGroup radioGroup, final int i) {
+            for (int j = 0; j < radioGroup.getChildCount(); j++) {
+                final ToggleButton view = (ToggleButton) radioGroup.getChildAt(j);
+                view.setChecked(view.getId() == i);
+            }
+        }
+    };
+	
 	private class CurrentWeatherTask extends AsyncTask<Void, Void, String> {
 		ImageButton currentWeatherImageView = (ImageButton) findViewById(R.id.WeatherRefreshButton);
 		TextView currentWeatherTextView = (TextView) findViewById(R.id.WeatherText);
@@ -177,6 +191,7 @@ public class HVACActivity extends Activity implements MenuInterface {
 	};
 	private OnClickListener fanOnListener = new OnClickListener() {
 		public void onClick(View v) {
+		    ((RadioGroup)v.getParent()).check(v.getId());
 			SharedPreferences settings = PreferenceManager
 					.getDefaultSharedPreferences(getBaseContext());
 			SharedPreferences.Editor edit = settings.edit();
@@ -189,6 +204,7 @@ public class HVACActivity extends Activity implements MenuInterface {
 	};
 	private OnClickListener fanOffListener = new OnClickListener() {
 		public void onClick(View v) {
+		    ((RadioGroup)v.getParent()).check(v.getId());
 			SharedPreferences settings = PreferenceManager
 					.getDefaultSharedPreferences(getBaseContext());
 			SharedPreferences.Editor edit = settings.edit();
@@ -201,6 +217,7 @@ public class HVACActivity extends Activity implements MenuInterface {
 	};
 	private OnClickListener fanAutoListener = new OnClickListener() {
 		public void onClick(View v) {
+		    ((RadioGroup)v.getParent()).check(v.getId());
 			SharedPreferences settings = PreferenceManager
 					.getDefaultSharedPreferences(getBaseContext());
 			SharedPreferences.Editor edit = settings.edit();
@@ -214,6 +231,8 @@ public class HVACActivity extends Activity implements MenuInterface {
 
 	private OnClickListener sysHeatListener = new OnClickListener() {
 		public void onClick(View v) {
+		    ((RadioGroup)v.getParent()).check(v.getId());
+
 			SharedPreferences settings = PreferenceManager
 					.getDefaultSharedPreferences(getBaseContext());
 			SharedPreferences.Editor edit = settings.edit();
@@ -226,6 +245,7 @@ public class HVACActivity extends Activity implements MenuInterface {
 	};
 	private OnClickListener sysCoolListener = new OnClickListener() {
 		public void onClick(View v) {
+		    ((RadioGroup)v.getParent()).check(v.getId());
 			SharedPreferences settings = PreferenceManager
 					.getDefaultSharedPreferences(getBaseContext());
 			SharedPreferences.Editor edit = settings.edit();
@@ -238,6 +258,7 @@ public class HVACActivity extends Activity implements MenuInterface {
 	};
 	private OnClickListener sysFanListener = new OnClickListener() {
 		public void onClick(View v) {
+		    ((RadioGroup)v.getParent()).check(v.getId());
 			SharedPreferences settings = PreferenceManager
 					.getDefaultSharedPreferences(getBaseContext());
 			SharedPreferences.Editor edit = settings.edit();
@@ -333,4 +354,6 @@ public class HVACActivity extends Activity implements MenuInterface {
 
 	}
 
+	
 }
+
