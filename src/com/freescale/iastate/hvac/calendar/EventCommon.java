@@ -9,7 +9,7 @@ public interface EventCommon {
 
 	//Base parameters
 	public final float HOURS = 24;
-	public final float MINUTE_MULT_CONSTANT_T2F = 60/100; // T2F = convert regular time to float
+	public final float MINUTE_MULT_CONSTANT_T2F = 100f/60f; // T2F = convert regular time to float
 	
 	
 	public class EventLib {
@@ -29,6 +29,14 @@ public interface EventCommon {
 //			DisplayMetrics metrics = new DisplayMetrics();
 //			getWindowManager().getDefaultDisplay
 //		}
+	}
+	public class EventTimeIndex {
+		public final int startIndex;
+		public final int stopIndex;
+		public EventTimeIndex(int startIndex, int stopIndex){
+			this.startIndex = startIndex;
+			this.stopIndex = stopIndex;
+		}
 	}
 	public class HeaderNumberInvalidException extends Exception {
 		private static final long serialVersionUID = 1L;

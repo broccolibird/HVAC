@@ -9,7 +9,7 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Event Panel"
+            android:text="Time Selection Toolbox"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     
  <!-- <ListView
@@ -29,7 +29,7 @@
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:layout_height="wrap_content"
-            android:text="Select Start Time..." />
+            android:text="Select Time 1..." />
 
         <TimePicker
             android:id="@+id/calendar_dayview_sidebar_timepicker1"
@@ -51,7 +51,7 @@
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:layout_height="wrap_content"
-            android:text="Select End Time..." />
+            android:text="Select Time 2..." />
 
         <TimePicker
             android:id="@+id/calendar_dayview_sidebar_timepicker2"
@@ -79,12 +79,12 @@
             android:layout_height="wrap_content"
             android:text="Insert" />
 
-        <Button
+   <!--      <Button
             android:id="@+id/button4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Switch Times" />
-
+-->
         <Button
             android:id="@+id/button5"
             android:layout_width="wrap_content"

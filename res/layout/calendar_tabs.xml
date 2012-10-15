@@ -78,6 +78,7 @@
                     <TextView
                         android:id="@+id/calendar_dayview_preview_transparent"
                         android:layout_width="160dp"
+                        android:textSize="18dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_toRightOf="@+id/calendar_dayview_linearlayout_deep"
@@ -88,8 +89,9 @@
 
                     <TextView
                         android:id="@+id/calendar_dayview_time_preview"
-                        android:layout_width="200dp"
+                        android:layout_width="160dp"
                         android:layout_height="wrap_content"
+                        android:textSize="18dp"
                         android:layout_alignLeft="@id/calendar_dayview_preview_transparent"
                         android:layout_below="@id/calendar_dayview_preview_transparent"
                         android:background="#ffffff"
@@ -99,9 +101,9 @@
                     <include
                         layout="@layout/calendar_dayview_sidebar"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_alignParentTop="true"
                         android:background="@drawable/list_background"
-                        android:layout_width="350dp"
+                        android:layout_width="260dp"
                         android:layout_height="wrap_content"
                        />
                 </RelativeLayout>

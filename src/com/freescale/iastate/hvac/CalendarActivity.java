@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Vector;
 
+import com.freescale.iastate.hvac.calendar.DayWrapper;
 import com.freescale.iastate.hvac.calendar.EventAdapter;
 import com.freescale.iastate.hvac.calendar.EventCommon;
 import com.freescale.iastate.hvac.calendar.EventWrapper;
@@ -214,6 +215,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	Vector<ListView>dayViews = new Vector<ListView>();
 	Vector<DayClickListener> dayClickListeners = new Vector<DayClickListener>();
 	Vector<Integer> heights = new Vector<Integer>();
+	DayWrapper dayWrapper;
 
 	HashMap<EventWrapper,TextView> eventMap = new HashMap<EventWrapper,TextView>();
 	HashMap<EventWrapper,TextView> timeMap = new HashMap<EventWrapper,TextView>();
@@ -226,20 +228,18 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	Button timeView2Button;
 	TimePicker timePicker1;
 	TimePicker timePicker2;
+	int timeViewCellHeight = 0;
 	public void setupDayTab() {
-
-		Vector<EventWrapper> dayView_data = new Vector<EventWrapper>();
-		Vector<EventWrapper> time_data = new Vector<EventWrapper>();
 
 		eventWrapperKeys.add(new EventWrapper(0f,5f).setContents("DayView Period #1"));
 		eventWrapperKeys.add(new EventWrapper(5f, 9f).setContents("DayView Period #2\nnewline1\njjhfghc"));
 		eventWrapperKeys.add(new EventWrapper(9f, 14f).setContents("DayView Period #3"));
 		eventWrapperKeys.add(new EventWrapper(14f, 24f).setContents("DayView Period #4"));
 
-		for(int i = 0; i < eventWrapperKeys.size(); i++) {
 
-		}
-		ScrollView dayViewMain = (ScrollView)findViewById(R.id.calendar_day_tab);
+		dayWrapper = new DayWrapper(eventWrapperKeys);
+		
+//		ScrollView dayViewMain = (ScrollView)findViewById(R.id.calendar_day_tab);
 		timeView1Button = (Button)findViewById(R.id.calendar_dayview_time1_button);
 		timeView2Button = (Button)findViewById(R.id.calendar_dayview_time2_button);
 		TabState tabState1 = TabState.TAB_CLOSED;
@@ -291,16 +291,27 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 
 			time_textView.setText(eventWrapperKeys.get(i).collapseTimes());
 			event_textView.setText(eventWrapperKeys.get(i).getContents());
-
+			
+			
+			
+				
+				//time_textView.setText(eventWrapperKeys.get(i).expandTimes());
 			timeMap.put(eventWrapperKeys.get(i), time_textView);
 			eventMap.put(eventWrapperKeys.get(i), event_textView);
 			viewMap.put(eventWrapperKeys.get(i), v.get(i));
 
 			eventCells.addView(v.get(i),i,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-			v.get(i).measure(0, 0);
+			
+			if(i == 0) {
+				time_textView.measure(0,0);
+				timeViewCellHeight = time_textView.getMeasuredHeight(); //the height for 1 hour
+				Log.i("ViewLoop","TimeViewCelHeight = " + String.valueOf(timeViewCellHeight));
+			}
 
-			heights.add(v.get(i).getMeasuredHeight());
+//			heights.add(v.get(i).getMeasuredHeight());
 		}
+		
+		
 		//		for(int i = 0; i < heights.size()-1; i++) hTrans += heights.get(i);
 		//		h2 += heights.get(heights.size()-1);
 		//		
@@ -599,42 +610,77 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return rootIntent.onOptionsItemSelected(this, item);
 	}
+	int transparentHeight= 0;
+	int exampleHeight = 0;
 	public class TimePickerListener implements TimePicker.OnTimeChangedListener {
 
 		public void onTimeChanged(TimePicker timePicker, int hourOfDay, int minute) {
 			//			timeMap
 			//			eventMap
 			//			viewMap
-			transparentView.invalidate();
-			sampleView.invalidate();
-			for(int i = 0; i < eventWrapperKeys.size(); i++) {
-				
-//
+			//transparentView.invalidate();
+			//sampleView.invalidate();
 
-//			for(int i = 0; i < eventWrapperKeys.size(); i++) {
-//				//					timeMap.get(eventWrapperKeys.get(i)).invalidate();
-//				//					eventMap.get(eventWrapperKeys.get(i)).invalidate();
-//				//					viewMap.get(eventWrapperKeys.get(i)).invalidate();
-//				int jcount = 0;
-//				for(jcount = 0; jcount < 24; jcount++)
-//					if(jcount < eventWrapperKeys.get(i).getEndTime())
-//						break;
-//				//transparentView.setHeight(getTransparentHeight(jcount));
-//				timeMap.get(eventWrapperKeys.get(i)).setText(eventWrapperKeys.get(i).collapseTimes());	
-//				for(int j = (int)eventWrapperKeys.get(i).getStartTime(); j <eventWrapperKeys.get(i).getEndTime() ; j++) {
-//					if(j < eventWrapperKeys.get(i).getEndTime() && j >= eventWrapperKeys.get(i).getStartTime()) {
-//						timeMap.get(eventWrapperKeys.get(i)).setText(eventWrapperKeys.get(i).expandTimes());
-//						//sampleView.setHeight(getSampleHeight(i));
-//					}
-//					else if(j < eventWrapperKeys.get(i).getEndTime() && eventWrapperKeys.get(i).getEndTime() < hourOfDay){
-//						timeMap.get(eventWrapperKeys.get(i)).setText(eventWrapperKeys.get(i).expandTimes());
-//						//	sampleView.setHeight(getSampleHeight(i));
-//					}
-//					else {
-//						timeMap.get(eventWrapperKeys.get(i)).setText(eventWrapperKeys.get(i).collapseTimes());
-//					}
-				}
+			float hour1 = 0, minute1=0;
+			float hour2=0, minute2=0;
+			if(timePicker.equals(timePicker1)) {
+				hour1 = hourOfDay;
+				minute1 = minute;
+				hour2 = timePicker2.getCurrentHour();
+				minute2 = timePicker2.getCurrentMinute();
 			}
+			else if (timePicker.equals(timePicker2)){
+				hour1 = hourOfDay;
+				minute1 = minute;
+				hour2 = timePicker1.getCurrentHour();
+				minute2 = timePicker1.getCurrentMinute();
+			}
+//			Log.i("TimePickerListener", "minute = "+ minute2);
+			
+			float time1 = hour1 + minute1*MINUTE_MULT_CONSTANT_T2F*0.01f;
+			float time2 = hour2 + minute2*MINUTE_MULT_CONSTANT_T2F*0.01f;
+
+			EventTimeIndex eti = dayWrapper.getTimeStartsInEventByEventIndex(time1,time2);
+			
+//			Log.i("TimePickerListener","startIndex = " + String.valueOf(eti.startIndex));
+//			Log.i("TimePickerListener","stopIndex = " + String.valueOf(eti.stopIndex));
+			
+			int count = 0;
+			while( count < eti.startIndex) {
+				timeMap.get(eventWrapperKeys.get(count)).setText(eventWrapperKeys.get(count).collapseTimes());
+				viewMap.get(eventWrapperKeys.get(count)).measure(0,0);
+				transparentHeight += viewMap.get(eventWrapperKeys.get(count)).getMeasuredHeight();
+
+				Log.i("TimePickerLoop","1st Loop Executed - index = " + count);
+				count++;
+			}
+			transparentView.invalidate();
+			transparentView.setHeight(transparentHeight);
+			transparentHeight = 0;
+			while(count < eti.stopIndex || count == eti.startIndex || count == eti.stopIndex) {
+				timeMap.get(eventWrapperKeys.get(count)).setText(eventWrapperKeys.get(count).expandTimes());
+				viewMap.get(eventWrapperKeys.get(count)).measure(0,0);
+//				Log.i("TimePickerLoop","2nd Loop Executed - index = " + count);
+				//Do stuff for the previews
+				
+				count++;
+				
+			}
+			while(count < eventWrapperKeys.size()) {
+				timeMap.get(eventWrapperKeys.get(count)).setText(eventWrapperKeys.get(count).collapseTimes());
+//				Log.i("TimePickerLoop","3rd Loop Executed - index = " + count);
+				count++;
+			}
+			/*
+			for(int i = startIndex; i < stopIndex; i++){
+				timeMap.get(eventWrapperKeys.get(i)).setText(eventWrapperKeys.get(i).expandTimes());
+				Log.i("TimePickerLoop","Second Loop Executed - index = " + i);
+			}
+			for(int i = stopIndex; i < eventWrapperKeys.size(); i++) {
+				timeMap.get(eventWrapperKeys.get(i)).setText(eventWrapperKeys.get(i).collapseTimes());
+				Log.i("TimePickerLoop","Third Loop Executed - index = " + i);
+			}*/
+
 		}
 		public int getTransparentHeight(int count) {
 			int value = 0;
@@ -646,21 +692,15 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 			}
 			return value;
 		}
-//		public int getSampleHeight(int i){
-//			int hour1 = timePicker1.getCurrentHour();
-//			int minute1 = timePicker1.getCurrentMinute();
-//			int hour2 = timePicker2.getCurrentHour();
-//			int minute2 = timePicker2.getCurrentMinute();
-//
-//			float time1 = hour1 + minute1*MINUTE_MULT_CONSTANT_T2F;
-//			float time2 = hour2 + minute2*MINUTE_MULT_CONSTANT_T2F;
-//			float delta_time = Math.abs(time2-time1);
-//			timeMap.get(eventWrapperKeys.get(i)).measure(0,0);
-//			float hourHeight = timeMap.get(eventWrapperKeys.get(i)).getMeasuredHeight();
-//			int newHeight = (int) (delta_time/hourHeight);
-//			return newHeight;
-//		}
 	}
+	//		public int getSampleHeight(int i){
+
+	//			timeMap.get(eventWrapperKeys.get(i)).measure(0,0);
+	//			float hourHeight = timeMap.get(eventWrapperKeys.get(i)).getMeasuredHeight();
+	//			int newHeight = (int) (delta_time/hourHeight);
+	//			return newHeight;
+	//		}
+	//	}
 	/*
 	 * for(int i = 0; i < hourOfDay-1; i++) hTrans += heights.get(i);
 		h2 += heights.get(heights.size()-1);
