@@ -16,32 +16,65 @@ import android.widget.Toast;
 
 /**
  * @author Namara
- *
+ * 
  */
-public class ButtonColumnFragment extends Fragment implements OnClickListener{
+public class ButtonColumnFragment extends Fragment {
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-    View view = inflater.inflate(R.layout.column_button_fragment,
-            container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.column_button_fragment,
+				container, false);
 
-	Button button1 = (Button) view.findViewById(R.id.col_button1);
-	button1.setOnClickListener(this);
-	Button button2 = (Button) view.findViewById(R.id.col_button2);
-	button2.setOnClickListener(this);
-	Button button3 = (Button) view.findViewById(R.id.col_button3);
-	button3.setOnClickListener(this);
-	Button button4 = (Button) view.findViewById(R.id.col_button4);
-	button4.setOnClickListener(this);
+		Button button1 = (Button) view.findViewById(R.id.col_button1);
+		button1.setText("Day");
+		button1.setOnClickListener(dayClick);
+		Button button2 = (Button) view.findViewById(R.id.col_button2);
+		button2.setText("Week");
+		button2.setOnClickListener(weekClick);
+		Button button3 = (Button) view.findViewById(R.id.col_button3);
+		button3.setText("Month");
+		button3.setOnClickListener(monthClick);
+		Button button4 = (Button) view.findViewById(R.id.col_button4);
+		button4.setText("Year");
+		button4.setOnClickListener(yearClick);
 
-	return view;
+		return view;
 	}
 
-	/* (non-Javadoc)
-	 * @see android.view.View.OnClickListener#onClick(android.view.View)
-	 */
-	public void onClick(View arg0) {
-		Toast.makeText(getActivity(), "BleepBloop", Toast.LENGTH_LONG).show();
-		
-	}
+	private OnClickListener dayClick = new OnClickListener() {
+		public void onClick(View v) {
+			Toast.makeText(getActivity(),
+					"Wake up in the morning and whatdyawantmost? day!",
+					Toast.LENGTH_LONG).show();
+		}
+
+	};
+
+	private OnClickListener weekClick = new OnClickListener() {
+		public void onClick(View v) {
+			Toast.makeText(getActivity(),
+					"Wake up in the morning and whatdyawantmost? week!",
+					Toast.LENGTH_LONG).show();
+		}
+
+	};
+	
+	private OnClickListener monthClick = new OnClickListener() {
+		public void onClick(View v) {
+			Toast.makeText(getActivity(),
+					"Wake up in the morning and whatdyawantmost? month!",
+					Toast.LENGTH_LONG).show();
+		}
+
+	};
+	
+	private OnClickListener yearClick = new OnClickListener() {
+		public void onClick(View v) {
+			Toast.makeText(getActivity(),
+					"Wake up in the morning and whatdyawantmost? year!",
+					Toast.LENGTH_LONG).show();
+		}
+
+	};
 }
