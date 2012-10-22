@@ -54,8 +54,8 @@ public class WeatherFragment extends Fragment {
 		
 		weekday.setText(obj.weekday);
 		image.setImageDrawable(imageDrawable);
-		high.setText("High: "+ obj.high);
-		low.setText("Low: "+ obj.low);
+		high.setText(obj.high);
+		low.setText(obj.low);
 		conditions.setText(obj.conditions);
 		
 

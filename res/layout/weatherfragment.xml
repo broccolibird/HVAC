@@ -11,8 +11,6 @@
         android:layout_gravity="center"
         android:text="DAY"
         android:textSize="24sp" />
-
-/>
     
     <ImageView
         android:id="@+id/dayimage"
@@ -20,27 +18,57 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
-    <LinearLayout
+    <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" 
+        android:columnCount="2"
+    	android:rowCount="3" >
+		
+        <TextView
+            android:id="@+id/condition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            style="@android:style/TextAppearance.Medium"
+            android:layout_columnSpan="2"
+            android:text="CONDITION" />
+        
+		<TextView
+		    android:id="@+id/high"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center_vertical|right"
+		    android:gravity="center"
+		    android:text="High:" />
+		
+		<TextView
+		    android:id="@+id/low"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center"
+		    android:gravity="center"
+		    android:text="Low:" />
+		
         <TextView
             android:id="@+id/temphigh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="center"
+            style="@style/TempFont"
             android:text="HI" />
 
         <TextView
             android:id="@+id/templow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            style="@style/TempFont"
             android:text="LOW" />
 
-    </LinearLayout>
-    <TextView
-        android:id="@+id/condition"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CONDITION" />
+    </GridLayout>
 
 </LinearLayout>
