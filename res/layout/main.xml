@@ -74,32 +74,36 @@
             android:text="@string/sys_mode"
             android:textSize="20pt" />
 
-        <LinearLayout
-            android:id="@+id/sys_mode_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+        <RadioGroup
+            android:id="@+id/modeGroup"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
 
-            <Button
+            <ToggleButton
                 android:id="@+id/sys_mode_heat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/sys_mode_heat" />
+                android:textOff="@string/sys_mode_heat"
+                android:textOn="@string/sys_mode_heat" />
 
-            <Button
+            <ToggleButton
                 android:id="@+id/sys_mode_fan"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/sys_mode_fan" />
+                android:textOff="@string/sys_mode_fan"
+                android:textOn="@string/sys_mode_fan" />
 
-            <Button
+            <ToggleButton
                 android:id="@+id/sys_mode_cool"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/sys_mode_cool" />
-        </LinearLayout>
+                android:textOff="@string/sys_mode_cool"
+                android:textOn="@string/sys_mode_cool" />
+        </RadioGroup>
 
         <TextView
             android:id="@+id/sys_fan_title"
@@ -107,34 +111,39 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/sys_fan"
+            android:textOn="@string/sys_fan"
             android:textSize="20pt" />
 
-        <LinearLayout
-            android:id="@+id/sys_fan_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+        <RadioGroup
+            android:id="@+id/fanGroup"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
 
-            <Button
+            <ToggleButton
                 android:id="@+id/sys_fan_on"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/sys_fan_on" />
+                android:textOn="@string/sys_fan_on"
+                android:textOff="@string/sys_fan_on" />
 
-            <Button
+            <ToggleButton
                 android:id="@+id/sys_fan_auto"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/sys_fan_auto" />
+                android:textOn="@string/sys_fan_auto"
+                android:textOff="@string/sys_fan_auto" />
 
-            <Button
+            <ToggleButton
                 android:id="@+id/sys_fan_off"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/sys_fan_off" />
-        </LinearLayout>
+                android:textOn="@string/sys_fan_off"
+                android:textOff="@string/sys_fan_off" />
+        </RadioGroup>
     </LinearLayout>
 
 </LinearLayout>
