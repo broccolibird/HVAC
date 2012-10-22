@@ -8,6 +8,7 @@ public class WeatherObject {
 	public String low;
 	public String conditions;
 	public Drawable image;
+	public String forecast;
 	
 
 	

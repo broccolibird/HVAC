@@ -67,6 +67,71 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="350dp"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/darker_gray" />
+
+        <fragment
+            android:id="@+id/day6fragment"
+            android:name="com.freescale.iastate.hvac.weather.WeatherFragment"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="350dp"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/darker_gray" />
+
+        <fragment
+            android:id="@+id/day7fragment"
+            android:name="com.freescale.iastate.hvac.weather.WeatherFragment"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="350dp"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/darker_gray" />
+
+        <fragment
+            android:id="@+id/day8fragment"
+            android:name="com.freescale.iastate.hvac.weather.WeatherFragment"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="350dp"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/darker_gray" />
+
+        <fragment
+            android:id="@+id/day9fragment"
+            android:name="com.freescale.iastate.hvac.weather.WeatherFragment"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="350dp"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/darker_gray" />
+
+        <fragment
+            android:id="@+id/day10fragment"
+            android:name="com.freescale.iastate.hvac.weather.WeatherFragment"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
     </LinearLayout>
 
 </HorizontalScrollView>
