@@ -51,8 +51,7 @@ public class WeatherActivity extends Activity implements MenuInterface, DisplayI
 
 	private class ForecastWeatherTask extends AsyncTask<Void, Void, String> {
 
-		String day1Text, day2Text, day3Text;
-		Drawable day1Image, day2Image, day3Image;
+		
 
 		protected String doInBackground(Void... params) {
 			try {
@@ -110,6 +109,16 @@ public class WeatherActivity extends Activity implements MenuInterface, DisplayI
 			WeatherFragment frag3 = (WeatherFragment) getFragmentManager().findFragmentById(
 					R.id.day3fragment);
 			frag3.updateWeather(dayArray[2]);
+			
+			WeatherFragment frag4 = (WeatherFragment) getFragmentManager().findFragmentById(
+					R.id.day4fragment);
+			frag4.updateWeather(dayArray[3]);
+			
+			WeatherFragment frag5 = (WeatherFragment) getFragmentManager().findFragmentById(
+					R.id.day5fragment);
+			frag5.updateWeather(dayArray[4]);
+			
+			
 
 		}
 

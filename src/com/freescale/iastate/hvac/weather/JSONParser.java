@@ -76,6 +76,6 @@ public class JSONParser {
     
     public static String zip = "50014";
     public static String conditionsURL = "http://api.wunderground.com/api/a07479251f71e216/conditions/q/"+zip+".json";
-    public static String threedayURL = "http://api.wunderground.com/api/a07479251f71e216/forecast/q/"+zip+".json";
+    public static String threedayURL = "http://api.wunderground.com/api/a07479251f71e216/forecast10day/q/"+zip+".json";
 
 }
