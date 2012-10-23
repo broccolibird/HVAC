@@ -209,7 +209,9 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	
 	private ListView eventList;
 	public void setupEventDialog() {
-		
+		stateData.add(new HVACState("State x"));
+		stateData.add(new HVACState("State y"));
+		stateData.add(new HVACState("State z"));
 		
 		esd = new EventSelectionDialog();
 		Button insertButton = (Button)findViewById(R.id.calendar_dayview_insertevent_button);
@@ -233,9 +235,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 			
 //			Button selectButton = (Button)findViewById(R.id.calendar_dayview_eventdialog_select);
 //			Button cancelButton = (Button)findViewById(R.id.calendar_dayview_eventdialog_cancel);
-			stateData.add(new HVACState("state x"));
-			stateData.add(new HVACState("state y"));
-			stateData.add(new HVACState("state z"));
+			
 			
 
 			LayoutInflater lf = (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -244,7 +244,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 			ListView eventList = (ListView)v.findViewById(R.id.calendar_dayview_eventdialog_list);
 			eventList.setEmptyView(emptyview);
 			eventList.setAdapter(new StateAdapter(getBaseContext(), R.id.calendar_dayview_eventdialog_list,stateData));
-			eventList.setOnItemClickListener(new StateSelectionSelector());
+		//	eventList.setOnItemClickListener(new StateSelectionSelector());
 			
 			
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
