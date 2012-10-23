@@ -30,4 +30,12 @@
         android:layout_below="@+id/calendar_listview_line2"
         android:src="@drawable/large_snowflake" />
 
+    <ImageView
+        android:id="@+id/calendar_fan_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/calendar_heat_image"
+        android:layout_toRightOf="@+id/calendar_heat_image"
+        android:src="@drawable/fan_on" />
+
 </RelativeLayout>
