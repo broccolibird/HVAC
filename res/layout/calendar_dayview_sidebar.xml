@@ -72,19 +72,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
+<!-- 
         <Button
             android:id="@+id/button3"
              android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Insert" />
-
-   <!--      <Button
-            android:id="@+id/button4"
+-->		
+<!--  this button will have a dialog -->
+        <Button
+            android:id="@+id/calendar_dayview_insertevent_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Switch Times" />
--->
+            android:text="Select State..." />
+
+		<!--  this button will have a dialog -->
         <Button
             android:id="@+id/button5"
             android:layout_width="wrap_content"
@@ -92,5 +94,9 @@
             android:text="Save Day..." />
 
     </LinearLayout>
-
+	<Button
+            android:id="@+id/button3"
+             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Insert" />
 </LinearLayout>

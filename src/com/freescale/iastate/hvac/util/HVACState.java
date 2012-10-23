@@ -2,11 +2,11 @@ package com.freescale.iastate.hvac.util;
 
 import com.freescale.iastate.util.FSState;
 
-public class FSHVACState extends FSState implements FSHVACStateInterface {
+public class HVACState extends FSState implements FSHVACStateInterface {
 	public FanSpeed fanSpeed;
 	public TempOperation tempOperation;
 	public QuickAdjust quickAdjust;
-	
+	public String title = new String("null");
 	/**
 	 * FanSpeed
 	 * @author ahoyt
@@ -97,9 +97,10 @@ public class FSHVACState extends FSState implements FSHVACStateInterface {
 	 * @author ahoyt
 	 * Constructor for FSHVACState, setting all parameters to "off."
 	 */
-	public FSHVACState() {
+	public HVACState(String title) {
 		fanSpeed = FanSpeed.FAN_OFF;
 		tempOperation = TempOperation.TEMP_OFF;
 		quickAdjust = QuickAdjust.ADJUST_STOP;
+		this.title=title;
 	}
 }
