@@ -49,6 +49,10 @@ public class StateAdapter extends ArrayAdapter<HVACState> implements EventCommon
 				heatImage.setImageResource(R.drawable.snowflake);
 				break;
 				
+			case TEMP_OFF:
+				heatImage.setImageResource(R.drawable.temp_off);
+				break;
+				
 			default:
 				heatImage.setImageResource(R.drawable.blank);
 				break;

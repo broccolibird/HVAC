@@ -100,12 +100,14 @@
             android:id="@+id/calendar_dayview_cleartime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="?android:attr/buttonStyleSmall"
             android:text="Clear Time" 
             android:layout_weight="1"/>
         <Button
             android:id="@+id/calendar_dayview_saveday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="?android:attr/buttonStyleSmall"
             android:text="Save Day..." 
             android:layout_weight="1"/>
         </LinearLayout>
