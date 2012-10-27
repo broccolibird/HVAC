@@ -7,11 +7,9 @@ package com.freescale.iastate.hvac.energy;
  * @author Namara
  *
  */
-import java.util.Random;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
-import org.achartengine.chart.PointStyle;
 import org.achartengine.chart.BarChart.Type;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
@@ -34,56 +32,71 @@ import android.widget.LinearLayout;
  * 
  */
 public class GraphFragment extends Fragment {
+	final int MONTH = 30;
+	final int WEEK = 7;
+	final int DAY = 24;
+	final int MAXKWH = 100;
 	
+	private String seriesTitle;
+	private int numDataPoints;
+	private int barColor;
+	private int axesColor;
+	private int fontColor;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {		
+			Bundle savedInstanceState) {
 		View view = inflater
 				.inflate(R.layout.graphs_fragment, container, false);
 		
-		GraphicalView graph = ChartFactory.getBarChartView(getActivity(), getDemoDataset(), getDemoRenderer(), Type.DEFAULT);
-		LinearLayout ll = (LinearLayout) view.findViewById(R.id.first_fragment_root);
-		
-	    ll.addView(graph, new LayoutParams(LayoutParams.MATCH_PARENT,
-	              LayoutParams.MATCH_PARENT));
-        
-        return view;
-	}
-	
-	private XYMultipleSeriesDataset getDemoDataset() {
-		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
-		final int nr = 30;
-		for (int i = 0; i < 2; i++) {
-			XYSeries series = new XYSeries("Demo series " + (i + 1));
-			for (int k = 0; k < nr; k++) {
-				
-				Double rando = Math.random() * 17;
-				int kWattHr = (int) (Math.floor(rando) + 65);
-				
-				series.add(k, kWattHr);
-			}
-			dataset.addSeries(series);
-		}
-		
-		return dataset;
+		seriesTitle = "";
+		numDataPoints = WEEK;
+		barColor = Color.RED;
+		axesColor = Color.RED;
+		fontColor = Color.RED;
+
+		GraphicalView graph = ChartFactory.getBarChartView(getActivity(),
+				getGeneratedDataset(numDataPoints), getChartRenderer(), Type.DEFAULT);
+		LinearLayout ll = (LinearLayout) view
+				.findViewById(R.id.first_fragment_root);
+
+		ll.addView(graph, new LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.MATCH_PARENT));
+
+		return view;
 	}
 
-	private XYMultipleSeriesRenderer getDemoRenderer() {
+	/*
+	 * Generates an example data set
+	 * Currently from 65+/- 17
+	 */
+	private XYMultipleSeriesDataset getGeneratedDataset(int numDataPoints) {
+		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+		final int floor = 65;
+		final int variation = 17;
+
+		XYSeries series = new XYSeries(seriesTitle);
+		for (int k = 0; k < numDataPoints; k++) {
+			Double rando = Math.random() * variation;
+			int kWattHr = (int) (Math.floor(rando) + floor);
+			series.add(k, kWattHr);
+		}
+		dataset.addSeries(series);
+
+		return dataset;
+	}
+	
+	private XYMultipleSeriesRenderer getChartRenderer() {
+		ChartSettings s = new ChartSettings();
 		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
-		double[] range = {0, 30, 0, 100};
-		renderer.setRange(range);
-		renderer.setAxisTitleTextSize(16);
-		renderer.setChartTitleTextSize(20);
-		renderer.setLabelsTextSize(15);
-		renderer.setLegendTextSize(15);
-		//renderer.setMargins(new int[] { 20, 30, 15, 0 });
+		//TODO CHANGE DAYS SO THAT IS IS RESPECTIVE TO MONTH OR NUMDATAPOINTS
+		s.setChartSettings(renderer, seriesTitle, "Days", "kWh", 0, numDataPoints, 0, MAXKWH, axesColor, fontColor);		
+		s.setTextSize(renderer, 16, 20, 15, 15);
+		s.setAutoSpacing(renderer);
+		
 		XYSeriesRenderer r = new XYSeriesRenderer();
-		r.setColor(Color.WHITE);
+		r.setColor(barColor);
 		renderer.addSeriesRenderer(r);
-		r = new XYSeriesRenderer();
-		renderer.addSeriesRenderer(r);
-		renderer.setAxesColor(Color.DKGRAY);
-		renderer.setLabelsColor(Color.LTGRAY);
 		return renderer;
 	}
 

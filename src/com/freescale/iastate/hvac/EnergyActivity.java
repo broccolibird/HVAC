@@ -1,6 +1,5 @@
 package com.freescale.iastate.hvac;
 
-import android.R.color;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
