@@ -1,5 +1,8 @@
 package com.freescale.iastate.hvac;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -39,6 +42,7 @@ public class WeatherActivity extends Activity implements MenuInterface, DisplayI
 
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		
 
 		// this sets the help string for the current activity.
 		// copy paste
@@ -59,11 +63,11 @@ public class WeatherActivity extends Activity implements MenuInterface, DisplayI
 				SharedPreferences settings = PreferenceManager
 						.getDefaultSharedPreferences(getBaseContext());
 				String zip = settings.getString("zip_code_key", "50014");
-
+				TextView weatherZip = (TextView) findViewById(R.id.weatherZip);
+				weatherZip.setText("Weather for: "+zip+"    Last updated: "+DateFormat.getDateTimeInstance().format(new Date()));			
 				JSONParser parser = new JSONParser();
 				JSONParser.zip = zip;
 				JSONObject json = parser.getJSONFromUrl(JSONParser.threedayURL);
-				String readable = json.toString(5);
 
 				JSONObject forecast = json.getJSONObject("forecast");
 				JSONObject simpleForecast = forecast
