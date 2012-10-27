@@ -1,5 +1,7 @@
 package com.freescale.iastate.hvac;
 
+import com.freescale.iastate.util.ButtonColumnFragment.OnButtonSelectedListener;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,8 +9,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
-public class EnergyActivity extends Activity implements MenuInterface, DisplayInterface {
+public class EnergyActivity extends Activity implements MenuInterface, DisplayInterface, OnButtonSelectedListener {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,9 @@ public class EnergyActivity extends Activity implements MenuInterface, DisplayIn
 
 	}
 
+	public void onButtonSelected(int buttonID){
+	}
+	
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.mainmenu, menu);

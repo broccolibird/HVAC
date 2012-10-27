@@ -5,6 +5,7 @@ package com.freescale.iastate.util;
 
 import com.freescale.iastate.hvac.R;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +20,8 @@ import android.widget.Toast;
  * 
  */
 public class ButtonColumnFragment extends Fragment {
-
+	OnButtonSelectedListener listener;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -42,38 +44,47 @@ public class ButtonColumnFragment extends Fragment {
 		return view;
 	}
 
+	public interface OnButtonSelectedListener{
+		public void onButtonSelected(int buttonID);
+	}
+	
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        
+        try {
+            listener = (OnButtonSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnButtonSelectedListener");
+        }
+    }
+	
 	private OnClickListener dayClick = new OnClickListener() {
 		public void onClick(View v) {
-			Toast.makeText(getActivity(),
-					"Wake up in the morning and whatdyawantmost? day!",
-					Toast.LENGTH_LONG).show();
+			listener.onButtonSelected(R.id.col_button1);
 		}
 
 	};
 
 	private OnClickListener weekClick = new OnClickListener() {
 		public void onClick(View v) {
-			Toast.makeText(getActivity(),
-					"Wake up in the morning and whatdyawantmost? week!",
-					Toast.LENGTH_LONG).show();
+			listener.onButtonSelected(R.id.col_button2);
+
 		}
 
 	};
 	
 	private OnClickListener monthClick = new OnClickListener() {
 		public void onClick(View v) {
-			Toast.makeText(getActivity(),
-					"Wake up in the morning and whatdyawantmost? month!",
-					Toast.LENGTH_LONG).show();
+			listener.onButtonSelected(R.id.col_button3);
 		}
 
 	};
 	
 	private OnClickListener yearClick = new OnClickListener() {
 		public void onClick(View v) {
-			Toast.makeText(getActivity(),
-					"Wake up in the morning and whatdyawantmost? year!",
-					Toast.LENGTH_LONG).show();
+			listener.onButtonSelected(R.id.col_button4);
 		}
 
 	};
