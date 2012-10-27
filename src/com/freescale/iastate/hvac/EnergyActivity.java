@@ -1,5 +1,6 @@
 package com.freescale.iastate.hvac;
 
+import com.freescale.iastate.hvac.energy.GraphFragment;
 import com.freescale.iastate.util.ButtonColumnFragment.OnButtonSelectedListener;
 
 import android.app.ActionBar;
@@ -29,6 +30,9 @@ public class EnergyActivity extends Activity implements MenuInterface, DisplayIn
 	}
 
 	public void onButtonSelected(int buttonID){
+		GraphFragment graphFrag = (GraphFragment)getFragmentManager().findFragmentById(R.id.fragment2);
+		
+		graphFrag.updateGraph(buttonID);
 	}
 	
 	public boolean onCreateOptionsMenu(Menu menu) {

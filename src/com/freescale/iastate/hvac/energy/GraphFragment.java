@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 /**
  * @author Namara
@@ -98,6 +99,13 @@ public class GraphFragment extends Fragment {
 		r.setColor(barColor);
 		renderer.addSeriesRenderer(r);
 		return renderer;
+	}
+
+	/**
+	 * @param buttonID
+	 */
+	public void updateGraph(int buttonID) {
+		Toast.makeText(getActivity(), "ButtonID in graph: " + buttonID, Toast.LENGTH_SHORT).show();
 	}
 
 }
