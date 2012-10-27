@@ -13,7 +13,10 @@ public class DayWrapper {
 		this.events = events;
 
 	}
-
+//	float cumulativeDuration;
+//	public float getCumulativeDuration() {
+//		return this.cumulativeDuration;
+//	}
 	public EventTimeIndex getTimeStartsInEventByEventIndex(float time1, float time2) {
 		int eventIndex = 0;
 		int startIndex = 0, stopIndex= 0;
@@ -48,6 +51,7 @@ public class DayWrapper {
 				cumulativeDuration += duration;
 
 			}
+//			this.cumulativeDuration = cumulativeDuration;
 		}
 		return new EventTimeIndex(startIndex,stopIndex);
 	}
@@ -59,6 +63,21 @@ public class DayWrapper {
 			}
 		return eventIndex;
 	}
+	public float getSmallTimeHeightDifference(int eventIndex, float smallTime) {
+		if(smallTime - events.get(eventIndex).getStartTime() > 0){
+			return smallTime - events.get(eventIndex).getStartTime();
+		}
+		else return 0;
+		
+	}
+	public float getSmallerTime(float time1, float time2) {
+		if(time1 > time2) return time2;
+		else return time1;
+	}
+	public float getAbsoluteTime(float time1, float time2) {
+		return Math.abs(time1-time2);
+	}
+	
 	public void addEvent(EventWrapper e) {
 		events.add(e);
 	}

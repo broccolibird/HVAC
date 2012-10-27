@@ -71,41 +71,62 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentTop="true"
                         android:orientation="vertical" >
-
-
                     </LinearLayout>
 
+                    <!--  empty space -->
                     <TextView
                         android:id="@+id/calendar_dayview_preview_transparent"
                         android:layout_width="160dp"
-                        android:textSize="18dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_toRightOf="@+id/calendar_dayview_linearlayout_deep"
-                        android:background="#fd1146"
-                        android:text="Empty Space"
-                        android:textColor="#ffffff" />
+                        android:textColor="#ffffff"
+                        android:textSize="18dp" 
+                        android:visibility="invisible"/>
                     <!-- android:layout_toRightOf="@+id/calendar_dayview_linearlayout_deep" -->
 
-                    <TextView
-                        android:id="@+id/calendar_dayview_time_preview"
-                        android:layout_width="160dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="18dp"
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
                         android:layout_alignLeft="@id/calendar_dayview_preview_transparent"
-                        android:layout_below="@id/calendar_dayview_preview_transparent"
-                        android:background="#ffffff"
-                        android:text="Preview part"
-                        android:textColor="#000000" />
-                    
+                        android:layout_below="@id/calendar_dayview_preview_transparent" >
+
+                        <include
+                            android:id="@+id/calendar_dayview_time_preview"
+                            android:layout_width="220dp"
+                            android:layout_height="wrap_content"
+                            layout="@layout/calendar_listview_cell"
+                             />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical" >
+
+                            <View
+                                android:id="@+id/calendar_dayview_timeremove"
+                                android:layout_width="5dp"
+                                android:layout_height="0dp"
+                                android:background="#a0f09c" 
+                                android:visibility="invisible"/>
+
+                            <View
+                                android:id="@+id/calendar_dayview_timeselection"
+                                android:layout_width="5dp"
+                                android:layout_height="0dp"
+                                android:background="#ffffff" />
+                        </LinearLayout>
+                    </FrameLayout>
+
+                    <!-- android:textColor="#000000" -->
+
                     <include
-                        layout="@layout/calendar_dayview_sidebar"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:background="@drawable/list_background"
                         android:layout_width="260dp"
                         android:layout_height="wrap_content"
-                       />
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        layout="@layout/calendar_dayview_sidebar"
+                        android:background="@drawable/calendar_sidebar_background" />
                 </RelativeLayout>
             </ScrollView>
 
@@ -115,7 +136,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="70dp"
                 android:orientation="horizontal" >
-<!--                 <LinearLayout
+
+                <!--
+                     <LinearLayout
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical" >
@@ -257,7 +280,8 @@
                         android:orientation="vertical" >
                     </ListView>
                </LinearLayout>
-   -->          </LinearLayout>
+                -->
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/month_tab"

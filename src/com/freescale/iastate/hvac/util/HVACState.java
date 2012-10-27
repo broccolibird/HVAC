@@ -1,5 +1,11 @@
 package com.freescale.iastate.hvac.util;
 
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.freescale.iastate.hvac.R;
 import com.freescale.iastate.util.FSState;
 
 public class HVACState extends FSState implements FSHVACStateInterface {
@@ -8,7 +14,10 @@ public class HVACState extends FSState implements FSHVACStateInterface {
 	public QuickAdjust quickAdjust;
 	public EnergySave energySave;
 	public String title = new String("null");
-	public String details = new String("null");
+	public String description = new String("null");
+	public ImageView heatImage = null;
+	public ImageView fanImage = null;
+	public ImageView energySaveImage = null;
 	
 	/**
 	 * FanSpeed
@@ -129,18 +138,23 @@ public class HVACState extends FSState implements FSHVACStateInterface {
 	 * Constructor for FSHVACState, setting all parameters to "off."
 	 */
 	public HVACState(String title) {
+	
 		fanSpeed = FanSpeed.FAN_OFF;
 		tempOperation = TempOperation.TEMP_OFF;
 		quickAdjust = QuickAdjust.ADJUST_STOP;
 		this.title=title;
 		
+		
 	}
-	public HVACState(String title, String details) {
+	public HVACState(String title, String description) {
+
+		
 		fanSpeed = FanSpeed.FAN_OFF;
 		tempOperation = TempOperation.TEMP_OFF;
 		quickAdjust = QuickAdjust.ADJUST_STOP;
 		this.title=title;
-		this.details = details;
+		this.description = description;
+
 		
 	}
 }

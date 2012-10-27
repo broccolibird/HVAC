@@ -81,7 +81,7 @@
             android:id="@+id/calendar_dayview_insertevent_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select State" 
+            android:text="Select State..." 
             android:layout_weight="1"/>
 
 		<Button

@@ -16,7 +16,7 @@ import com.freescale.iastate.hvac.calendar.DayWrapper;
 import com.freescale.iastate.hvac.calendar.StateAdapter;
 import com.freescale.iastate.hvac.calendar.EventCommon;
 import com.freescale.iastate.hvac.calendar.EventWrapper;
-import com.freescale.iastate.hvac.calendar.TimeAdapter;
+
 import com.freescale.iastate.hvac.util.HVACState;
 import com.freescale.iastate.util.FSEvent.RecurrenceType;
 
@@ -76,6 +76,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	Resources res;
 	TabHost tabHost;
 	TextView emptyview;
+
 	private enum TabState {
 		TAB_OPEN,
 		TAB_CLOSED;
@@ -107,55 +108,10 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	public void addTabs() {
 
 		TabHost.TabSpec programTabSpec = tabHost.newTabSpec("_program"); //move into strings.xml
-		Calendar cal = Calendar.getInstance();
 		/**
 		 * This is the Program Tab in the Calendar's Tab View
 		 * 
 		 */
-
-		TabState tabStateStart = TabState.TAB_CLOSED;
-		TabState tabStateStop = TabState.TAB_CLOSED;
-
-		//	LinearLayout tableRowStart = (LinearLayout) findViewById(R.id.calendar_eventview_startdate_drawer);
-		//	LinearLayout tableRowStop = (LinearLayout) findViewById(R.id.calendar_eventview_stopdate_drawer);
-
-		//	tableRowStart.setVisibility(View.GONE);
-		//	tableRowStop.setVisibility(View.GONE);
-
-		//		Button eventviewTopDrawerButton = (Button) findViewById(R.id.calendar_eventview_top_drawer_button);
-		//		Button eventviewBottomDrawerButton = (Button) findViewById(R.id.calendar_eventview_bottom_drawer_button);
-		//
-		//		String []startString = res.getStringArray(R.array.calendar_eventview_top_tab_text);
-		//		String []endString = res.getStringArray(R.array.calendar_eventview_bottom_tab_text);
-
-		//		DatePicker startDatePicker = (DatePicker) findViewById(R.id.calendar_eventview_startdate);
-		//		DatePicker endDatePicker = (DatePicker) findViewById(R.id.calendar_eventview_enddate);
-
-		//		final TimePicker startTimePicker = (TimePicker) findViewById(R.id.calendar_eventview_starttime);
-		//		final TimePicker endTimePicker = (TimePicker) findViewById(R.id.calendar_eventview_endtime);
-		//
-		//		TextView textStartDate = (TextView) findViewById(R.id.calendar_eventview_stopdate_value);
-		//		TextView textEndDate = (TextView) findViewById(R.id.calendar_eventview_startdate_value);
-		//
-		//		eventviewTopDrawerButton.setOnClickListener(new TabClickListener(tableRowStart,tabStateStart, eventviewTopDrawerButton, startString));
-		//		eventviewBottomDrawerButton.setOnClickListener(new TabClickListener(tableRowStop,tabStateStop, eventviewBottomDrawerButton, endString));
-
-		//		CalendarChangeListener listenerStartDate = new CalendarChangeListener(textStartDate);
-		//		CalendarChangeListener listenerEndDate = new CalendarChangeListener(textEndDate);
-
-		//		startDatePicker.init(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),listenerStartDate);
-		//		startTimePicker.setOnTimeChangedListener(listenerStartDate);
-
-		//		endDatePicker.init(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),listenerEndDate);
-		//		endTimePicker.setOnTimeChangedListener(listenerEndDate);
-
-
-		//======   START ANDROID SDK BUG FIX ======//
-		//At this point, we want to avoid the TimePicker am/pm bug.
-
-		//not implemented
-
-		//======   END ANDROID SDK BUG FIX ======//
 
 		programTabSpec.setContent(R.id.calendar_day_tab);
 		programTabSpec.setIndicator(res.getString(R.string.calendar_programview_label));
@@ -206,66 +162,79 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 
 	EventSelectionDialog esd;
 	Vector<HVACState> stateData = new Vector<HVACState>();
-
-
-
 	private ListView stateList;
+
 	public void setupEventDialog() {
-		HVACState state1 = new HVACState("State 1 - cool, fan max, save off")
+		HVACState state1 = new HVACState("State 1","cool, fan max, save off")
 		.setStates(HVACState.TempOperation.TEMP_COOL,
-			HVACState.FanSpeed.FAN_MAX,
-			HVACState.EnergySave.SAVE_OFF);
-		
-		HVACState state2 = new HVACState("State 2 - heat, fan max, save on")
-			.setStates(HVACState.TempOperation.TEMP_HEAT,
+				HVACState.FanSpeed.FAN_MAX,
+				HVACState.EnergySave.SAVE_OFF);
+
+		HVACState state2 = new HVACState("State 2","heat, fan max, save on")
+		.setStates(HVACState.TempOperation.TEMP_HEAT,
 				HVACState.FanSpeed.FAN_MAX,
 				HVACState.EnergySave.SAVE_ON);
-		
-		HVACState state3 = new HVACState("State 3 - heat, fan auto, save off")
+
+		HVACState state3 = new HVACState("State 3","heat, fan auto, save off")
 		.setStates(HVACState.TempOperation.TEMP_HEAT,
-			HVACState.FanSpeed.FAN_AUTO,
-			HVACState.EnergySave.SAVE_OFF);
-		
-		HVACState state4 = new HVACState("State 4 - temp off, fan off, save on")
+				HVACState.FanSpeed.FAN_AUTO,
+				HVACState.EnergySave.SAVE_OFF);
+
+		HVACState state4 = new HVACState("State 4","temp off, fan off, save on")
 		.setStates(HVACState.TempOperation.TEMP_OFF,
-			HVACState.FanSpeed.FAN_OFF,
-			HVACState.EnergySave.SAVE_ON);
-		
+				HVACState.FanSpeed.FAN_OFF,
+				HVACState.EnergySave.SAVE_ON);
+
 		stateData.add(state1);
 		stateData.add(state2);
 		stateData.add(state3);
 		stateData.add(state4);
-		
-		esd = new EventSelectionDialog();
-		Button insertButton = (Button)findViewById(R.id.calendar_dayview_insertevent_button);
-		insertButton.setOnClickListener(new EventDialogListener());
 
+		esd = new EventSelectionDialog();
+
+		Button insertButton = (Button)findViewById(R.id.calendar_dayview_insertevent_button);
+		insertButton.setOnClickListener(new EventDialogListener()); 
+
+		heatIcon = (ImageView)sampleView.findViewById(R.id.calendar_heat_image);
+		fanIcon = (ImageView)sampleView.findViewById(R.id.calendar_fan_image);
+		energySaveIcon = (ImageView)sampleView.findViewById(R.id.calendar_energysave_image);
 	}
+	ImageView heatIcon;
+	ImageView fanIcon;
+	ImageView energySaveIcon;
+	StateAdapter sa;
+	LinearLayout listRow;
 	public class EventDialogListener implements OnClickListener {
 		public void onClick(View v) {
 			esd.show(getFragmentManager(), "statedialog");
 		}
 	}
-	ImageView heatImage;
+
 	public class EventSelectionDialog extends DialogFragment {
 
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 
 			LayoutInflater lf = (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			LinearLayout listRow = (LinearLayout) lf.inflate(R.layout.calendar_dayview_eventdialog, null);
-			
+			listRow = (LinearLayout) lf.inflate(R.layout.calendar_dayview_eventdialog, null);
+
 			stateList = (ListView)listRow.findViewById(R.id.calendar_dayview_eventdialog_list);
 			stateList.setEmptyView(emptyview);
-			stateList.setAdapter(new StateAdapter(getBaseContext(), R.id.calendar_dayview_eventdialog_list,stateData));
+			sa = new StateAdapter(getBaseContext(), R.id.calendar_dayview_eventdialog_list,stateData);
+			stateList.setAdapter(sa);
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
 			builder.setView(listRow)
-			.setTitle("Choose State...").setMessage("Select an State to Use")
+			.setTitle("Choose State...").setMessage("Select a State to Use")
 			.setPositiveButton("Select State", new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
+					int index = stateList.getCheckedItemPosition();
+					//Log.i("Dialog:PreviewParameters","checkedItem = "+index);
+					if(index < 0){
+						EventSelectionDialog.this.getDialog().cancel();
+
+					} else 
+						CalendarActivity.this.setPreviewParameters(index);
 
 				}
 			}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -280,23 +249,10 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 			return builder.create();
 		}
 	}
-	public class StateSelectionSelector implements OnItemClickListener {
-
-		public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-			int selected = 0;
-			for(int i = 0; i < parent.getChildCount(); i++) {
-				if(i == position) 
-					parent.getChildAt(i).setBackgroundResource(R.drawable.calendar_dayview_selected);
-				else {
-					parent.getChildAt(i).setBackgroundResource(R.drawable.calendar_dayview_deselected);
-				}
-			}
 
 
-		}
-
-	}
 	LinearLayout dayViewContainer;
+
 	//Shared components
 	Vector<Vector<EventWrapper>> events_data;
 	TextView timesHeader;
@@ -313,35 +269,58 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 
 	Vector<TextView> dayHeaders = new Vector<TextView>();
 	Vector<ListView>dayViews = new Vector<ListView>();
-	Vector<DayClickListener> dayClickListeners = new Vector<DayClickListener>();
 	Vector<Integer> heights = new Vector<Integer>();
 	DayWrapper dayWrapper;
 
-	HashMap<EventWrapper,TextView> eventMap = new HashMap<EventWrapper,TextView>();
+	HashMap<EventWrapper,RelativeLayout> eventMap = new HashMap<EventWrapper,RelativeLayout>();
 	HashMap<EventWrapper,TextView> timeMap = new HashMap<EventWrapper,TextView>();
 	HashMap<EventWrapper,LinearLayout> viewMap = new HashMap<EventWrapper,LinearLayout>();
 	Vector<EventWrapper> eventWrapperKeys = new Vector<EventWrapper>();
 
-	TextView transparentView;
-	TextView sampleView;
+	TextView previewSideTransparentView;
+	RelativeLayout sampleView;
 	Button timeView1Button;
 	Button timeView2Button;
 	TimePicker timePicker1;
 	TimePicker timePicker2;
-	int timeViewCellHeight = 0;
+	int timeViewHourHeight = 0;
+	RelativeLayout sampleParent;
+
+	public void setPreviewParameters(int position) {
+		TextView title = (TextView)sampleView.findViewById(R.id.calendar_listview_title);
+		TextView description = (TextView)sampleView.findViewById(R.id.calendar_listview_description);
 
 
+		title.setText(sa.getItem(position).title);
+		description.setText(sa.getItem(position).description);
+
+		heatIcon.setImageDrawable(sa.getItem(position).heatImage.getDrawable());
+		fanIcon.setImageDrawable(sa.getItem(position).fanImage.getDrawable());
+		energySaveIcon.setImageDrawable(sa.getItem(position).energySaveImage.getDrawable());
+		heatIcon.requestLayout();
+		fanIcon.requestLayout();
+		energySaveIcon.requestLayout();
+
+
+	}
+	View timeSelection;
+	View timePadding;
 	public void setupDayTab() {
 
-		eventWrapperKeys.add(new EventWrapper(0f,5f).setContents("DayView Period #1"));
-		eventWrapperKeys.add(new EventWrapper(5f, 9f).setContents("DayView Period #2\nnewline1\njjhfghc"));
-		eventWrapperKeys.add(new EventWrapper(9f, 14f).setContents("DayView Period #3"));
-		eventWrapperKeys.add(new EventWrapper(14f, 24f).setContents("DayView Period #4"));
+		eventWrapperKeys.add(new EventWrapper(0f,24f));
+//		eventWrapperKeys.add(new EventWrapper(5f, 9f).setContents("DayView Period #2\nnewline1\njjhfghc"));
+//		eventWrapperKeys.add(new EventWrapper(9f, 14f).setContents("DayView Period #3"));
+//		eventWrapperKeys.add(new EventWrapper(14f, 24f).setContents("DayView Period #4"));
+
+		sampleParent = (RelativeLayout)findViewById(R.id.calendar_dayview_relativelayout);
+		sampleView = (RelativeLayout)findViewById(R.id.calendar_dayview_time_preview);
+
+		timeSelection = (View)findViewById(R.id.calendar_dayview_timeselection);
+		timePadding = (View)findViewById(R.id.calendar_dayview_timeremove);
 
 
 		dayWrapper = new DayWrapper(eventWrapperKeys);
 
-		//		ScrollView dayViewMain = (ScrollView)findViewById(R.id.calendar_day_tab);
 		timeView1Button = (Button)findViewById(R.id.calendar_dayview_time1_button);
 		timeView2Button = (Button)findViewById(R.id.calendar_dayview_time2_button);
 		TabState tabState1 = TabState.TAB_CLOSED;
@@ -377,8 +356,10 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 
 
 
-		transparentView = (TextView)findViewById(R.id.calendar_dayview_preview_transparent);
-		sampleView = (TextView)findViewById(R.id.calendar_dayview_time_preview);
+		previewSideTransparentView = (TextView)findViewById(R.id.calendar_dayview_preview_transparent);
+		previewSideTransparentView.getLayoutParams().height = 0;
+		previewSideTransparentView.requestLayout();
+
 
 		Vector<LinearLayout> v = new Vector<LinearLayout>();
 
@@ -386,156 +367,30 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 
 			v.add((LinearLayout)inflater.inflate(R.layout.calendar_dayview_shallow,null));
 			TextView time_textView = (TextView)v.get(i).findViewById(R.id.calendar_dayview_time_view);
-			TextView event_textView = (TextView)v.get(i).findViewById(R.id.calendar_dayview_event_view);
+			RelativeLayout event_layout = (RelativeLayout)v.get(i).findViewById(R.id.calendar_dayview_event_view);
 
 			if(i%2 == 0) v.get(i).setBackgroundResource(R.drawable.calendar_dayview_shallow_light);
 			else v.get(i).setBackgroundResource(R.drawable.calendar_dayview_shallow_dark);
 
 			time_textView.setText(eventWrapperKeys.get(i).collapseTimes());
-			event_textView.setText(eventWrapperKeys.get(i).getContents());
+			if(i == 0) {
+				time_textView.measure(0, 0);
+				timeViewHourHeight = time_textView.getMeasuredHeightAndState()-4;
+				
+				if(eventWrapperKeys.size()>1) timeViewHourHeight = time_textView.getMeasuredHeightAndState()+2;
+			}
+			//			event_layout.setText(eventWrapperKeys.get(i).getContents());
 
 			timeMap.put(eventWrapperKeys.get(i), time_textView);
-			eventMap.put(eventWrapperKeys.get(i), event_textView);
+			eventMap.put(eventWrapperKeys.get(i), event_layout);
 			viewMap.put(eventWrapperKeys.get(i), v.get(i));
 
 			eventCells.addView(v.get(i),i,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-			if(i == 0) {
-				time_textView.measure(0,0);
-				timeViewCellHeight = time_textView.getMeasuredHeight(); //the height for 1 hour
-				Log.i("ViewLoop","TimeViewCelHeight = " + String.valueOf(timeViewCellHeight));
-			}
-
-			//			heights.add(v.get(i).getMeasuredHeight());
 		}
+		
 	}
 
-
-	//		for(int i = 0; i < heights.size()-1; i++) hTrans += heights.get(i);
-	//		h2 += heights.get(heights.size()-1);
-	//		
-	//		transparentView.invalidate();
-	//		sampleView.invalidate();
-	//		transparentView.setHeight(hTrans);
-	//		sampleView.setHeight(h2);
-
-
-	/*	
-		//weekview list is used for day list header
-		timesHeader = (TextView)findViewById(R.id.calendar_weekview_header);
-		timesHeader.setText("Time:");
-		timesView = (ListView) findViewById(R.id.calendar_dayview_list_times);
-		//dayViewPreview1 = (ListView)findViewById(R.id.calendar_dayview_list_day_actual);
-		dayViewPreview2 = (ListView)findViewById(R.id.calendar_dayview_list_day_preview);
-
-
-
-		String[] times_arr = getResources().getStringArray(R.array.calendar_timeview_array);
-		for(int k= 0; k < times_arr.length; k++){
-			time_data.add(new EventWrapper(k*1f,(k+1)*1f).setContents(times_arr[k]));
-		}
-
-		//weekview_cell is copied for day 12:00AM - 11:00PM time cells
-		emptyview = new (this);
-
-		timesView.setEmptyView(emptyview);
-		timesView.setAdapter(new TimeAdapter(this, R.id.calendar_dayview_list_times, time_data));
-
-		//dayViewPreview1.setEmptyView(emptyview);
-		//dayViewPreview1.setAdapter(new EventAdapter(this, R.id.calendar_dayview_list_day_actual, dayView_data));
-
-		//dayViewPreview2.setEmptyView(emptyview);
-		dayViewPreview2.setAdapter(new EventAdapter(this, R.id.calendar_dayview_list_day_preview, dayView_data));
-	 *///}
-	//	public void setupWeekTab() {
-	//		dayViews = new Vector<ListView>();
-	//		timesHeader = (TextView) findViewById(R.id.calendar_weekview_header);
-	//		timesHeader.setText("Time:");
-	//
-	//		timesView = (ListView) findViewById(R.id.calendar_weekview_list_times);
-	//
-	//		dayViews.add((ListView) findViewById(R.id.calendar_weekview_list_1));
-	//		dayViews.add((ListView) findViewById(R.id.calendar_weekview_list_2));
-	//		dayViews.add((ListView) findViewById(R.id.calendar_weekview_list_3));
-	//		dayViews.add((ListView) findViewById(R.id.calendar_weekview_list_4));
-	//		dayViews.add((ListView) findViewById(R.id.calendar_weekview_list_5));
-	//		dayViews.add((ListView) findViewById(R.id.calendar_weekview_list_6));
-	//		dayViews.add((ListView) findViewById(R.id.calendar_weekview_list_7));
-	//
-	//
-	//		//set the values for all the headers (Stand-alone TextViews) in the calendar
-	//		dayHeaders.add((TextView) findViewById(R.id.calendar_timeview_1));
-	//		dayHeaders.add((TextView) findViewById(R.id.calendar_timeview_2));
-	//		dayHeaders.add((TextView) findViewById(R.id.calendar_timeview_3));
-	//		dayHeaders.add((TextView) findViewById(R.id.calendar_timeview_4));
-	//		dayHeaders.add((TextView) findViewById(R.id.calendar_timeview_5));
-	//		dayHeaders.add((TextView) findViewById(R.id.calendar_timeview_6));
-	//		dayHeaders.add((TextView) findViewById(R.id.calendar_timeview_7));
-	//
-	//		this.setHeaders(new String[] { "Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"});
-	//		//set an empty view for initializing TextView classes
-	//		emptyview = new TextView(this);
-	//
-	//		Resources res = getResources();
-	//		Drawable background = res.getDrawable(R.drawable.list_background);
-	//		dayViewContainer.setBackground(background);
-	//
-	//		Vector<EventWrapper> time_data = new Vector<EventWrapper>();
-	//		String[] times_arr = getResources().getStringArray(R.array.calendar_timeview_array);
-	//
-	//		//make the time cells in increments of 1f
-	//		for(int k= 0; k < times_arr.length; k++){
-	//			time_data.add(new EventWrapper(k*1f,(k+1)*1f).setContents(times_arr[k]));
-	//		}
-	//
-	//		events_data = new Vector<Vector<EventWrapper>>();
-	//
-	//		Vector<EventWrapper> event_data = new Vector<EventWrapper>();
-	//		event_data.add(new EventWrapper(0f,5f).setContents("Period #1"));
-	//		event_data.add(new EventWrapper(5f, 9f).setContents("Period #2"));
-	//		event_data.add(new EventWrapper(10f, 15f).setContents("Period #3"));
-	//		event_data.add(new EventWrapper(14f, 24f).setContents("Period #4"));
-	//		events_data.add(event_data);
-	//
-	//		event_data = new Vector<EventWrapper>();
-	//		event_data.add(new EventWrapper(0f,6f).setContents("Morning"));
-	//		event_data.add(new EventWrapper(6f,8f).setContents("Wake Up"));
-	//		event_data.add(new EventWrapper(8f,12f).setContents("Heat"));
-	//		event_data.add(new EventWrapper(12f,18f).setContents("Cool"));
-	//		event_data.add(new EventWrapper(18f,24f).setContents("Evening"));
-	//		events_data.add(event_data);
-	//
-	//		event_data = new Vector<EventWrapper>();
-	//		event_data.add(new EventWrapper(0f,6f).setContents("Morning"));
-	//		event_data.add(new EventWrapper(6f,18f).setContents("Vacation"));
-	//		event_data.add(new EventWrapper(18f,24f).setContents("Evening"));
-	//		events_data.add(event_data);
-	//		events_data.add(event_data);
-	//		events_data.add(event_data);
-	//		events_data.add(event_data);
-	//
-	//		event_data = new Vector<EventWrapper>();
-	//		event_data.add(new EventWrapper(0f,4f).setContents("Idle"));
-	//		event_data.add(new EventWrapper(4f,6f).setContents("High Heat"));
-	//		event_data.add(new EventWrapper(6f,12f).setContents("Heat"));
-	//		event_data.add(new EventWrapper(12f,18f).setContents("Cool"));
-	//		event_data.add(new EventWrapper(18f,24f).setContents("Idle"));
-	//		events_data.add(event_data);
-	//
-	//		for(int i = 0; i < 7; i++)
-	//			dayClickListeners.add(new DayClickListener().setIndex(i));
-	//
-	//		timesView.setEmptyView(emptyview);
-	//		timesView.setAdapter(new TimeAdapter(this, R.layout.calendar_weekview_cell, time_data));
-	//
-	//		dayViews.get(0).setEmptyView(emptyview);
-	//		dayViews.get(0).setAdapter(new EventAdapter(this, R.id.calendar_weekview_list_1, events_data.get(0)));
-	//		dayViews.get(0).setOnItemClickListener(dayClickListeners.get(0));
-	//
-	//		dayViews.get(1).setEmptyView(emptyview);
-	//		dayViews.get(1).setAdapter(new EventAdapter(this, R.id.calendar_weekview_list_2, events_data.get(1)));
-	//		dayViews.get(1).setOnItemClickListener(dayClickListeners.get(1));
-	// 		}
 	public void setHeaders(String []values){
 		int count = 7;
 		if(values.length == count)
@@ -545,148 +400,20 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 
 	}
 
-	public class DayClickListener implements  OnItemClickListener {
-		boolean isInitialized = false;
-		boolean [] isSelected;
-		int index;
-		public int selected = -1;
-		public DayClickListener setIndex(int index) {
-			this.index = index;
-			return this;
-		}
-		public void onItemClick(AdapterView<?> parent, View v, int position,
-				long id) {
-			StateAdapter ea = ((StateAdapter)parent.getAdapter());
-			if(!isInitialized) {
-				isSelected = new boolean[parent.getCount()];
-				isInitialized =true;
-
-			}
-			for(int i = 0; i < dayViews.size(); i++) {
-				if(dayViews.get(i) == parent) {
-					for(int j = 0; j < dayViews.get(i).getChildCount(); j++){
-						parent.getChildAt(i).setBackgroundResource(R.drawable.calendar_dayview_selected);
-					}
-					selected = i;
-				}
-				else {
-					for(int j = 0; j < dayViews.get(i).getChildCount(); j++){
-						dayViews.get(i).getChildAt(j).setBackgroundResource(R.drawable.calendar_dayview_deselected);
-					}
-				}
-			}
-		}
-	}
-
-
-
-
-
-	//			if(dayViews.get(index) == parent) {
-	//				if(isSelected[position] == true) {
-	//					v.setBackgroundResource(R.drawable.calendar_dayview_selected);
-	//					isSelected[position] = false;
-	//				}
-	//				else if (isSelected[position] == false) {
-	//					v.setBackgroundResource(R.drawable.calendar_dayview_deselected);			
-	//					isSelected[position] = true;
-	//				}
-	//			}
-	//			else {
-	//			for(int i = 0; i < dayViews.size(); i++) {
-	//				if(dayViews.get(i) != parent) {
-	//					for(int j = 0; j < parent.getChildCount(); j++){
-	//						parent.getChildAt(j).setBackgroundResource(R.drawable.calendar_dayview_deselected);
-	//					}
-	//				}
-	//				else {
-	//					for(int j = 0; j < parent.getChildCount(); j++){
-	//						parent.getChildAt(j).setBackgroundResource(R.drawable.calendar_dayview_selected);
-	//					}
-	//				}
-	//			}
-
-	//for(int j = 0; j < parent.getChildCount(); j++){
-
-
-	//				v.setBackgroundResource(R.drawable.calendar_dayview_deselected);			
-	//				isSelected[position] = true;
-	//			}
-	//				if(((EventAdapter)parent.getAdapter()).hasStableIds())Toast.makeText(getBaseContext(), "IDs are stable", Toast.LENGTH_SHORT).show();
-	//				else  Toast.makeText(getBaseContext(), "IDs are unstable", Toast.LENGTH_SHORT).show();
-
-	//	v.setVisibility(View.GONE);
-	//		ea.clear();
-	//		ea.remove(events_data.get(index).get(position));
-	//			v.invalidate();
-	//		ea.notifyDataSetChanged();
-	//		parent.setEmptyView(emptyview);
-
-
-	//			Toast.makeText(getBaseContext(), "Count = " + av.getCount() + "\n" + 
-	//					"Selected Item Position = " + position, Toast.LENGTH_SHORT).show();
-	//			Toast.makeText(getBaseContext(), "ListID = " + av.getId() + "\n" + 
-	//					"Sunday = " + R.id.calendar_weekview_list_1, Toast.LENGTH_SHORT).show();
-
-	//	((EventAdapter)parent.getAdapter()).remove(events_data.get(index).get(position));
-	//((EventAdapter)av.getAdapter()).notifyDataSetChanged();
-
-	//			EventAdapter ea = ((EventAdapter)parent.getAdapter());
-	//			if(!isInitialized) {
-	//				isSelected = new boolean[parent.getCount()];
-	//				isInitialized =true;
-	//
-	//			}
-	//			if(dayViews.get(index) == parent) {
-	//				if(isSelected[position] == true) {
-	//					for(int i = 0; i < parent.getChildCount(); i++) {
-	//						parent.getChildAt(i).setBackgroundResource(R.drawable.calendar_dayview_selected);
-	//						
-	////					isSelected[position] = false;
-	//							
-	//				}
-	//				else if (isSelected[position] == false) {
-	//					for(int i = 0; i < parent.getChildCount(); i++)
-	//						parent.getChildAt(i).setBackgroundResource(R.drawable.calendar_dayview_deselected);	
-	////					for(int i = 0; i < parent.getChildCount(); i++)
-	////						if(dayViews.get(i) != index) {
-	////							parent.getChildAt(i).setBackgroundResource(R.drawable.calendar_dayview_deselected);
-	////							isSelected[position] = false;
-	////						}	else isSelected[position] = true;
-	//						
-	//				}
-	////				if(((EventAdapter)parent.getAdapter()).hasStableIds())Toast.makeText(getBaseContext(), "IDs are stable", Toast.LENGTH_SHORT).show();
-	//				else  Toast.makeText(getBaseContext(), "IDs are unstable", Toast.LENGTH_SHORT).show();
-	//	ea.clear();
-	//		ea.remove(events_data.get(index).get(position));
-	//v.invalidate();
-	//ea.notifyDataSetChanged();
-	//	parent.setEmptyView(emptyview);
-	//for(int i = 0; i < parent.getChildCount(); i++)
-	//parent.getChildAt(i).setVisibility(View.GONE);
-
-
-	//			Toast.makeText(getBaseContext(), "Count = " + av.getCount() + "\n" + 
-	//					"Selected Item Position = " + position, Toast.LENGTH_SHORT).show();
-	//			Toast.makeText(getBaseContext(), "ListID = " + av.getId() + "\n" + 
-	//					"Sunday = " + R.id.calendar_weekview_list_1, Toast.LENGTH_SHORT).show();
-
-	//	((EventAdapter)parent.getAdapter()).remove(events_data.get(index).get(position));
-	//((EventAdapter)av.getAdapter()).notifyDataSetChanged();
-
-	//		}
-	//	}
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.mainmenu, menu);
 		return true;
 	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return rootIntent.onOptionsItemSelected(this, item);
 	}
+	
 	int transparentHeight= 0;
 	int exampleHeight = 0;
+	
 	public class TimePickerListener implements TimePicker.OnTimeChangedListener {
 
 		public void onTimeChanged(TimePicker timePicker, int hourOfDay, int minute) {
@@ -715,19 +442,34 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 			while( count < eti.startIndex) {
 				timeMap.get(eventWrapperKeys.get(count)).setText(eventWrapperKeys.get(count).collapseTimes());
 				viewMap.get(eventWrapperKeys.get(count)).measure(0,0);
-				transparentHeight += viewMap.get(eventWrapperKeys.get(count)).getMeasuredHeight();
+				transparentHeight += viewMap.get(eventWrapperKeys.get(count)).getMeasuredHeightAndState();
 
-				Log.i("TimePickerLoop","1st Loop Executed - index = " + count);
+				//				Log.i("TimePickerLoop","1st Loop Executed - index = " + count);
 				count++;
 			}
-			transparentView.invalidate();
-			transparentView.setHeight(transparentHeight);
+
+			previewSideTransparentView.getLayoutParams().height = transparentHeight;
+			previewSideTransparentView.requestLayout();
 			transparentHeight = 0;
+			float timePaddingHeight = 0;
+	
 			while(count < eti.stopIndex || count == eti.startIndex || count == eti.stopIndex) {
 				timeMap.get(eventWrapperKeys.get(count)).setText(eventWrapperKeys.get(count).expandTimes());
-				viewMap.get(eventWrapperKeys.get(count)).measure(0,0);
-				//				Log.i("TimePickerLoop","2nd Loop Executed - index = " + count);
-				//Do stuff for the previews
+				//viewMap.get(eventWrapperKeys.get(count)).measure(0,0);
+
+				
+				int additionalHeight = 0;
+				if(eti.startIndex == eti.stopIndex) additionalHeight = -9;
+				if(count == eti.stopIndex && eti.stopIndex > eti.startIndex) additionalHeight = timeViewHourHeight;
+				
+				float smallTime = dayWrapper.getSmallerTime(time1, time2);
+				timePaddingHeight += dayWrapper.getSmallTimeHeightDifference(count, smallTime);
+
+				timePadding.getLayoutParams().height = (int) Math.ceil(timeViewHourHeight*timePaddingHeight);
+				timePadding.requestLayout();
+				
+				timeSelection.getLayoutParams().height = (int) Math.ceil(timeViewHourHeight*dayWrapper.getAbsoluteTime(time1, time2)-additionalHeight);
+				timeSelection.requestLayout();
 
 				count++;
 
@@ -739,6 +481,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 
 
 		}
+		
 		public int getTransparentHeight(int count) {
 			int value = 0;
 			for(int i = 0; i < count; i++){
@@ -759,6 +502,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		private String stringOn;
 		private String stringOff;
 		SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
+		
 		public DrawerClickListener(TimePicker timePicker, TabState state, Button button, String []string){
 			//setState(state);
 			this.state = state;
@@ -767,11 +511,11 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 			this.stringOff = string[0];
 			this.stringOn = string[1];
 		}
+		
 		public void onClick(View view) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
 			calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-
 
 			switch(state){
 			case TAB_OPEN:
