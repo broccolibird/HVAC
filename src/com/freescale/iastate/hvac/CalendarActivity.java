@@ -184,12 +184,17 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		.setStates(HVACState.TempOperation.TEMP_OFF,
 				HVACState.FanSpeed.FAN_OFF,
 				HVACState.EnergySave.SAVE_ON);
+		HVACState state5 = new HVACState("State 5","temp cool, fan off, save on")
+		.setStates(HVACState.TempOperation.TEMP_COOL,
+				HVACState.FanSpeed.FAN_OFF,
+				HVACState.EnergySave.SAVE_ON);
 
 		stateData.add(state1);
 		stateData.add(state2);
 		stateData.add(state3);
 		stateData.add(state4);
-
+		stateData.add(state5);
+		
 		esd = new EventSelectionDialog();
 
 		Button insertButton = (Button)findViewById(R.id.calendar_dayview_insertevent_button);
