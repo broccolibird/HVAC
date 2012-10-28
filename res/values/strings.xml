@@ -28,6 +28,7 @@
    	<string name="brightness_default">100</string>
     <string name="zip_code_default">50014</string>
     <string name="time_zone_default">CST</string>
+    <string name="nil">null</string>
     
 
 </resources>
