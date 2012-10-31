@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -165,6 +166,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		//	this.setupWeekTab();
 		this.setupDayTab();
 		this.setupEventDialog();
+		this.setupTimeDialog();
 	}
 
 	EventSelectionDialog esd;
@@ -211,23 +213,99 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		fanIcon = (ImageView)sampleView.findViewById(R.id.calendar_fan_image);
 		energySaveIcon = (ImageView)sampleView.findViewById(R.id.calendar_energysave_image);
 	}
+	Calendar cal;
+	public void setupTimeDialog() {
+		
+		td = new TimeSelectionDialog();
+		tpl = new TimePickerListener();
+		Button selectTimeButton = (Button)findViewById(R.id.calendar_dayview_timedialog_button);
+		selectTimeButton.setOnClickListener(new TimeDialogListener());
+	
+	}
 	ImageView heatIcon;
 	ImageView fanIcon;
 	ImageView energySaveIcon;
 	StateAdapter sa;
 	LinearLayout listRow;
+	LinearLayout timerLayout;
+	TimeSelectionDialog td;
+	
 	public class EventDialogListener implements OnClickListener {
 		public void onClick(View v) {
 			esd.show(getFragmentManager(), "statedialog");
 		}
 	}
+	
+	public class TimeDialogListener implements OnClickListener {
+		public void onClick(View v) {
+			td.show(getFragmentManager(), "timedialog");
+		}
+	}
+	
+	TimePickerListener tpl;
+	int tp1currentMinute = 0;
+	int tp1currentHour = 0;
+	
+	int tp2currentMinute = 0;
+	int tp2currentHour = 0;
+	TextView timeText;
+	
+	public class TimeSelectionDialog extends DialogFragment {
+		boolean timePickerIsInit = false;
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			
+			//This view needs to be re-inflated each time to avoid a crash related to builder.setView()
+			timerLayout = (LinearLayout) inflater.inflate(R.layout.calendar_dayview_timedialog, null);
+			
+			timePicker1 = (TimePicker)timerLayout.findViewById(R.id.calendar_dayview_sidebar_timepicker1);
+			timePicker1.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
+			timePicker1.setCurrentHour(tp1currentHour);
+			timePicker1.setCurrentMinute(tp1currentMinute);
+			timePicker1.setOnTimeChangedListener(new TimeChangeListener());
+			
+			timePicker2 = (TimePicker)timerLayout.findViewById(R.id.calendar_dayview_sidebar_timepicker2);
+			timePicker2.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
+			timePicker2.setCurrentHour(tp2currentHour);
+			timePicker2.setCurrentMinute(tp2currentMinute);
+			timePicker2.setOnTimeChangedListener(new TimeChangeListener());
 
+			timeText = (TextView)timerLayout.findViewById(R.id.calendar_dayview_timetext);
+			
+			
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setView(timerLayout)
+			.setTitle("Choose Times...").setMessage("Choose a start time and an end time")
+			.setPositiveButton("Set Times", new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int which) {
+						tp1currentHour = timePicker1.getCurrentHour();
+						tp1currentMinute = timePicker1.getCurrentMinute();
+						
+						tp2currentHour = timePicker2.getCurrentHour();
+						tp1currentMinute = timePicker2.getCurrentMinute();
+					
+						tpl.onTimeChanged(timePicker1, tp1currentHour, tp1currentMinute);
+						tpl.onTimeChanged(timePicker2, tp2currentHour, tp2currentMinute);
+						TimeSelectionDialog.this.getDialog().dismiss();
+				
+				}
+			}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int which) {
+					TimeSelectionDialog.this.getDialog().cancel();
+
+				}
+			});
+
+
+			return builder.create();
+		}
+	}
 	public class EventSelectionDialog extends DialogFragment {
 
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-			LayoutInflater lf = (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			listRow = (LinearLayout) lf.inflate(R.layout.calendar_dayview_eventdialog, null);
+			listRow = (LinearLayout) inflater.inflate(R.layout.calendar_dayview_eventdialog, null);
 
 			stateList = (ListView)listRow.findViewById(R.id.calendar_dayview_eventdialog_list);
 			stateList.setEmptyView(emptyview);
@@ -271,13 +349,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	ListView timesView;
 	ListView dayViewPreview1;
 	ListView dayViewPreview2;
-	TextView day1Header;
-	TextView day2Header;
-	TextView day3Header;
-	TextView day4Header;
-	TextView day5Header;
-	TextView day6Header;
-	TextView day7Header;
+
 
 	Vector<TextView> dayHeaders = new Vector<TextView>();
 	Vector<ListView>dayViews = new Vector<ListView>();
@@ -314,11 +386,13 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		energySaveIcon.requestLayout();
 
 	}
+	LayoutInflater inflater;
 	View timeSelection;
 	View timePadding;
 	public void setupDayTab() {
-
-		eventWrapperKeys.add(new EventWrapper(0f,24f));
+		EventWrapper ew = new EventWrapper(0f,24f);
+		ew.expandTimes();
+		eventWrapperKeys.add(ew);
 //		eventWrapperKeys.add(new EventWrapper(5f, 9f).setContents("DayView Period #2\nnewline1\njjhfghc"));
 //		eventWrapperKeys.add(new EventWrapper(9f, 14f).setContents("DayView Period #3"));
 //		eventWrapperKeys.add(new EventWrapper(14f, 24f).setContents("DayView Period #4"));
@@ -332,37 +406,25 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 
 		dayWrapper = new DayWrapper(eventWrapperKeys);
 
-		timeView1Button = (Button)findViewById(R.id.calendar_dayview_time1_button);
-		timeView2Button = (Button)findViewById(R.id.calendar_dayview_time2_button);
-		TabState tabState1 = TabState.TAB_CLOSED;
-		TabState tabState2 = TabState.TAB_CLOSED;
+//		timeView1Button = (Button)findViewById(R.id.calendar_dayview_time1_button);
+//		timeView2Button = (Button)findViewById(R.id.calendar_dayview_time2_button);
+//		TabState tabState1 = TabState.TAB_CLOSED;
+//		TabState tabState2 = TabState.TAB_CLOSED;
 
-		String []toggleString = new String[2];
-		toggleString[0] = "Select Time...";
-		toggleString[1] = "Hide Selector";
+//		String []toggleString = new String[2];
+//		toggleString[0] = "Select Time...";
+//		toggleString[1] = "Hide Selector";
 
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.set(Calendar.MINUTE, 0);
+		
 
-		timePicker1 = (TimePicker)findViewById(R.id.calendar_dayview_sidebar_timepicker1);
-		timePicker1.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
-		timePicker1.setCurrentMinute(cal.get(Calendar.MINUTE));
-		timePicker1.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
-		timePicker1.setOnTimeChangedListener(new TimePickerListener());
+		
 
-		timePicker2 = (TimePicker)findViewById(R.id.calendar_dayview_sidebar_timepicker2);
-		timePicker2.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
-		timePicker2.setCurrentMinute(cal.get(Calendar.MINUTE));
-		timePicker2.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
-		timePicker2.setOnTimeChangedListener(new TimePickerListener());
+	//	DrawerClickListener dcl1 = new DrawerClickListener(timePicker1,tabState1,timeView1Button,toggleString);
+		//DrawerClickListener dcl2 = new DrawerClickListener(timePicker2,tabState2,timeView2Button,toggleString);
+	//	timeView1Button.setOnClickListener(dcl1);
+		//timeView2Button.setOnClickListener(dcl2);
 
-		DrawerClickListener dcl1 = new DrawerClickListener(timePicker1,tabState1,timeView1Button,toggleString);
-		DrawerClickListener dcl2 = new DrawerClickListener(timePicker2,tabState2,timeView2Button,toggleString);
-		timeView1Button.setOnClickListener(dcl1);
-		timeView2Button.setOnClickListener(dcl2);
-
-		LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		LinearLayout eventCells = (LinearLayout)findViewById(R.id.calendar_dayview_linearlayout_deep);
 
 
@@ -425,6 +487,38 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	int transparentHeight= 0;
 	int exampleHeight = 0;
 	
+	public class TimeChangeListener implements TimePicker.OnTimeChangedListener {
+		EventWrapper evw;
+		public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+			float minutesA = 0;
+			float minutesB = 0;
+			float hoursA = 0;
+			float hoursB = 0;
+			float timeA = 0;
+			float timeB = 0;
+			
+
+			minutesA = (float) (Math.ceil(timePicker1.getCurrentMinute()*MINUTE_MULT_CONSTANT_T2F)/100);
+			minutesB = (float) (Math.ceil(timePicker2.getCurrentMinute()*MINUTE_MULT_CONSTANT_T2F)/100);
+			hoursA = (float)timePicker1.getCurrentHour();
+			hoursB = (float)timePicker2.getCurrentHour();
+				
+			timeA = hoursA + minutesA;
+			timeB = hoursB + minutesB;
+
+//			Log.i("Minutes A:", String.valueOf(minutesA));
+//			Log.i("Time A:", String.valueOf(timeA));
+//			Log.i("Minutes B:", String.valueOf(minutesB));
+//			Log.i("Time B:", String.valueOf(timeB));
+			//EventWrapper automatically takes care of whichever time is greater.
+			evw = new EventWrapper(timeA,timeB);
+			
+		
+			timeText.setText(evw.getTimeStart() + " - " + evw.getTimeEnd());
+			
+		}
+		
+	}
 	public class TimePickerListener implements TimePicker.OnTimeChangedListener {
 
 		public void onTimeChanged(TimePicker timePicker, int hourOfDay, int minute) {

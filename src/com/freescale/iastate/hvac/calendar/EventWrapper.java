@@ -25,28 +25,37 @@ public class EventWrapper implements EventCommon {
 	
 	public Vector<Integer> heights = new Vector<Integer>(); //? use
 	
+	private void sortTimes(float startTime, float endTime) {
+		if(startTime < endTime) {
+			this.startTime = startTime;
+			this.endTime = endTime;
+		} else {
+			this.startTime = endTime;
+			this.endTime = startTime;
+		}
+	}
 	//Constructors
 	public EventWrapper(float startTime, float endTime){
-		this.startTime = startTime;
-		this.endTime = endTime;
+		sortTimes(startTime,endTime);
+		
 		this.contents = Float.valueOf(getTimeDuration()).toString();
 		
 	}
 	public EventWrapper(float startTime, float endTime, boolean transparent){
-		this.startTime = startTime;
-		this.endTime = endTime;
+		sortTimes(startTime,endTime);
+		
 		this.transparent = transparent;
 		this.contents = Float.valueOf(getTimeDuration()).toString();
 	}
 	public EventWrapper(float startTime, float endTime, String id){
-		this.startTime = startTime;
-		this.endTime = endTime;
+		sortTimes(startTime,endTime);
+		
 		this.contents = Float.valueOf(getTimeDuration()).toString();
 		this.Id = id;
 	}
 	public EventWrapper(float startTime, float endTime, boolean transparent, String id){
-		this.startTime = startTime;
-		this.endTime = endTime;
+		sortTimes(startTime,endTime);
+		
 		this.transparent = transparent;
 		this.contents = Float.valueOf(getTimeDuration()).toString();
 		this.Id = id;

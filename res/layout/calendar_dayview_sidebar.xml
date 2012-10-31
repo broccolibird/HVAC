@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/calendar_dayview_sidebar"
+    android:id="@+id/calendar_dayview_sidebar"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical" 
     android:background="@drawable/calendar_dayview_sidebar_drawable"
-    android:isScrollContainer="false">
-	<TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Time Selection Toolbox"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-    
- <!-- <ListView
+    android:isScrollContainer="false"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time Selection Toolbox"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <!--
+    <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="200dp" >
     </ListView>
--->
+    -->
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
+        <!--
         <Button
             android:id="@+id/calendar_dayview_time1_button"
             android:layout_width="fill_parent"
@@ -37,7 +41,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:visibility="gone" />
+        -->
 
+        <Button
+            android:id="@+id/calendar_dayview_timedialog_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="Select Time Interval..." />
     </LinearLayout>
 
     <LinearLayout
@@ -45,70 +57,77 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <Button
+        <!--
+             <Button
             android:id="@+id/calendar_dayview_time2_button"
             android:layout_width="fill_parent"
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:layout_height="wrap_content"
             android:text="Select Time 2..." />
-
-        <TimePicker
+        -->
+        <!--
+             <TimePicker
             android:id="@+id/calendar_dayview_sidebar_timepicker2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:visibility="gone" />
-
-      <!--   <TextView
+        -->
+        <!--
+             <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Small Text"
             android:textAppearance="?android:attr/textAppearanceSmall" />
--->
+        -->
     </LinearLayout>
 
-<!-- 
+    <!--
         <Button
             android:id="@+id/button3"
              android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Insert" />
--->		
-<!--  this button will have a dialog -->
-        <Button
-            android:id="@+id/calendar_dayview_insertevent_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Select State..." 
-            android:layout_weight="1"/>
+    -->
+    <!-- this button will have a dialog -->
 
-		<Button
-            android:id="@+id/calendar_dayview_insert"
-             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Insert" 
-            android:layout_weight="1"/>
-	
+    <Button
+        android:id="@+id/calendar_dayview_insertevent_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Select State..." />
+
+    <Button
+        android:id="@+id/calendar_dayview_insert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Insert" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-		<!--  this button will have a dialog -->
+
+        <!-- this button will have a dialog -->
+
         <Button
             android:id="@+id/calendar_dayview_cleartime"
+            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="?android:attr/buttonStyleSmall"
-            android:text="Clear Time" 
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="Clear Time" />
+
         <Button
             android:id="@+id/calendar_dayview_saveday"
+            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="?android:attr/buttonStyleSmall"
-            android:text="Save Day..." 
-            android:layout_weight="1"/>
-        </LinearLayout>
+            android:layout_weight="1"
+            android:text="Save Day..." />
+    </LinearLayout>
+
 </LinearLayout>

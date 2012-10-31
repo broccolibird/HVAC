@@ -33,7 +33,7 @@ public interface MenuInterface {
 			} else if(itemID.compareTo("Help") == 0){
 				Toast.makeText(act, helpText, Toast.LENGTH_LONG).show();
 				return true;
-			} else if(itemID.compareTo("Calendar") == 0){
+			} else if(itemID.compareTo("Schedule") == 0){
 				act.startActivity(rootIntent.calendarIntent);
 				return true;
 			} else if(itemID.compareTo("Weather") == 0){
