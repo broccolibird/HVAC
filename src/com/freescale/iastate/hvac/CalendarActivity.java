@@ -207,7 +207,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		
 		esd = new EventSelectionDialog();
 
-		Button insertButton = (Button)findViewById(R.id.calendar_dayview_insertevent_button);
+		Button insertButton = (Button)findViewById(R.id.calendar_dayview_selectstate_button);
 		insertButton.setOnClickListener(new EventDialogListener()); 
 
 		heatIcon = (ImageView)sampleView.findViewById(R.id.calendar_heat_image);
