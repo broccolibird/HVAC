@@ -33,6 +33,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.FloatMath;
 import android.util.Log;
 import android.view.LayoutInflater;
 //import android.util.Log;
@@ -498,8 +499,8 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 			float timeB = 0;
 			
 
-			minutesA = (float) (Math.ceil(timePicker1.getCurrentMinute()*MINUTE_MULT_CONSTANT_T2F)/100);
-			minutesB = (float) (Math.ceil(timePicker2.getCurrentMinute()*MINUTE_MULT_CONSTANT_T2F)/100);
+			minutesA = (float) (FloatMath.ceil(timePicker1.getCurrentMinute()*MINUTE_MULT_CONSTANT_T2F)/100);
+			minutesB = (float) (FloatMath.ceil(timePicker2.getCurrentMinute()*MINUTE_MULT_CONSTANT_T2F)/100);
 			hoursA = (float)timePicker1.getCurrentHour();
 			hoursB = (float)timePicker2.getCurrentHour();
 				
