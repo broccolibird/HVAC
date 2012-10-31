@@ -263,13 +263,74 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 			timePicker1.setCurrentHour(tp1currentHour);
 			timePicker1.setCurrentMinute(tp1currentMinute);
 			timePicker1.setOnTimeChangedListener(new TimeChangeListener());
+			//Code to fix google TimePicker bug
+			View amPmView1  = ((ViewGroup)timePicker1.getChildAt(0)).getChildAt(2);
+			if(amPmView1 instanceof Button)
+			{
+				amPmView1.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						Log.d("OnClickListener", "OnClickListener called");
+						if(v instanceof Button)
+						{
+							if(((Button) v).getText().equals("AM"))
+							{
+								((Button) v).setText("PM");
+								 if (timePicker1.getCurrentHour() < 12) {
+									 timePicker1.setCurrentHour(timePicker1.getCurrentHour() + 12);
+					                }  
+								
+							}
+							else{
+								((Button) v).setText("AM");
+								 if (timePicker1.getCurrentHour() >= 12) {
+									 timePicker1.setCurrentHour(timePicker1.getCurrentHour() - 12);
+					                }
+							}
+						}
+						
+					}
+				});
+			}
+			//end
 			
 			timePicker2 = (TimePicker)timerLayout.findViewById(R.id.calendar_dayview_sidebar_timepicker2);
 			timePicker2.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
 			timePicker2.setCurrentHour(tp2currentHour);
 			timePicker2.setCurrentMinute(tp2currentMinute);
 			timePicker2.setOnTimeChangedListener(new TimeChangeListener());
-
+			
+			//Code to fix google TimePicker bug
+			View amPmView2  = ((ViewGroup)timePicker2.getChildAt(0)).getChildAt(2);
+			if(amPmView2 instanceof Button)
+			{
+				amPmView2.setOnClickListener(new OnClickListener() {
+				
+					public void onClick(View v) {
+						Log.d("OnClickListener", "OnClickListener called");
+						if(v instanceof Button)
+						{
+							if(((Button) v).getText().equals("AM"))
+							{
+								((Button) v).setText("PM");
+								 if (timePicker2.getCurrentHour() < 12) {
+									 timePicker2.setCurrentHour(timePicker2.getCurrentHour() + 12);
+					                }  
+								
+							}
+							else{
+								((Button) v).setText("AM");
+								 if (timePicker2.getCurrentHour() >= 12) {
+									 timePicker2.setCurrentHour(timePicker2.getCurrentHour() - 12);
+					                }
+							}
+						}
+						
+					}
+				});
+			}
+			//end
+			
 			timeText = (TextView)timerLayout.findViewById(R.id.calendar_dayview_timetext);
 			
 			
