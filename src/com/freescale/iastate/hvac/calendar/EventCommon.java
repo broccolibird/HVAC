@@ -33,9 +33,11 @@ public interface EventCommon {
 	public class EventTimeIndex {
 		public final int startIndex;
 		public final int stopIndex;
+		public final int totalSlots;
 		public EventTimeIndex(int startIndex, int stopIndex){
 			this.startIndex = startIndex;
 			this.stopIndex = stopIndex;
+			this.totalSlots = stopIndex-startIndex;
 		}
 	}
 	public class HeaderNumberInvalidException extends Exception {

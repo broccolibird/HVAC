@@ -9,6 +9,9 @@ import java.util.Vector;
 
 import android.util.FloatMath;
 import android.util.Log;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class EventWrapper implements EventCommon {
 	private String Id = null;
@@ -22,8 +25,35 @@ public class EventWrapper implements EventCommon {
 	public float startTime = 0f;
 	public float endTime = 0f;
 	public float height = 0;
+	public LinearLayout linearView;
+	public RelativeLayout eventView;
+	public TextView timeView;
 	
-	public Vector<Integer> heights = new Vector<Integer>(); //? use
+//	public Vector<Integer> heights = new Vector<Integer>(); //? use
+	
+	// Linear Layout
+	public LinearLayout getLinearView() {
+		return this.linearView;
+	}
+	public void setLinearView(LinearLayout linearView) {
+		this.linearView = linearView;
+	}
+	// Relative Layout
+	public RelativeLayout getEventView() {
+		return this.eventView;
+	}
+	public void setEventView(RelativeLayout eventView)  {
+		this.eventView = eventView;
+	}
+	// TextView
+	public TextView getTimeView() {
+		return this.timeView;
+	}
+	public void setTimeView(TextView timeView){
+		this.timeView = timeView;
+	}
+	
+	
 	
 	private void sortTimes(float startTime, float endTime) {
 		if(startTime < endTime) {
@@ -92,11 +122,11 @@ public class EventWrapper implements EventCommon {
 		else return -1f;
 	}
 	
-	public String getTimeEnd() {
+	public String getTime_end() {
 		return this.getTime(this.endTime);
 	}
 	
-	public String getTimeStart(){
+	public String getTime_start(){
 		return this.getTime(this.startTime);
 	}
 	
@@ -114,9 +144,9 @@ public class EventWrapper implements EventCommon {
 		cal.set(Calendar.HOUR_OF_DAY, hour);
 		cal.set(Calendar.MINUTE, scaledMinute);
 
-		SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
 		sdf.setCalendar(cal);
-		return sdf.format(cal.getTime());
+		return sdf.format(cal.getTime()).replaceAll("^0", "  ");
 	}
 	
 	public String expandTimes(){
@@ -149,21 +179,20 @@ public class EventWrapper implements EventCommon {
 		return true;
 	}
 	
-	public boolean getTransparency() {
-		return this.transparent;
-	}
-	
-	public void setTransparency(boolean transparent) {
-		this.transparent = transparent;
-	}
-	
 	public EventWrapper getWrapperObject() {
 		return this;
 	}
-	public float getEndTime() {
+	public float getStopTime() {
 		return this.endTime;
 	}
+	public void setStopTime(float f){
+		this.endTime = f;
+	}
+
 	public float getStartTime() {
 		return this.startTime;
+	}
+	public void setStartTime(float f) {
+		this.startTime = f;
 	}
 }
