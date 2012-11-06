@@ -536,17 +536,15 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	LinearLayout eventCells;
 	public void doScheduleLayout(){
 		eventCells = (LinearLayout)findViewById(R.id.calendar_dayview_linearlayout_deep);
-		
-		Vector<LinearLayout> v = new Vector<LinearLayout>();
 
 		for(int i = 0; i < dayWrapper.size(); i++) {
 
-			v.add((LinearLayout)inflater.inflate(R.layout.calendar_dayview_shallow,null));
-			TextView time_textView = (TextView)v.get(i).findViewById(R.id.calendar_dayview_time_view);
-			RelativeLayout event_layout = (RelativeLayout)v.get(i).findViewById(R.id.calendar_dayview_event_view);
+			LinearLayout layoutToAdd = (LinearLayout)inflater.inflate(R.layout.calendar_dayview_shallow,null);
+			TextView time_textView = (TextView)layoutToAdd.findViewById(R.id.calendar_dayview_time_view);
+			RelativeLayout event_layout = (RelativeLayout)layoutToAdd.findViewById(R.id.calendar_dayview_event_view);
 
-			if(i%2 == 0) v.get(i).setBackgroundResource(R.drawable.calendar_dayview_shallow_light);
-			else v.get(i).setBackgroundResource(R.drawable.calendar_dayview_shallow_dark);
+			if(i%2 == 0) layoutToAdd.setBackgroundResource(R.drawable.calendar_dayview_shallow_light);
+			else layoutToAdd.setBackgroundResource(R.drawable.calendar_dayview_shallow_dark);
 
 			time_textView.setText(dayWrapper.get(i).collapseTimes());
 			if(i == 0) {
@@ -559,10 +557,10 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 
 			dayWrapper.get(i).setTimeView(time_textView);
 			dayWrapper.get(i).setEventView(event_layout);
-			dayWrapper.get(i).setLinearView(v.get(i));
+			dayWrapper.get(i).setLinearView(layoutToAdd);
 			Log.i("Count",i + "");
 
-			eventCells.addView(v.get(i),i,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+			eventCells.addView(layoutToAdd,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
 		}
 	}
