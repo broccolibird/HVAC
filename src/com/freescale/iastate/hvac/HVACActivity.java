@@ -83,8 +83,8 @@ public class HVACActivity extends Activity implements MenuInterface {
 		Button sysFan = (Button) findViewById(R.id.sys_mode_fan);
 
 		// buttons for temp adjustment
-		Button adjustUp = (Button) findViewById(R.id.tempUp);
-		Button adjustDown = (Button) findViewById(R.id.tempDown);
+		ImageButton adjustUp = (ImageButton) findViewById(R.id.tempUp);
+		ImageButton adjustDown = (ImageButton) findViewById(R.id.tempDown);
 
 		fanOn.setOnClickListener(fanOnListener);
 		fanOff.setOnClickListener(fanOffListener);
@@ -156,9 +156,9 @@ public class HVACActivity extends Activity implements MenuInterface {
 						.getString("relative_humidity");
 				String obsTime = currentObservation
 						.getString("observation_time");
-				currentWeatherText = "Weather for: " + zip + "\n" + weather
-						+ "\n" + tempString + "\n" + windString + "\n"
-						+ relativeHumidity + "\n" + obsTime;
+				currentWeatherText = "Weather for: " + zip + "\n" + tempString
+						+ "\n" + weather + "\n" + windString + "\n"
+						+ relativeHumidity + " Chance of Precipitation\n" + obsTime;
 				currentWeatherImage = weatherImage(currentWeatherText);
 
 				return currentWeatherText;
