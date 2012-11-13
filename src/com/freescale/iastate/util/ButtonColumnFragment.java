@@ -63,7 +63,6 @@ public class ButtonColumnFragment extends Fragment {
 	private OnClickListener dayClick = new OnClickListener() {
 		public void onClick(View v) {
 			listener.onButtonSelected(1);
-			//listener.onButtonSelected(R.id.col_button1);
 		}
 
 	};
@@ -71,7 +70,6 @@ public class ButtonColumnFragment extends Fragment {
 	private OnClickListener weekClick = new OnClickListener() {
 		public void onClick(View v) {
 			listener.onButtonSelected(2);
-			//listener.onButtonSelected(R.id.col_button2);
 		}
 
 	};
@@ -79,7 +77,6 @@ public class ButtonColumnFragment extends Fragment {
 	private OnClickListener monthClick = new OnClickListener() {
 		public void onClick(View v) {
 			listener.onButtonSelected(3);
-			//listener.onButtonSelected(R.id.col_button3);
 		}
 
 	};
@@ -87,7 +84,6 @@ public class ButtonColumnFragment extends Fragment {
 	private OnClickListener yearClick = new OnClickListener() {
 		public void onClick(View v) {
 			listener.onButtonSelected(4);
-			//listener.onButtonSelected(R.id.col_button4);
 		}
 
 	};

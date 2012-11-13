@@ -6,7 +6,7 @@
     android:orientation="horizontal" >
 
     <fragment
-        android:id="@+id/fragment1"
+        android:id="@+id/button_column_fragment"
         android:name="com.freescale.iastate.util.ButtonColumnFragment"
         android:layout_width="0dip"
         android:layout_height="match_parent"
@@ -14,7 +14,7 @@
 
     <fragment
 		android:name="com.freescale.iastate.hvac.energy.GraphFragment"
-        android:id="@+id/fragment2"
+        android:id="@+id/energy_graph_fragment"
         android:layout_width="0dip"
         android:layout_height="match_parent"
         android:layout_weight="6"/>

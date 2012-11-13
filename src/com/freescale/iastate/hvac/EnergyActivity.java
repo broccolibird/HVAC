@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 public class EnergyActivity extends Activity implements MenuInterface, DisplayInterface, OnButtonSelectedListener {
 	
@@ -30,7 +29,7 @@ public class EnergyActivity extends Activity implements MenuInterface, DisplayIn
 	}
 
 	public void onButtonSelected(int buttonID){
-		GraphFragment graphFrag = (GraphFragment)getFragmentManager().findFragmentById(R.id.fragment2);
+		GraphFragment graphFrag = (GraphFragment)getFragmentManager().findFragmentById(R.id.energy_graph_fragment);
 		
 		graphFrag.updateGraph(buttonID);
 	}
