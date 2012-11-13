@@ -36,9 +36,12 @@ public class GraphFragment extends Fragment {
 	final int MONTH = 30;
 	final int WEEK = 7;
 	final int DAY = 24;
+	final int YEAR = 12;
 	final int MAXKWH = 100;
 
 	LinearLayout graphLayout;
+	LayoutInflater localInflater;
+	ViewGroup localContainer;
 	View view;
 	private String seriesTitle;
 	private int numDataPoints;
@@ -49,8 +52,10 @@ public class GraphFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		localInflater = inflater;
+		localContainer = container;
 		view = inflater.inflate(R.layout.graphs_fragment, container, false);
-
+		
 		seriesTitle = "";
 		numDataPoints = WEEK;
 		barColor = Color.RED;
@@ -107,17 +112,27 @@ public class GraphFragment extends Fragment {
 	 * @param buttonID
 	 */
 	public void updateGraph(int buttonID) {
-		Toast.makeText(getActivity(), "ButtonID in graph: " + buttonID,
+		Toast.makeText(getActivity(), "ButtonID in graph: " + buttonID ,
 				Toast.LENGTH_SHORT).show();
+		
+		if (buttonID == 1){
+			numDataPoints = DAY;
+		} else if (buttonID == 2){
+			numDataPoints = WEEK;
+		} else if (buttonID == 4){
+			numDataPoints = YEAR;
+		} else {
+			numDataPoints = MONTH;
+		}
 
-		numDataPoints = MONTH;
+		((ViewGroup) view).removeAllViews();
 
-		graphLayout.removeAllViews();
-
-		//redrawGraph();
+		redrawGraph();
 	}
 
 	public void redrawGraph() {
+		//view = localInflater.inflate(R.layout.graphs_fragment, localContainer, false);
+		
 		GraphicalView graph = ChartFactory.getBarChartView(getActivity(),
 				getGeneratedDataset(numDataPoints), getChartRenderer(),
 				Type.DEFAULT);
@@ -125,8 +140,10 @@ public class GraphFragment extends Fragment {
 		graphLayout = (LinearLayout) view
 				.findViewById(R.id.graph_fragment_layout);
 		
-		graphLayout.addView(graph, new LayoutParams(LayoutParams.MATCH_PARENT,
+		((ViewGroup) view).addView(graph, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT));
+		
+		
 
 	}
 }
