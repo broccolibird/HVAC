@@ -37,7 +37,9 @@ public class GraphFragment extends Fragment {
 	final int WEEK = 7;
 	final int DAY = 24;
 	final int MAXKWH = 100;
-	
+
+	LinearLayout graphLayout;
+	View view;
 	private String seriesTitle;
 	private int numDataPoints;
 	private int barColor;
@@ -47,9 +49,8 @@ public class GraphFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater
-				.inflate(R.layout.graphs_fragment, container, false);
-		
+		view = inflater.inflate(R.layout.graphs_fragment, container, false);
+
 		seriesTitle = "";
 		numDataPoints = WEEK;
 		barColor = Color.RED;
@@ -57,19 +58,19 @@ public class GraphFragment extends Fragment {
 		fontColor = Color.RED;
 
 		GraphicalView graph = ChartFactory.getBarChartView(getActivity(),
-				getGeneratedDataset(numDataPoints), getChartRenderer(), Type.DEFAULT);
-		LinearLayout ll = (LinearLayout) view
-				.findViewById(R.id.first_fragment_root);
+				getGeneratedDataset(numDataPoints), getChartRenderer(),
+				Type.DEFAULT);
+		graphLayout = (LinearLayout) view
+				.findViewById(R.id.graph_fragment_layout);
 
-		ll.addView(graph, new LayoutParams(LayoutParams.MATCH_PARENT,
+		graphLayout.addView(graph, new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT));
 
 		return view;
 	}
 
 	/*
-	 * Generates an example data set
-	 * Currently from 65+/- 17
+	 * Generates an example data set Currently from 65+/- 17
 	 */
 	private XYMultipleSeriesDataset getGeneratedDataset(int numDataPoints) {
 		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
@@ -86,15 +87,16 @@ public class GraphFragment extends Fragment {
 
 		return dataset;
 	}
-	
+
 	private XYMultipleSeriesRenderer getChartRenderer() {
 		ChartSettings s = new ChartSettings();
 		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
-		//TODO CHANGE DAYS SO THAT IS IS RESPECTIVE TO MONTH OR NUMDATAPOINTS
-		s.setChartSettings(renderer, seriesTitle, "Days", "kWh", 0, numDataPoints, 0, MAXKWH, axesColor, fontColor);		
+		// TODO CHANGE DAYS SO THAT IS IS RESPECTIVE TO MONTH OR NUMDATAPOINTS
+		s.setChartSettings(renderer, seriesTitle, "Days", "kWh", 0,
+				numDataPoints, 0, MAXKWH, axesColor, fontColor);
 		s.setTextSize(renderer, 16, 20, 15, 15);
 		s.setAutoSpacing(renderer);
-		
+
 		XYSeriesRenderer r = new XYSeriesRenderer();
 		r.setColor(barColor);
 		renderer.addSeriesRenderer(r);
@@ -105,7 +107,26 @@ public class GraphFragment extends Fragment {
 	 * @param buttonID
 	 */
 	public void updateGraph(int buttonID) {
-		Toast.makeText(getActivity(), "ButtonID in graph: " + buttonID, Toast.LENGTH_SHORT).show();
+		Toast.makeText(getActivity(), "ButtonID in graph: " + buttonID,
+				Toast.LENGTH_SHORT).show();
+
+		numDataPoints = MONTH;
+
+		graphLayout.removeAllViews();
+
+		//redrawGraph();
 	}
 
+	public void redrawGraph() {
+		GraphicalView graph = ChartFactory.getBarChartView(getActivity(),
+				getGeneratedDataset(numDataPoints), getChartRenderer(),
+				Type.DEFAULT);
+		
+		graphLayout = (LinearLayout) view
+				.findViewById(R.id.graph_fragment_layout);
+		
+		graphLayout.addView(graph, new LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.MATCH_PARENT));
+
+	}
 }
