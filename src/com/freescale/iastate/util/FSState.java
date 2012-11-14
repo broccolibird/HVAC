@@ -1,6 +1,8 @@
 package com.freescale.iastate.util;
 
-public class FSState {
+import android.app.Activity;
+
+public class FSState extends Activity {
 	public FSState createPointer(){
 		return this;
 	}

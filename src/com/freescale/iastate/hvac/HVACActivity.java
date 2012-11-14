@@ -31,7 +31,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 //import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -68,6 +70,8 @@ public class HVACActivity extends Activity implements MenuInterface {
 		ImageButton refreshWeather = (ImageButton) findViewById(R.id.WeatherRefreshButton);
 		refreshWeather.setOnClickListener(refreshWeatherListener);
 
+		((RadioGroup) findViewById(R.id.fanGroup)).setOnCheckedChangeListener(ToggleListener);
+		((RadioGroup) findViewById(R.id.modeGroup)).setOnCheckedChangeListener(ToggleListener);
 		// buttons for fan
 		Button fanOn = (Button) findViewById(R.id.sys_fan_on);
 		Button fanOff = (Button) findViewById(R.id.sys_fan_off);
@@ -79,8 +83,8 @@ public class HVACActivity extends Activity implements MenuInterface {
 		Button sysFan = (Button) findViewById(R.id.sys_mode_fan);
 
 		// buttons for temp adjustment
-		Button adjustUp = (Button) findViewById(R.id.tempUp);
-		Button adjustDown = (Button) findViewById(R.id.tempDown);
+		ImageButton adjustUp = (ImageButton) findViewById(R.id.tempUp);
+		ImageButton adjustDown = (ImageButton) findViewById(R.id.tempDown);
 
 		fanOn.setOnClickListener(fanOnListener);
 		fanOff.setOnClickListener(fanOffListener);
@@ -113,6 +117,16 @@ public class HVACActivity extends Activity implements MenuInterface {
 
 	}
 
+	
+	static final RadioGroup.OnCheckedChangeListener ToggleListener = new RadioGroup.OnCheckedChangeListener() {
+        public void onCheckedChanged(final RadioGroup radioGroup, final int i) {
+            for (int j = 0; j < radioGroup.getChildCount(); j++) {
+                final ToggleButton view = (ToggleButton) radioGroup.getChildAt(j);
+                view.setChecked(view.getId() == i);
+            }
+        }
+    };
+	
 	private class CurrentWeatherTask extends AsyncTask<Void, Void, String> {
 		ImageButton currentWeatherImageView = (ImageButton) findViewById(R.id.WeatherRefreshButton);
 		TextView currentWeatherTextView = (TextView) findViewById(R.id.WeatherText);
@@ -142,9 +156,9 @@ public class HVACActivity extends Activity implements MenuInterface {
 						.getString("relative_humidity");
 				String obsTime = currentObservation
 						.getString("observation_time");
-				currentWeatherText = "Weather for: " + zip + "\n" + weather
-						+ "\n" + tempString + "\n" + windString + "\n"
-						+ relativeHumidity + "\n" + obsTime;
+				currentWeatherText = "Weather for: " + zip + "\n" + tempString
+						+ "\n" + weather + "\n" + windString + "\n"
+						+ relativeHumidity + " Chance of Precipitation\n" + obsTime;
 				currentWeatherImage = weatherImage(currentWeatherText);
 
 				return currentWeatherText;
@@ -177,6 +191,7 @@ public class HVACActivity extends Activity implements MenuInterface {
 	};
 	private OnClickListener fanOnListener = new OnClickListener() {
 		public void onClick(View v) {
+		    ((RadioGroup)v.getParent()).check(v.getId());
 			SharedPreferences settings = PreferenceManager
 					.getDefaultSharedPreferences(getBaseContext());
 			SharedPreferences.Editor edit = settings.edit();
@@ -189,6 +204,7 @@ public class HVACActivity extends Activity implements MenuInterface {
 	};
 	private OnClickListener fanOffListener = new OnClickListener() {
 		public void onClick(View v) {
+		    ((RadioGroup)v.getParent()).check(v.getId());
 			SharedPreferences settings = PreferenceManager
 					.getDefaultSharedPreferences(getBaseContext());
 			SharedPreferences.Editor edit = settings.edit();
@@ -201,6 +217,7 @@ public class HVACActivity extends Activity implements MenuInterface {
 	};
 	private OnClickListener fanAutoListener = new OnClickListener() {
 		public void onClick(View v) {
+		    ((RadioGroup)v.getParent()).check(v.getId());
 			SharedPreferences settings = PreferenceManager
 					.getDefaultSharedPreferences(getBaseContext());
 			SharedPreferences.Editor edit = settings.edit();
@@ -214,6 +231,8 @@ public class HVACActivity extends Activity implements MenuInterface {
 
 	private OnClickListener sysHeatListener = new OnClickListener() {
 		public void onClick(View v) {
+		    ((RadioGroup)v.getParent()).check(v.getId());
+
 			SharedPreferences settings = PreferenceManager
 					.getDefaultSharedPreferences(getBaseContext());
 			SharedPreferences.Editor edit = settings.edit();
@@ -226,6 +245,7 @@ public class HVACActivity extends Activity implements MenuInterface {
 	};
 	private OnClickListener sysCoolListener = new OnClickListener() {
 		public void onClick(View v) {
+		    ((RadioGroup)v.getParent()).check(v.getId());
 			SharedPreferences settings = PreferenceManager
 					.getDefaultSharedPreferences(getBaseContext());
 			SharedPreferences.Editor edit = settings.edit();
@@ -238,6 +258,7 @@ public class HVACActivity extends Activity implements MenuInterface {
 	};
 	private OnClickListener sysFanListener = new OnClickListener() {
 		public void onClick(View v) {
+		    ((RadioGroup)v.getParent()).check(v.getId());
 			SharedPreferences settings = PreferenceManager
 					.getDefaultSharedPreferences(getBaseContext());
 			SharedPreferences.Editor edit = settings.edit();
@@ -318,15 +339,21 @@ public class HVACActivity extends Activity implements MenuInterface {
 		if (condition.contains("storm")) {
 			conditionDrawable = res.getDrawable(R.drawable.weather_storm);
 		}
+
 		if (condition.contains("cloudy") || condition.contains("Cloudy")
-				|| condition.contains("Overcast")) {
+				|| condition.contains("Overcast") || condition.contains("Haze") || condition.contains("haze")) {
 			conditionDrawable = res.getDrawable(R.drawable.weather_cloudy);
 		}
 		if (condition.contains("snow") || condition.contains("Snow")) {
 			conditionDrawable = res.getDrawable(R.drawable.weather_snow);
 		}
+		if (condition.contains("Partly")){
+			conditionDrawable = res.getDrawable(R.drawable.weather_partlycloudy);
+		}
 		return conditionDrawable;
 
 	}
 
+	
 }
+

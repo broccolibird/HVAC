@@ -9,27 +9,27 @@ public class FSHVACEvent extends FSEvent implements FSHVACEventInterface, FSHVAC
 		 super(isRecurring,times);
 	}
 	
-	FSHVACState startState;
-	FSHVACState stopState;
-	FSHVACState middleState;
+	HVACState startState;
+	HVACState stopState;
+	HVACState middleState;
 	
-	public void setStartState(FSHVACState state){
+	public void setStartState(HVACState state){
 		this.startState = state;
 		
 	}
-	public void setMiddleState(FSHVACState state){
+	public void setMiddleState(HVACState state){
 		this.middleState = state;
 	}
 	
-	public void setStopState(FSHVACState state) {
+	public void setStopState(HVACState state) {
 		this.stopState = state;
 	}
 	
-	public FSHVACState getStartState() {
+	public HVACState getStartState() {
 		return this.startState;
 	}
 	
-	public FSHVACState getStopState() {
+	public HVACState getStopState() {
 		return this.stopState;
 	}
 	
