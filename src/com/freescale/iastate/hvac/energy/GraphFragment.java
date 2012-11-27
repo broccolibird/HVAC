@@ -75,7 +75,7 @@ public class GraphFragment extends Fragment {
 	private XYMultipleSeriesDataset getGeneratedDataset(int timePeriod) {
 		final int floor = 65;
 		int averageKWH = 0;
-		int variation = 0;
+		double variation = 0;
 
 		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 		Calendar c = Calendar.getInstance();
@@ -83,7 +83,7 @@ public class GraphFragment extends Fragment {
 
 		if (timePeriod == DAY) {
 			averageKWH = hourKWH();
-			variation = 1;
+			variation = 3;
 			c = Calendar.getInstance();
 			numDataPoints = c.get(Calendar.HOUR_OF_DAY) + 1;
 		} else if (timePeriod == WEEK) {
@@ -130,7 +130,7 @@ public class GraphFragment extends Fragment {
 			chartTitle = "Energy Usage Today";
 			xTitle = "Hours";
 			numBars = 24.5;
-			yMax = hourKWH() +  hourKWH();
+			yMax = 4* hourKWH();
 
 			renderer.clearXTextLabels();
 
