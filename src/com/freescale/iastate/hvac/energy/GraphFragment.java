@@ -83,7 +83,7 @@ public class GraphFragment extends Fragment {
 
 		if (timePeriod == DAY) {
 			averageKWH = hourKWH();
-			variation = 4;
+			variation = 1;
 			c = Calendar.getInstance();
 			numDataPoints = c.get(Calendar.HOUR_OF_DAY) + 1;
 		} else if (timePeriod == WEEK) {
@@ -130,7 +130,7 @@ public class GraphFragment extends Fragment {
 			chartTitle = "Energy Usage Today";
 			xTitle = "Hours";
 			numBars = 24.5;
-			yMax = hourKWH() +  hourKWH()*.4;
+			yMax = hourKWH() +  hourKWH();
 
 			renderer.clearXTextLabels();
 

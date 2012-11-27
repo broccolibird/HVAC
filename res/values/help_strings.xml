@@ -4,5 +4,6 @@
     <string name="weather_help">Displays three day forecast. Your current location may be adjusted in the Settings menu.</string>
     <string name="settings_help">Adjust your HVAC application settings here.</string>
     <string name="calendar_help">Please fill me in!</string>
+    <string name="energy_help">This graph displays the energy usage.\n\nPress a button on the left to change the time frame of the energy usage graph</string>
 	    
 </resources>
