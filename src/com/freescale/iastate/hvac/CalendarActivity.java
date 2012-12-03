@@ -450,12 +450,12 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	View timePadding;
 	
 	public void setupDayTab() {
-		EventWrapper ew = new EventWrapper(0f,24f);
+		EventWrapper ew = new EventWrapper(0f,5f);
 		ew.expandTimes();
 		eventWrapperKeys.add(ew);
-		//		eventWrapperKeys.add(new EventWrapper(5f, 9f).setContents("DayView Period #2\nnewline1\njjhfghc"));
-		//		eventWrapperKeys.add(new EventWrapper(9f, 14f).setContents("DayView Period #3"));
-		//		eventWrapperKeys.add(new EventWrapper(14f, 24f).setContents("DayView Period #4"));
+				eventWrapperKeys.add(new EventWrapper(5f, 9f).setContents("DayView Period #2\nnewline1\njjhfghc"));
+				eventWrapperKeys.add(new EventWrapper(9f, 14f).setContents("DayView Period #3"));
+				eventWrapperKeys.add(new EventWrapper(14f, 24f).setContents("DayView Period #4"));
 
 		eventView = (RelativeLayout)findViewById(R.id.calendar_dayview_relativelayout);
 		sampleView = (RelativeLayout)findViewById(R.id.calendar_dayview_time_preview);
@@ -558,7 +558,6 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 			dayWrapper.get(i).setTimeView(time_textView);
 			dayWrapper.get(i).setEventView(event_layout);
 			dayWrapper.get(i).setLinearView(layoutToAdd);
-			Log.i("Count",i + "");
 
 			eventCells.addView(layoutToAdd,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 

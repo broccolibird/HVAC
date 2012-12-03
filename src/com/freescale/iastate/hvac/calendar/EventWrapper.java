@@ -18,13 +18,13 @@ public class EventWrapper implements EventCommon {
 	
 	//View Parameters
 	public boolean transparent = false;
-	public String contents = new String();
 	public int fontsize = 8;
 	//View and Data Parameters
 	DecimalFormat scannerFormat = new DecimalFormat("00.00");
 	public float startTime = 0f;
 	public float endTime = 0f;
 	public float height = 0;
+	public String contents = new String();
 	public LinearLayout linearView;
 	public RelativeLayout eventView;
 	public TextView timeView;
@@ -146,7 +146,7 @@ public class EventWrapper implements EventCommon {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
 		sdf.setCalendar(cal);
-		return sdf.format(cal.getTime()).replaceAll("^0", "  ");
+		return sdf.format(cal.getTime()).replaceAll("^0", ""); //TODO
 	}
 	
 	public String expandTimes(){
@@ -176,11 +176,17 @@ public class EventWrapper implements EventCommon {
 	public boolean timeIsCoherent() {
 		if(this.getTimeDuration() == -1f) return false;
 		if(this.endTime < 0 || this.startTime < 0) return false;
+		if(this.endTime == this.startTime) return false;
 		return true;
 	}
 	
-	public EventWrapper getWrapperObject() {
-		return this;
+	public EventWrapper clone() {
+		EventWrapper ew = new EventWrapper(this.startTime,this.endTime);
+		ew.setLinearView(this.linearView);
+		ew.setTimeView(this.timeView);
+		ew.setEventView(this.eventView);
+		ew.setContents(this.contents);
+		return ew;
 	}
 	public float getStopTime() {
 		return this.endTime;
