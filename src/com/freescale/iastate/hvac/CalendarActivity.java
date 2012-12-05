@@ -342,7 +342,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 					tp1currentMinute = timePicker1.getCurrentMinute();
 
 					tp2currentHour = timePicker2.getCurrentHour();
-					tp1currentMinute = timePicker2.getCurrentMinute();
+					tp2currentMinute = timePicker2.getCurrentMinute();
 
 					tpl.onTimeChanged(timePicker1, tp1currentHour, tp1currentMinute);
 					tpl.onTimeChanged(timePicker2, tp2currentHour, tp2currentMinute);
@@ -374,8 +374,8 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setView(listRow)
-			.setTitle("Choose State...").setMessage("Select a State to Use")
-			.setPositiveButton("Select State", new DialogInterface.OnClickListener() {
+			.setTitle("Choose Mode...").setMessage("Select a Mode to Use")
+			.setPositiveButton("Select Mode", new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
 					int index = stateList.getCheckedItemPosition();
@@ -450,12 +450,14 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	View timePadding;
 	
 	public void setupDayTab() {
-		EventWrapper ew = new EventWrapper(0f,5f);
+		EventWrapper ew = new EventWrapper(0f,1f);
 		ew.expandTimes();
 		eventWrapperKeys.add(ew);
-				eventWrapperKeys.add(new EventWrapper(5f, 9f).setContents("DayView Period #2\nnewline1\njjhfghc"));
-				eventWrapperKeys.add(new EventWrapper(9f, 14f).setContents("DayView Period #3"));
-				eventWrapperKeys.add(new EventWrapper(14f, 24f).setContents("DayView Period #4"));
+		eventWrapperKeys.add(new EventWrapper(1f, 6f).setContents("DayView Period #2b\nnewline1\njjhfghc"));
+		eventWrapperKeys.add(new EventWrapper(6f, 12f).setContents("DayView Period #2c\nnewline1\njjhfghc"));
+				eventWrapperKeys.add(new EventWrapper(12f, 18f).setContents("DayView Period #2\nnewline1\njjhfghc"));
+				eventWrapperKeys.add(new EventWrapper(18f, 24f).setContents("DayView Period #3"));
+//				eventWrapperKeys.add(new EventWrapper(18f, 24f).setContents("DayView Period #4"));
 
 		eventView = (RelativeLayout)findViewById(R.id.calendar_dayview_relativelayout);
 		sampleView = (RelativeLayout)findViewById(R.id.calendar_dayview_time_preview);
@@ -471,7 +473,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 //				Toast.makeText(getBaseContext(), "Event Inserted (Not Implemented)", Toast.LENGTH_SHORT).show();
 				
 				eventCells.removeAllViews();
-				dayWrapper.insertEvent(new EventWrapper(time1,time2), dayWrapper.getTimeStartsInEventByEventIndex(time1,time2));
+				dayWrapper.insertEvent(new EventWrapper(time1,time2));
 				doScheduleLayout();
 			
 			}
@@ -547,12 +549,6 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 			else layoutToAdd.setBackgroundResource(R.drawable.calendar_dayview_shallow_dark);
 
 			time_textView.setText(dayWrapper.get(i).collapseTimes());
-			if(i == 0) {
-				time_textView.measure(0, 0);
-				timeViewHourHeight = time_textView.getMeasuredHeightAndState()-4;
-
-				if(dayWrapper.size()>1) timeViewHourHeight = time_textView.getMeasuredHeightAndState()+2;
-			}
 			//			event_layout.setText(eventWrapperKeys.get(i).getContents());
 
 			dayWrapper.get(i).setTimeView(time_textView);
@@ -638,42 +634,42 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 				minute2 = timePicker1.getCurrentMinute();
 			}
 
-			time1 = hour1 + minute1*MINUTE_MULT_CONSTANT_T2F*0.01f;
-			time2 = hour2 + minute2*MINUTE_MULT_CONSTANT_T2F*0.01f;
+			time1 = hour1 + minute1*(MINUTE_MULT_CONSTANT_T2F*0.01f);
+			time2 = hour2 + minute2*(MINUTE_MULT_CONSTANT_T2F*0.01f);
 
 			EventTimeIndex eti = dayWrapper.getTimeStartsInEventByEventIndex(time1,time2);
 			int count = 0;
-
+			Log.i("TimePickerListener", "Time 1: " + time1 + " / Time 2: "+ time2);
 			while( count < eti.startIndex) {
 				dayWrapper.get(count).getTimeView().setText(dayWrapper.get(count).collapseTimes());
-				dayWrapper.get(count).getTimeView().measure(0,0);
-				transparentHeight += dayWrapper.get(count).getTimeView().getMeasuredHeightAndState();
+//				dayWrapper.get(count).getTimeView().measure(0,0);
+//				transparentHeight += dayWrapper.get(count).getTimeView().getMeasuredHeightAndState();
 
 				//				Log.i("TimePickerLoop","1st Loop Executed - index = " + count);
 				count++;
 			}
 
-			previewSideTransparentView.getLayoutParams().height = transparentHeight;
-			previewSideTransparentView.requestLayout();
-			transparentHeight = 0;
-			float timePaddingHeight = 0;
+//			previewSideTransparentView.getLayoutParams().height = transparentHeight;
+//			previewSideTransparentView.requestLayout();
+//			transparentHeight = 0;
+//			float timePaddingHeight = 0;
 
 			while(count < eti.stopIndex || count == eti.startIndex || count == eti.stopIndex) {
 				dayWrapper.get(count).getTimeView().setText(dayWrapper.get(count).expandTimes());
 				//viewMap.get(eventWrapperKeys.get(count)).measure(0,0);
 				
-				int additionalHeight = 0;
-				if(eti.startIndex == eti.stopIndex) additionalHeight = -9;
-				if(count == eti.stopIndex && eti.stopIndex > eti.startIndex) additionalHeight = timeViewHourHeight;
+//				int additionalHeight = 0;
+//				if(eti.startIndex == eti.stopIndex) additionalHeight = -9;
+//				if(count == eti.stopIndex && eti.stopIndex > eti.startIndex) additionalHeight = timeViewHourHeight;
 
-				float smallTime = dayWrapper.getSmallerTime(time1, time2);
-				timePaddingHeight += dayWrapper.getSmallTimeHeightDifference(count, smallTime);
+//				float smallTime = dayWrapper.getSmallerTime(time1, time2);
+//				timePaddingHeight += dayWrapper.getSmallTimeHeightDifference(count, smallTime);
 
-				timePadding.getLayoutParams().height = (int) FloatMath.ceil(timeViewHourHeight*timePaddingHeight);
-				timePadding.requestLayout();
-
-				timeSelection.getLayoutParams().height = (int) FloatMath.ceil(timeViewHourHeight*dayWrapper.getAbsoluteTime(time1, time2)-additionalHeight);
-				timeSelection.requestLayout();
+//				timePadding.getLayoutParams().height = (int) FloatMath.ceil(timeViewHourHeight*timePaddingHeight);
+//				timePadding.requestLayout();
+//
+//				timeSelection.getLayoutParams().height = (int) FloatMath.ceil(timeViewHourHeight*dayWrapper.getAbsoluteTime(time1, time2)-additionalHeight);
+//				timeSelection.requestLayout();
 
 				count++;
 
