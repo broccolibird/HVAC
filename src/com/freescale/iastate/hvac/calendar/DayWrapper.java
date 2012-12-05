@@ -105,14 +105,14 @@ public class DayWrapper {
 				intersectionStop++;
 			}
 		}
-//
-//
-//		for(int i = 0; i < intersectionStart; i++) {
-//			if(oldEvents.get(i).getStartTime() == oldEvents.get(i).getStopTime()) continue;  //not strictly necessary for operation, but a good precaution.
-//			if(oldEvents.get(i).getStartTime() != oldEvents.get(i).getStopTime()) newVector.add(oldEvents.get(i));
-//		}
-//		
-		
+		//
+		//
+		//		for(int i = 0; i < intersectionStart; i++) {
+		//			if(oldEvents.get(i).getStartTime() == oldEvents.get(i).getStopTime()) continue;  //not strictly necessary for operation, but a good precaution.
+		//			if(oldEvents.get(i).getStartTime() != oldEvents.get(i).getStopTime()) newVector.add(oldEvents.get(i));
+		//		}
+		//		
+
 		float lowerTime1 = oldEvents.get(intersectionStart).getStopTime();
 		float lowerTime2 = newEvent.getStartTime();
 		float middleTime1 = oldEvents.get(intersectionStop).getStopTime();
@@ -121,67 +121,81 @@ public class DayWrapper {
 		float upperTime2 = newEvent.getStopTime();
 
 		//float superTime1  = 0;
-//		Vector<EventWrapper> tempVector = new Vector<EventWrapper>();
-//		tempVector = (Vector<EventWrapper>) oldEvents.clone();
-		
-//		if(oldEvents.get(i).oldEvents.get(intersectionStop-1).getStopTime();
-	//	float superTime2
+		//		Vector<EventWrapper> tempVector = new Vector<EventWrapper>();
+		//		tempVector = (Vector<EventWrapper>) oldEvents.clone();
+
+		//		if(oldEvents.get(i).oldEvents.get(intersectionStop-1).getStopTime();
+		//	float superTime2
 		Log.i("##case2","Lower Times = (1) "+ lowerTime1 + " > (2) " + lowerTime2);
 		Log.i("##case2","Middle Times = (1) "+ middleTime1 +" > (2) " +middleTime2) ;
 		Log.i("##case2","Upper Times = (1) "+ upperTime1 + " < (2) " + upperTime2);
 		//Log.i("##case2","Super Times = (1) "+ superTime1 + " : ["+ (intersectionStop-1) + "]");
-	//	EventWrapper ew2a = oldEvents.get(intersectionStart).clone();
-///		EventWrapper ew2b = oldEvents.get(intersectionStop).clone();
-//		EventWrapper ew2n = newEvent.clone();
+		//	EventWrapper ew2a = oldEvents.get(intersectionStart).clone();
+		///		EventWrapper ew2b = oldEvents.get(intersectionStop).clone();
+		//		EventWrapper ew2n = newEvent.clone();
 
-//		ew2n.setStartTime(lowerTime2);
-//		ew2n.setStopTime(upperTime2);
+		//		ew2n.setStartTime(lowerTime2);
+		//		ew2n.setStopTime(upperTime2);
 
-		
+
 		//if(newVector.get(intersectionStart).getStartTime() == 0) newVector.get(intersectionStart).setStartTime(upperTime2);
-		
+
 		//if(ew2n.getStartTime() != ew2n.getStopTime()) newVector.insertElementAt(ew2n, intersectionStart);
 		if(oldEvents.get(0).getStartTime()== 0 ) {
 			//ew2a.setStartTime(lowerTime2);
-		//	ew2a.setStopTime(upperTime2);
-			Log.i("Time", lowerTime2 + " > " + upperTime2  + " => start ["+intersectionStart+"]");
-			
+			//	ew2a.setStopTime(upperTime2);
+			//Log.i("Time", lowerTime2 + " > " + upperTime2  + " => start ["+intersectionStart+"]");
+
 			if(intersectionStart < intersectionStop) {
 				//oldEvents.get(intersectionStart).setStartAndStopTimes(lowerTime2, upperTime2);
 				oldEvents.get(intersectionStart).setStartAndStopTimes(lowerTime1, upperTime2);
-				
-				for(int i = 0; i < intersectionStart-1; i++){
+
+				for(int i = 0; i < intersectionStart; i++){
 					if(oldEvents.get(i).getStartTime() == oldEvents.get(i).getStopTime()) continue;
 					newVector.add(oldEvents.get(i));
 				}
 				Log.i("Inner if statement","Intersection start/stop = "+ intersectionStart+" => Time: "+ upperTime2);
-				
-				
+
+
 				if(oldEvents.get(0).getStartTime() != 0 ) {
 					//newVector.get(0).setStartTime(0);
 					//oldEvents.get(0).setStartTime(0);
+					Log.i("info", "oldEvents.get(0).getStartTime() != 0 Time: "+oldEvents.get(0).getStartTime());
+
+
 					if(newVector.size() == 0) {
+						EventWrapper startBufferX = oldEvents.get(0).clone();
+						if(newEvent.getStartTime() > 0 && startBufferX.checkStartAndStop()){
+							startBufferX.setStartAndStopTimes(0, lowerTime2);
+							newVector.add(startBufferX);
+						}
 						float startTime = oldEvents.get(intersectionStart).getStartTime();
 						float stopTime = oldEvents.get(intersectionStart).getStopTime();
+
 						EventWrapper startBuffer = oldEvents.get(0).clone();
 						startBuffer.setStartAndStopTimes(startTime, stopTime);
 						if(startBuffer.getStartTime() != startBuffer.getStopTime() &&
 								startBuffer.getStopTime() != newEvent.getStopTime()) newVector.add(startBuffer);
 						Log.i("Times","StartBuffer if = "  +startBuffer.getStartTime() + " : " +startBuffer.getStopTime());
+
 					} else {
-					EventWrapper startBuffer = oldEvents.get(intersectionStart).clone();
-					startBuffer.setStartAndStopTimes(oldEvents.get(0).getStartTime(),newEvent.getStartTime());
-					if(startBuffer.getStartTime() != startBuffer.getStopTime())  newVector.add(startBuffer);
-					Log.i("Times","StartBuffer else = "  +startBuffer.getStartTime() + " : " +startBuffer.getStopTime());
+						EventWrapper startBuffer = oldEvents.get(intersectionStart).clone();
+
+						float startTime = oldEvents.get(0).getStartTime();
+						float stopTime = newEvent.getStartTime();
+						startBuffer.setStartAndStopTimes(startTime,stopTime);
+
+						if(startBuffer.getStartTime() != startBuffer.getStopTime())  newVector.add(startBuffer);
+
+						Log.i("StartBuffer else ","Time: "  +startBuffer.getStartTime() + " < " +startBuffer.getStopTime());
 					}
-					Log.i("Times","Start time does not equal zero => "  +lowerTime2+" > "+  newEvent.getStartTime());
-					
+
 				} else { // if(middleTime2 != newVector.get(0).getStopTime()) {
 					for(int i = 0; i < newVector.size(); i++) {
 						Log.i("newVector [inside]","Time: "+newVector.get(i).getStartTime() + " ==> " +  newVector.get(i).getStopTime() + "  ["+ i+"]");
 					}
 					EventWrapper startBuffer = oldEvents.get(intersectionStart).clone();
-//					float bufferStartTime = newVector.get(newVector.size()-intersectionStart).getStartTime();
+					//					float bufferStartTime = newVector.get(newVector.size()-intersectionStart).getStartTime();
 					float bufferStopTime = oldEvents.get(intersectionStart-1).getStopTime();
 					startBuffer.setStartAndStopTimes(bufferStopTime, lowerTime2);
 					Log.i("eep", "middletime2 != newvector(ints).stoptime "+ bufferStopTime);
@@ -190,91 +204,140 @@ public class DayWrapper {
 				}
 				if(newEvent.getStartTime() != oldEvents.get(intersectionStart).getStopTime() ||
 						newEvent.getStopTime()!=oldEvents.get(intersectionStop).getStartTime()) newVector.add(newEvent);
-				
+
 				if(oldEvents.get(intersectionStop).getStartTime() < newEvent.getStopTime()) {
 					Log.i("Times","End time is bigger newEvent end time => " + oldEvents.get(intersectionStop).getStartTime() + " < "+newEvent.getStopTime());
 					EventWrapper endBuffer = oldEvents.get(intersectionStop).clone();
+					float startTime;
+					float stopTime;
+					//					endBuffer.setStartAndStopTimes()
 					endBuffer.setStartTime(lowerTime2);
 					Log.i("endTime", endBuffer.getStartTime() + " " + endBuffer.getStopTime());	
 					oldEvents.get(intersectionStop).setStartTime(newEvent.getStopTime());
 
 				}
-				
-				
+
+
 				for(int i = intersectionStop; i < oldEvents.size(); i++){
 					if(oldEvents.get(i).getStartTime() == oldEvents.get(i).getStopTime()) continue;
 					newVector.add(oldEvents.get(i));
 				}
 				//##############################################################################################//
 			} else {
-				for(int i = 0; i < intersectionStart-1; i++){
+				for(int i = 0; i < intersectionStart; i++){
 					if(oldEvents.get(i).getStartTime() == oldEvents.get(i).getStopTime()) continue;
 					newVector.add(oldEvents.get(i));
 				}
 				//In this specific case we need to make a new event and clone it
-			//	EventWrapper ew1o = newEvent.clone();
-//				ew1o.setStopTime(upperTime2);
-//				ew1o.setStartTime(lowerTime2);
-				Log.i("Inner else statement","inner else");
+				//	EventWrapper ew1o = newEvent.clone();
+				//				ew1o.setStopTime(upperTime2);
+				//				ew1o.setStartTime(lowerTime2);
+				//Log.i("Inner else statement","inner else");
 				//if(ew1o.getStartTime() != ew1o.getStopTime() ) {
-					Log.i("Inner else if","inner else if [" + intersectionStart+ "]");
-					oldEvents.get(intersectionStart).setStartAndStopTimes(0f,0f);
-					
+				Log.i("Else case","else case [start] [stop] => [" + intersectionStart+ "] ["+ intersectionStop + "]");
+				//oldEvents.get(intersectionStart).setStartAndStopTimes(0f,0f);
+				EventWrapper startBufferX = oldEvents.get(intersectionStart).clone();
+				if(newEvent.getStartTime() < startBufferX.getStopTime() && startBufferX.checkStartAndStop()){
+					float startTime = oldEvents.get(intersectionStart).getStartTime();
+					float stopTime = newEvent.getStartTime();
+					startBufferX.setStartAndStopTimes(startTime,stopTime);
+					newVector.add(startBufferX);
+					Log.i("Buffer","startBufferX in else case.  Times: "+startTime + " > "+ stopTime);
+					if(newEvent.checkStartAndStop()) newVector.add(newEvent);
+				}
+
+				//## old
+//				if(newEvent.getStartTime() > 0){
+//					startBufferX.setStartAndStopTimes(0, lowerTime2);
+//					if(startBufferX.getStartTime() != startBufferX.getStopTime()) newVector.add(startBufferX);
+//					Log.i("Buffer","Buffer X lower " + 0 + " < " + lowerTime2);
+//				}
+				//## end
+
 				//	if(ew1o.getStartTime() != ew1o.getStopTime()) newVector.add(ew1o);
-					if(oldEvents.get(0).getStartTime() == 0 && newEvent.getStartTime() < upperTime2) {
-						EventWrapper ew2o = oldEvents.get(intersectionStart).clone();
-						if(upperTime1 < lowerTime2) ew2o.setStartAndStopTimes(upperTime1,lowerTime2 );
-						else ew2o.setStartAndStopTimes(upperTime2,lowerTime1 );
-						if(ew2o.getStartTime() != ew2o.getStopTime()) newVector.add(ew2o);
-					
-						Log.i("Later Time 4",upperTime2 + " > " + middleTime1 + " ["+ newVector.size() +"]");
-					}
-					
-					if(newEvent.getStartTime() < upperTime2) {
-						EventWrapper ew2o = oldEvents.get(intersectionStart).clone();
-						if(newEvent.getStartTime() < upperTime2) ew2o.setStartAndStopTimes(newEvent.getStartTime(),upperTime2);
-						else ew2o.setStartAndStopTimes(upperTime2,newEvent.getStartTime());
-						if(ew2o.getStartTime() != ew2o.getStopTime())  newVector.add(ew2o);
-						Log.i("Later Time 1",newEvent.getStartTime() + " > " + upperTime2 + " ["+ newVector.size() +"]");
-					} else
-					if(oldEvents.get(intersectionStart).getStartTime() < newEvent.getStopTime() ) {
-						EventWrapper ew2o = oldEvents.get(intersectionStart).clone();
-						if(upperTime1 < lowerTime2) ew2o.setStartAndStopTimes(upperTime1,lowerTime2 );
-						else ew2o.setStartAndStopTimes(upperTime2,lowerTime1 );
-						if(ew2o.getStartTime() != ew2o.getStopTime()) newVector.add(ew2o);
-					
-						Log.i("Later Time 2",upperTime2 + " > " + middleTime1 + " ["+ newVector.size() +"]");
-					}
-					
-					if(middleTime1 > upperTime2) {
-						EventWrapper ew2o = oldEvents.get(intersectionStart).clone();
-						if(upperTime2 < middleTime1) ew2o.setStartAndStopTimes(upperTime2,middleTime1);
-						else ew2o.setStartAndStopTimes(middleTime1,upperTime2);
-						if(ew2o.getStartTime() != ew2o.getStopTime()) newVector.add(ew2o);
-						Log.i("Later Time 5",upperTime2 + " > " + middleTime1 + " ["+ newVector.size() +"]");
-					} else
-					if(newEvent.getStartTime() < middleTime1) {
-						EventWrapper ew2o = oldEvents.get(intersectionStart).clone();
-						if(lowerTime2 < middleTime1) ew2o.setStartAndStopTimes(middleTime1,lowerTime2);
-						else ew2o.setStartAndStopTimes(lowerTime2,middleTime1);
-						if(ew2o.getStartTime() != ew2o.getStopTime())  newVector.add(ew2o);
-						Log.i("Later Time 3",middleTime1 + " > " + lowerTime2 + " ["+ newVector.size() +"]");
-					}
 
 				
-					for(int i = 0; i < newVector.size(); i++) {
-						Log.i("newVector [inside]","Time: "+ newVector.get(i).getStartTime() + " ==> " +  newVector.get(i).getStopTime() + "  ["+ i+"]");
-					}
-			//	}
-				for(int i = intersectionStop; i < oldEvents.size(); i++){
+				if(oldEvents.get(intersectionStop).getStopTime() > newEvent.getStopTime()) {
+					float startTime = newEvent.getStopTime();
+					float stopTime = oldEvents.get(intersectionStop).getStopTime();
+					EventWrapper buffer1 = oldEvents.get(intersectionStop).clone();
+					buffer1.setStartAndStopTimes(startTime, stopTime);
+					newVector.add(buffer1);
+					Log.i("Buffer","buffer1 in else case.  Times: "+startTime + " > "+ stopTime);
+					
+				}
+			/*
+			 *	//## old
+			 
+				if(oldEvents.get(0).getStartTime() == 0  &&
+						newEvent.getStartTime() > middleTime2 ) {
+					float startTime;
+					float endTime;
+					EventWrapper ew2o = oldEvents.get(intersectionStart).clone();
+					if(upperTime1 < lowerTime2) ew2o.setStartAndStopTimes(startBufferX.getStopTime(),middleTime2 );
+					else ew2o.setStartAndStopTimes(startBufferX.getStopTime() ,middleTime1 );
+					if(ew2o.getStartTime() != ew2o.getStopTime()&& ew2o.getStopTime() != 0) newVector.add(ew2o);
+
+					Log.i("Later Time 4",upperTime2 + " > " + middleTime1 + " ["+ newVector.size() +"]");
+				}
+				//## end
+				if(newEvent.getStartTime() < upperTime2) {
+					float startTime;
+					float endTime;
+
+					EventWrapper ew2o = oldEvents.get(intersectionStart).clone();
+					ew2o.setStartAndStopTimes(startBufferX.getStartTime(),newEvent.getStartTime());
+
+					if(ew2o.getStartTime() != ew2o.getStopTime() && ew2o.getStopTime() != 0 && ew2o.getStartTime() != 0)  newVector.add(ew2o);
+					Log.i("Later Time 1",upperTime2 + " > " + newEvent.getStartTime() + " ["+ newVector.size() +"]");
+				}
+
+				if(oldEvents.get(intersectionStart).getStartTime() < newEvent.getStopTime() ) {
+					float startTime;
+					float endTime;
+
+					EventWrapper ew2o = oldEvents.get(intersectionStart).clone();
+					ew2o.setStartAndStopTimes(upperTime1,lowerTime2 );
+					if(ew2o.getStartTime() != ew2o.getStopTime()&& ew2o.getStopTime() != 0 && ew2o.getStartTime() != 0) newVector.add(ew2o);
+
+					Log.i("Later Time 2",upperTime2 + " > " + middleTime1 + " ["+ newVector.size() +"]");
+				}
+
+				if(middleTime1 > upperTime2) {
+					float startTime;
+					float endTime;
+					EventWrapper ew2o = oldEvents.get(intersectionStart).clone();
+					if(upperTime2 < middleTime1) ew2o.setStartAndStopTimes(upperTime2,middleTime1);
+					else ew2o.setStartAndStopTimes(middleTime1,upperTime2);
+					if(ew2o.getStartTime() != ew2o.getStopTime()&& ew2o.getStopTime() != 0 && ew2o.getStartTime() != 0) newVector.add(ew2o);
+					Log.i("Later Time 5",upperTime2 + " > " + middleTime1 + " ["+ newVector.size() +"]");
+				}
+
+				if(newEvent.getStartTime() < middleTime1 && lowerTime1 != middleTime1 ) {
+					float startTime;
+					float endTime;
+					EventWrapper ew2o = oldEvents.get(intersectionStart).clone();
+					if(lowerTime2 < middleTime1) ew2o.setStartAndStopTimes(middleTime1,lowerTime2);
+					else ew2o.setStartAndStopTimes(lowerTime2,middleTime1);
+					if(ew2o.getStartTime() != ew2o.getStopTime() && ew2o.getStopTime() != 0 && ew2o.getStartTime() != 0)  newVector.add(ew2o);
+					Log.i("Later Time 3",middleTime1 + " > " + lowerTime2 + " ["+ newVector.size() +"]");
+				}
+
+*/
+				for(int i = 0; i < newVector.size(); i++) {
+					Log.i("newVector [inside]","Time: "+ newVector.get(i).getStartTime() + " ==> " +  newVector.get(i).getStopTime() + "  ["+ i+"]");
+				}
+				
+				//	}
+				for(int i = intersectionStop+1; i < oldEvents.size(); i++){
 					if(oldEvents.get(i).getStartTime() == oldEvents.get(i).getStopTime()) continue;
 					newVector.add(oldEvents.get(i));
 				}
 			}
-			
+
 			//	ew2a.setStopTime(newVector.get(intersectionStart).getStopTime());
-				//newVector.insertElementAt(ew2a,intersectionStart);
-				
+			//newVector.insertElementAt(ew2a,intersectionStart);
+
 		} else if(oldEvents.get(0).getStartTime() != oldEvents.get(0).getStopTime()) {
 			Log.i("else"," " + upperTime2 + " intersection start ["+intersectionStart+"]");
 			for(int i = 0; i < oldEvents.size(); i++) {
@@ -295,7 +358,7 @@ public class DayWrapper {
 			Log.i("newVector [after]","Time: "+newVector.get(i).getStartTime() + " ==> " +  newVector.get(i).getStopTime() + "  ["+ i+"]");
 		}
 		Log.i("Index [start] [stop]","[" + intersectionStart+"]  ["+intersectionStop+"]");
-		
+
 		//this.events = newVector;
 
 	}
