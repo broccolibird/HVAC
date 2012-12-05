@@ -1,60 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/energy"
+    android:id="@+id/energy"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal" >
 
-    <GridLayout
-        android:id="@+id/gridLayout1"
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:columnCount="1" >
+    <fragment
+        android:id="@+id/button_column_fragment"
+        android:name="com.freescale.iastate.util.ButtonColumnFragment"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_column="0"
-            android:layout_width="fill_parent"
-            android:layout_row="1"
-            android:onClick="dayGraphClick"
-            android:text="Day" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_column="0"
-			android:layout_width="fill_parent"
-            android:layout_row="3"
-            android:onClick="weekGraphClick"
-            android:text="Week" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_column="0"
-			android:layout_width="fill_parent"
-            android:layout_row="5"            
-            android:onClick="monthGraphClick"
-            android:text="Month" />
-        
-        <Button
-            android:id="@+id/button4"
-            android:layout_column="0"
-            android:layout_width="fill_parent"
-            android:layout_row="7"            
-            android:onClick="yearGraphClick"
-            android:text="Year" />
-
-
-    </GridLayout>
-
-    <EditText
-        android:id="@+id/editText1"
-       	android:text="Test Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="7" >
-
-        <requestFocus />
-    </EditText>
+    <fragment
+		android:name="com.freescale.iastate.hvac.energy.GraphFragment"
+        android:id="@+id/energy_graph_fragment"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="6"/>
 
 </LinearLayout>
