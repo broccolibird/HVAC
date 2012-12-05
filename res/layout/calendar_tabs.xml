@@ -42,7 +42,6 @@
                 </TableRow>
             </TableLayout>
 
-
             <!--
                          <TextView
                         android:layout_width="match_parent"
@@ -74,7 +73,8 @@
                         android:orientation="vertical" >
                     </LinearLayout>
 
-                    <!--  empty space -->
+                    <!-- empty space -->
+
                     <TextView
                         android:id="@+id/calendar_dayview_preview_transparent"
                         android:layout_width="160dp"
@@ -82,34 +82,43 @@
                         android:layout_alignParentTop="true"
                         android:layout_toRightOf="@+id/calendar_dayview_linearlayout_deep"
                         android:textColor="#ffffff"
-                        android:textSize="18dp" 
-                        android:visibility="invisible"/>
-                    <!-- android:layout_toRightOf="@+id/calendar_dayview_linearlayout_deep" -->
+                        android:textSize="18dp"
+                        android:visibility="invisible" />
 
-                    <FrameLayout
+                    <!-- android:layout_toRightOf="@+id/calendar_dayview_linearlayout_deep" -->
+                    <!--
+					 <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
                         android:layout_alignLeft="@id/calendar_dayview_preview_transparent"
                         android:layout_below="@id/calendar_dayview_preview_transparent" >
+                    -->
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/calendar_dayview_linearlayout_deep" >
 
                         <include
                             android:id="@+id/calendar_dayview_time_preview"
                             android:layout_width="220dp"
                             android:layout_height="wrap_content"
-                            layout="@layout/calendar_listview_cell"
-                             />
+                            layout="@layout/calendar_listview_cell" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical" >
 
-                            <View
+                            <!--
+                                 <View
                                 android:id="@+id/calendar_dayview_timeremove"
                                 android:layout_width="5dp"
                                 android:layout_height="0dp"
                                 android:background="#a0f09c" 
                                 android:visibility="invisible"/>
+                            -->
 
                             <View
                                 android:id="@+id/calendar_dayview_timeselection"

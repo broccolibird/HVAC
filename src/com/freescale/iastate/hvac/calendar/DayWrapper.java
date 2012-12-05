@@ -14,6 +14,7 @@ public class DayWrapper {
 		this.events = events;
 
 	}
+
 	//	float cumulativeDuration;
 	//	public float getCumulativeDuration() {
 	//		return this.cumulativeDuration;
@@ -85,6 +86,7 @@ public class DayWrapper {
 		Log.i("DayWrapper","insertEvent");
 		int intersectionStart = 0;
 		int intersectionStop = 0;
+		Log.i("StartAndStopTimes", "Time: "+newEvent.getStartTime() + " > "+newEvent.getStopTime() );
 		if(newEvent.getStartTime() == newEvent.getStopTime()) return;
 
 		Vector<EventWrapper> newVector = new Vector<EventWrapper>();
@@ -241,7 +243,7 @@ public class DayWrapper {
 					float startTime = oldEvents.get(intersectionStart).getStartTime();
 					float stopTime = newEvent.getStartTime();
 					startBufferX.setStartAndStopTimes(startTime,stopTime);
-					newVector.add(startBufferX);
+					if(startBufferX.checkStartAndStop()) newVector.add(startBufferX);
 					Log.i("Buffer","startBufferX in else case.  Times: "+startTime + " > "+ stopTime);
 					if(newEvent.checkStartAndStop()) newVector.add(newEvent);
 				}

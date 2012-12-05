@@ -27,6 +27,9 @@ public class StateAdapter extends ArrayAdapter<HVACState> implements EventCommon
 //		this.layoutResourceId = layoutResourceId;
 		this.views = views;
 	}
+	public HVACState getStateView(int position) {
+		return this.views.get(position);
+	}
 	/*
 	 * Big fat note: getView() doesn't come with a null convertView after it's been used with a ListView.
 	 * Found this on:

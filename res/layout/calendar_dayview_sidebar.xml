@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Select State..." />
+        android:text="Select Mode..." />
 
     <Button
         android:id="@+id/calendar_dayview_insert"
@@ -62,5 +62,12 @@
             android:layout_weight="1"
             android:text="Save Day..." />
     </LinearLayout>
-
+    <TextView 
+        android:id="@+id/calendar_dayview_dateselection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select a Time"
+        android:textColor="@android:color/white"
+        android:textSize="18dp" 
+        android:layout_gravity="center"/>
 </LinearLayout>

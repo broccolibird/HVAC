@@ -7,8 +7,11 @@ import java.util.GregorianCalendar;
 import java.util.Scanner;
 import java.util.Vector;
 
+import com.freescale.iastate.hvac.util.HVACState;
+
 import android.util.FloatMath;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,7 +31,8 @@ public class EventWrapper implements EventCommon {
 	public LinearLayout linearView;
 	public RelativeLayout eventView;
 	public TextView timeView;
-	
+	private HVACState state;
+
 //	public Vector<Integer> heights = new Vector<Integer>(); //? use
 	
 	// Linear Layout
@@ -52,7 +56,12 @@ public class EventWrapper implements EventCommon {
 	public void setTimeView(TextView timeView){
 		this.timeView = timeView;
 	}
-	
+	public void setState(HVACState state) {
+		this.state = state;
+	}
+	public HVACState getState() {
+		return this.state;
+	}
 	
 	
 	private void sortTimes(float startTime, float endTime) {
@@ -67,28 +76,16 @@ public class EventWrapper implements EventCommon {
 	//Constructors
 	public EventWrapper(float startTime, float endTime){
 		sortTimes(startTime,endTime);
-		
+		//Log.i("EventWrapper Constructor", "Time: "+startTime + " > " + endTime);
 		this.contents = Float.valueOf(getTimeDuration()).toString();
 		
 	}
-	public EventWrapper(float startTime, float endTime, boolean transparent){
+	public EventWrapper(float startTime, float endTime, HVACState state){
 		sortTimes(startTime,endTime);
-		
-		this.transparent = transparent;
+		//Log.i("EventWrapper Constructor", "Time: "+startTime + " > " + endTime);
 		this.contents = Float.valueOf(getTimeDuration()).toString();
-	}
-	public EventWrapper(float startTime, float endTime, String id){
-		sortTimes(startTime,endTime);
+		this.state = state;
 		
-		this.contents = Float.valueOf(getTimeDuration()).toString();
-		this.Id = id;
-	}
-	public EventWrapper(float startTime, float endTime, boolean transparent, String id){
-		sortTimes(startTime,endTime);
-		
-		this.transparent = transparent;
-		this.contents = Float.valueOf(getTimeDuration()).toString();
-		this.Id = id;
 	}
 
 	//methods
@@ -160,6 +157,10 @@ public class EventWrapper implements EventCommon {
 			}
 		return s;
 	}
+	public boolean checkStartAndStop() {
+		if(this.getStartTime() == this.getStopTime()) return false;
+		else return true;
+	}
 	
 	public String collapseTimes() {
 		return getTime(this.startTime) + " - " + getTime(this.endTime);
@@ -181,7 +182,7 @@ public class EventWrapper implements EventCommon {
 	}
 	
 	public EventWrapper clone() {
-		EventWrapper ew = new EventWrapper(this.startTime,this.endTime);
+		EventWrapper ew = new EventWrapper(this.startTime,this.endTime,state);
 		ew.setLinearView(this.linearView);
 		ew.setTimeView(this.timeView);
 		ew.setEventView(this.eventView);
@@ -193,6 +194,10 @@ public class EventWrapper implements EventCommon {
 	}
 	public void setStopTime(float f){
 		this.endTime = f;
+	}
+	public void setStartAndStopTimes(float start, float stop){
+		this.startTime = start;
+		this.endTime = stop;
 	}
 
 	public float getStartTime() {

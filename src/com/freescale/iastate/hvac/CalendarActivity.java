@@ -79,7 +79,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 	TextView emptyview;
 	TabState state;
 	LayoutInflater inflater;
-	
+
 	public enum TabState {
 		TAB_OPEN,
 		TAB_CLOSED;
@@ -172,12 +172,14 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		this.setupTimeDialog();
 	}
 
-	EventSelectionDialog esd;
+	PreviewSelectionDialog esd;
 	Vector<HVACState> stateData = new Vector<HVACState>();
 	private ListView stateList;
 
+	HVACState state1;
+	HVACState state5;
 	public void setupEventDialog() {
-		HVACState state1 = new HVACState("State 1","cool, fan max, save off")
+		state1 = new HVACState("State 1","cool, fan max, save off")
 		.setStates(HVACState.TempOperation.TEMP_COOL,
 				HVACState.FanSpeed.FAN_MAX,
 				HVACState.EnergySave.SAVE_OFF);
@@ -196,7 +198,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		.setStates(HVACState.TempOperation.TEMP_OFF,
 				HVACState.FanSpeed.FAN_OFF,
 				HVACState.EnergySave.SAVE_ON);
-		HVACState state5 = new HVACState("State 5","temp cool, fan off, save on")
+		state5 = new HVACState("State 5","temp cool, fan off, save on")
 		.setStates(HVACState.TempOperation.TEMP_COOL,
 				HVACState.FanSpeed.FAN_OFF,
 				HVACState.EnergySave.SAVE_ON);
@@ -207,7 +209,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		stateData.add(state4);
 		stateData.add(state5);
 
-		esd = new EventSelectionDialog();
+		esd = new PreviewSelectionDialog();
 
 		Button insertButton = (Button)findViewById(R.id.calendar_dayview_selectstate_button);
 		insertButton.setOnClickListener(new EventDialogListener()); 
@@ -346,6 +348,8 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 
 					tpl.onTimeChanged(timePicker1, tp1currentHour, tp1currentMinute);
 					tpl.onTimeChanged(timePicker2, tp2currentHour, tp2currentMinute);
+					
+					timeInformation.setText((new EventWrapper(time1,time2)).collapseTimes());
 					TimeSelectionDialog.this.getDialog().dismiss();
 
 				}
@@ -361,7 +365,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 			return builder.create();
 		}
 	}
-	public class EventSelectionDialog extends DialogFragment {
+	public class PreviewSelectionDialog extends DialogFragment {
 
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -381,16 +385,18 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 					int index = stateList.getCheckedItemPosition();
 					//Log.i("Dialog:PreviewParameters","checkedItem = "+index);
 					if(index < 0){
-						EventSelectionDialog.this.getDialog().cancel();
+						PreviewSelectionDialog.this.getDialog().cancel();
 
 					} else 
 						CalendarActivity.this.setPreviewParameters(index);
+					int position = stateList.getCheckedItemPosition();
+					if(position >= 0) selectedState = sa.getItem(position);
 
 				}
 			}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 
 				public void onClick(DialogInterface dialog, int which) {
-					EventSelectionDialog.this.getDialog().cancel();
+					PreviewSelectionDialog.this.getDialog().cancel();
 
 				}
 			});
@@ -433,6 +439,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		TextView title = (TextView)sampleView.findViewById(R.id.calendar_listview_title);
 		TextView description = (TextView)sampleView.findViewById(R.id.calendar_listview_description);
 
+		selectedState = stateData.get(position);
 
 		title.setText(sa.getItem(position).title);
 		description.setText(sa.getItem(position).description);
@@ -445,37 +452,50 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 		energySaveIcon.requestLayout();
 
 	}
-	
 	View timeSelection;
 	View timePadding;
-	
+	HVACState selectedState = new HVACState("");
+	HVACState defaultState;
 	public void setupDayTab() {
-		EventWrapper ew = new EventWrapper(0f,1f);
+		HVACState defaultState = new HVACState("Default State","All settings off")
+		.setStates(HVACState.TempOperation.TEMP_OFF,
+				HVACState.FanSpeed.FAN_OFF,
+				HVACState.EnergySave.SAVE_OFF);
+		EventWrapper ew = new EventWrapper(0f,24f,defaultState);
 		ew.expandTimes();
 		eventWrapperKeys.add(ew);
-		eventWrapperKeys.add(new EventWrapper(1f, 6f).setContents("DayView Period #2b\nnewline1\njjhfghc"));
-		eventWrapperKeys.add(new EventWrapper(6f, 12f).setContents("DayView Period #2c\nnewline1\njjhfghc"));
-				eventWrapperKeys.add(new EventWrapper(12f, 18f).setContents("DayView Period #2\nnewline1\njjhfghc"));
-				eventWrapperKeys.add(new EventWrapper(18f, 24f).setContents("DayView Period #3"));
-//				eventWrapperKeys.add(new EventWrapper(18f, 24f).setContents("DayView Period #4"));
+		//		
+		//		eventWrapperKeys.add(new EventWrapper(1f, 6f).setContents("DayView Period #2b\nnewline1\njjhfghc"));
+		//		eventWrapperKeys.add(new EventWrapper(6f, 12f).setContents("DayView Period #2c\nnewline1\njjhfghc"));
+		//				eventWrapperKeys.add(new EventWrapper(12f, 18f).setContents("DayView Period #2\nnewline1\njjhfghc"));
+		//				eventWrapperKeys.add(new EventWrapper(18f, 24f).setContents("DayView Period #3"));
+		////				eventWrapperKeys.add(new EventWrapper(18f, 24f).setContents("DayView Period #4"));
+		dayWrapper = new DayWrapper(eventWrapperKeys);
+
 
 		eventView = (RelativeLayout)findViewById(R.id.calendar_dayview_relativelayout);
 		sampleView = (RelativeLayout)findViewById(R.id.calendar_dayview_time_preview);
 
-		timeSelection = (View)findViewById(R.id.calendar_dayview_timeselection);
-		timePadding = (View)findViewById(R.id.calendar_dayview_timeremove);
+		//	timeSelection = (View)findViewById(R.id.calendar_dayview_timeselection);
+		//timePadding = (View)findViewById(R.id.calendar_dayview_timeremove);
 
 
-		dayWrapper = new DayWrapper(eventWrapperKeys);
+
 		Button insertButton = (Button)findViewById(R.id.calendar_dayview_insert);
 		insertButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-//				Toast.makeText(getBaseContext(), "Event Inserted (Not Implemented)", Toast.LENGTH_SHORT).show();
-				
+				//				Toast.makeText(getBaseContext(), "Event Inserted (Not Implemented)", Toast.LENGTH_SHORT).show();
+
 				eventCells.removeAllViews();
-				dayWrapper.insertEvent(new EventWrapper(time1,time2));
+
+				EventWrapper newEvent = new EventWrapper(time1,time2,selectedState);
+				dayWrapper.insertEvent(newEvent);
+
+				Log.i("CalendarActivity insertButton","State match found.");
+
 				doScheduleLayout();
-			
+
+
 			}
 		});
 
@@ -496,45 +516,15 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 
 				tp2currentMinute = 0;
 				tp2currentHour = 0;
-
-				timePadding.getLayoutParams().height = 0;
-				timePadding.requestLayout();
-
-				timeSelection.getLayoutParams().height = 0;
-				timeSelection.requestLayout();
 			}
 
 		});
-		//		timeView1Button = (Button)findViewById(R.id.calendar_dayview_time1_button);
-		//		timeView2Button = (Button)findViewById(R.id.calendar_dayview_time2_button);
-		//		TabState tabState1 = TabState.TAB_CLOSED;
-		//		TabState tabState2 = TabState.TAB_CLOSED;
-
-		//		String []toggleString = new String[2];
-		//		toggleString[0] = "Select Time...";
-		//		toggleString[1] = "Hide Selector";
-
-
-
-
-
-		//	DrawerClickListener dcl1 = new DrawerClickListener(timePicker1,tabState1,timeView1Button,toggleString);
-		//DrawerClickListener dcl2 = new DrawerClickListener(timePicker2,tabState2,timeView2Button,toggleString);
-		//	timeView1Button.setOnClickListener(dcl1);
-		//timeView2Button.setOnClickListener(dcl2);
-
-		
-
-
-
-		previewSideTransparentView = (TextView)findViewById(R.id.calendar_dayview_preview_transparent);
-		previewSideTransparentView.getLayoutParams().height = 0;
-		previewSideTransparentView.requestLayout();
-
-
+		timeInformation = (TextView)findViewById(R.id.calendar_dayview_dateselection);
 		doScheduleLayout();
 
 	}
+	TextView timeInformation;
+	boolean afterFirstTime = true;
 	LinearLayout eventCells;
 	public void doScheduleLayout(){
 		eventCells = (LinearLayout)findViewById(R.id.calendar_dayview_linearlayout_deep);
@@ -548,12 +538,129 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 			if(i%2 == 0) layoutToAdd.setBackgroundResource(R.drawable.calendar_dayview_shallow_light);
 			else layoutToAdd.setBackgroundResource(R.drawable.calendar_dayview_shallow_dark);
 
-			time_textView.setText(dayWrapper.get(i).collapseTimes());
+			if(dayWrapper.size() <= 1) time_textView.setText(dayWrapper.get(i).expandTimes());
+			else time_textView.setText(dayWrapper.get(i).collapseTimes());
 			//			event_layout.setText(eventWrapperKeys.get(i).getContents());
+
+			if(afterFirstTime) {
+				TextView title = (TextView)event_layout.findViewById(R.id.calendar_listview_title);
+				TextView description = (TextView)event_layout.findViewById(R.id.calendar_listview_description);
+				//title.setText("Not Programmed");
+				//description.setText("Program this with c");
+				if(dayWrapper.get(i).getState() != null) {
+					Log.i("doScheduleLayout [CalendarActivity]","day wrapper's state was not null [" + i + "]");
+
+					HVACState tempState = dayWrapper.get(i).getState();
+
+					title.setText(tempState.title);
+					description.setText(tempState.description);
+
+
+					//#####  Look up tables for images
+					ImageView heatImage = (ImageView)event_layout.findViewById(R.id.calendar_heat_image);
+					if(tempState.tempOperation != null) {
+						switch(tempState.getTemperatureOperation()) {
+
+						case TEMP_HEAT:
+							heatImage.setImageResource(R.drawable.campfire);
+							break;
+
+						case TEMP_COOL:
+							heatImage.setImageResource(R.drawable.snowflake);
+							break;
+
+						case TEMP_OFF:
+							heatImage.setImageResource(R.drawable.temp_off);
+							break;
+
+						default:
+							heatImage.setImageResource(R.drawable.blank);
+							break;
+
+						}
+						tempState.heatImage = heatImage;
+					}
+					ImageView fanImage = (ImageView)event_layout.findViewById(R.id.calendar_fan_image);
+					if(tempState.fanSpeed != null) {
+						switch(tempState.getFanSpeed()) {
+
+						case FAN_MAX:
+							fanImage.setImageResource(R.drawable.fan_on);
+							break;
+
+						case FAN_HIGH:
+							fanImage.setImageResource(R.drawable.fan_on);
+							break;
+
+						case FAN_MED:
+							fanImage.setImageResource(R.drawable.fan_on);
+							break;
+
+						case FAN_SLOW:
+							fanImage.setImageResource(R.drawable.fan_on);
+							break;
+
+						case FAN_AUTO:
+							fanImage.setImageResource(R.drawable.fan_auto);
+							break;
+
+						case FAN_OFF:
+							fanImage.setImageResource(R.drawable.fan_off);
+							break;
+
+						default:
+							fanImage.setImageResource(R.drawable.blank);
+							break;
+						}
+						tempState.fanImage = fanImage;
+					}
+					ImageView energySaveImage = (ImageView)event_layout.findViewById(R.id.calendar_energysave_image);
+
+					if(tempState.energySave != null) {
+						switch(tempState.getEnergySave()) {
+
+						case SAVE_ON:
+							energySaveImage.setImageResource(R.drawable.leaf);
+							break;
+
+						case SAVE_OFF:
+							energySaveImage.setImageResource(R.drawable.blank);
+							break;
+
+						default:
+							energySaveImage.setImageResource(R.drawable.blank);
+							break;
+
+						}
+						tempState.energySaveImage = energySaveImage;
+					}
+
+					dayWrapper.get(i).setState(tempState);
+
+					if(heatIcon == null) Log.i("doSchedule [Calendar Activity]","heatIcon was null");
+					if(tempState.heatImage == null) Log.i("doSchedule [Calendar Activity]","heatIcon was null");
+					if(tempState.heatImage.getDrawable() == null) Log.i("doSchedule [Calendar Activity]","drawable was null");
+					//###########  End look up tables for images
+
+					//					heatIcon.setImageDrawable(tempState.heatImage.getDrawable());
+					//					fanIcon.setImageDrawable(tempState.fanImage.getDrawable());
+					//					energySaveIcon.setImageDrawable(tempState.energySaveImage.getDrawable());
+					//					heatIcon.requestLayout();
+					//					fanIcon.requestLayout();
+					//					energySaveIcon.requestLayout();
+				}
+				else {
+					Log.i("doScheduleLayout [CalendarActivity]","day wrapper's state == null [" + i + "]");
+
+				}			
+			}
+
+			afterFirstTime = true;
 
 			dayWrapper.get(i).setTimeView(time_textView);
 			dayWrapper.get(i).setEventView(event_layout);
 			dayWrapper.get(i).setLinearView(layoutToAdd);
+
 
 			eventCells.addView(layoutToAdd,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
@@ -603,20 +710,23 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 			timeB = hoursB + minutesB;
 
 			//EventWrapper automatically takes care of whichever time is greater.
-			evw = new EventWrapper(timeA,timeB);
-
+			if(selectedState != null) {
+				evw = new EventWrapper(timeA,timeB,selectedState);
+			}
+			else 
+				evw = new EventWrapper(timeA,timeB);
 
 			timeText.setText(evw.getTime_start() + " - " + evw.getTime_end());
 
 		}
 
 	}
-	
+
 	float time1;
 	float time2;
-	
+
 	public class TimePickerListener implements TimePicker.OnTimeChangedListener {
-		
+
 		public void onTimeChanged(TimePicker timePicker, int hourOfDay, int minute) {
 
 			float hour1 = 0, minute1 = 0;
@@ -639,37 +749,37 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 
 			EventTimeIndex eti = dayWrapper.getTimeStartsInEventByEventIndex(time1,time2);
 			int count = 0;
-			Log.i("TimePickerListener", "Time 1: " + time1 + " / Time 2: "+ time2);
+			//			Log.i("TimePickerListener", "Time 1: " + time1 + " / Time 2: "+ time2);
 			while( count < eti.startIndex) {
 				dayWrapper.get(count).getTimeView().setText(dayWrapper.get(count).collapseTimes());
-//				dayWrapper.get(count).getTimeView().measure(0,0);
-//				transparentHeight += dayWrapper.get(count).getTimeView().getMeasuredHeightAndState();
+				//				dayWrapper.get(count).getTimeView().measure(0,0);
+				//				transparentHeight += dayWrapper.get(count).getTimeView().getMeasuredHeightAndState();
 
 				//				Log.i("TimePickerLoop","1st Loop Executed - index = " + count);
 				count++;
 			}
 
-//			previewSideTransparentView.getLayoutParams().height = transparentHeight;
-//			previewSideTransparentView.requestLayout();
-//			transparentHeight = 0;
-//			float timePaddingHeight = 0;
+			//			previewSideTransparentView.getLayoutParams().height = transparentHeight;
+			//			previewSideTransparentView.requestLayout();
+			//			transparentHeight = 0;
+			//			float timePaddingHeight = 0;
 
 			while(count < eti.stopIndex || count == eti.startIndex || count == eti.stopIndex) {
 				dayWrapper.get(count).getTimeView().setText(dayWrapper.get(count).expandTimes());
 				//viewMap.get(eventWrapperKeys.get(count)).measure(0,0);
-				
-//				int additionalHeight = 0;
-//				if(eti.startIndex == eti.stopIndex) additionalHeight = -9;
-//				if(count == eti.stopIndex && eti.stopIndex > eti.startIndex) additionalHeight = timeViewHourHeight;
 
-//				float smallTime = dayWrapper.getSmallerTime(time1, time2);
-//				timePaddingHeight += dayWrapper.getSmallTimeHeightDifference(count, smallTime);
+				//				int additionalHeight = 0;
+				//				if(eti.startIndex == eti.stopIndex) additionalHeight = -9;
+				//				if(count == eti.stopIndex && eti.stopIndex > eti.startIndex) additionalHeight = timeViewHourHeight;
 
-//				timePadding.getLayoutParams().height = (int) FloatMath.ceil(timeViewHourHeight*timePaddingHeight);
-//				timePadding.requestLayout();
-//
-//				timeSelection.getLayoutParams().height = (int) FloatMath.ceil(timeViewHourHeight*dayWrapper.getAbsoluteTime(time1, time2)-additionalHeight);
-//				timeSelection.requestLayout();
+				//				float smallTime = dayWrapper.getSmallerTime(time1, time2);
+				//				timePaddingHeight += dayWrapper.getSmallTimeHeightDifference(count, smallTime);
+
+				//				timePadding.getLayoutParams().height = (int) FloatMath.ceil(timeViewHourHeight*timePaddingHeight);
+				//				timePadding.requestLayout();
+				//
+				//				timeSelection.getLayoutParams().height = (int) FloatMath.ceil(timeViewHourHeight*dayWrapper.getAbsoluteTime(time1, time2)-additionalHeight);
+				//				timeSelection.requestLayout();
 
 				count++;
 
