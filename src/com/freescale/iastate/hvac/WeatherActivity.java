@@ -64,7 +64,7 @@ public class WeatherActivity extends Activity implements MenuInterface,
 
 		// this sets the help string for the current activity.
 		// copy paste
-		rootIntent.setHelpText(getText(R.string.weather_help));
+		rootIntent.setHelpText("Weather Forecast", getText(R.string.weather_help));
 	}
 
 	private class ForecastWeatherTask extends AsyncTask<Void, Void, String> {

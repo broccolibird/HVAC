@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="main_help">&quot;Refresh the current weather by touching the weather image.\n\nAdjust system operating temperature up and down by touching the Adjust Up or Adjust Down buttons.\n\nChange system mode and fan operation by touching your preferred selections.</string>
-    <string name="weather_help">Displays three day forecast. Your current location may be adjusted in the Settings menu.</string>
-    <string name="settings_help">Adjust your HVAC application settings here.</string>
-    <string name="calendar_help">Please fill me in!</string>
-    <string name="energy_help">This graph displays the energy usage.\n\nPress a button on the left to change the time frame of the energy usage graph</string>
+    <string name="weather_help">&quot;Displays ten day forecast. Drag the view right and left to view the whole forecast.\n\nSelect a day\'s weather image to view a detailed forecast.\n\nAdjust your current location in the Settings menu.</string>
+    <string name="settings_help">&quot;Adjust your HVAC application settings here.</string>
+    <string name="calendar_help">&quot;Start by selecting the Time Interval that you would like the temperature and fan settings to change.\n\nNext, press the button labeled \'Select Mode\' to choose your temperature and fan settings.\n\nInsert the Mode selection into the schedule by selecting \'Insert\'.</string>
+    <string name="energy_help">&quot;This graph displays the energy usage.\n\nPress a button on the left to change the time frame of the energy usage graph</string>
 	    
 </resources>

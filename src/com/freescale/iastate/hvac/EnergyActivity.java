@@ -26,7 +26,7 @@ public class EnergyActivity extends Activity implements MenuInterface, DisplayIn
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		
-		rootIntent.setHelpText(getText(R.string.energy_help));
+		rootIntent.setHelpText("Energy Consumption", getText(R.string.energy_help));
 	}
 
 	public void onButtonSelected(int buttonID){

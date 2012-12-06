@@ -77,6 +77,8 @@ public class SettingsActivity extends PreferenceActivity implements
 						return true;
 					}
 				});
+		
+		rootIntent.setHelpText("Settings Menu", getText(R.string.settings_help));
 	}
 
 	private void changeBrightness() {

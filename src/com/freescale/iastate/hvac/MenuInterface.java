@@ -1,6 +1,7 @@
 package com.freescale.iastate.hvac;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +32,11 @@ public interface MenuInterface {
 				act.startActivity(rootIntent.homeIntent);
 				return true;
 			} else if(itemID.compareTo("Help") == 0){
-				Toast.makeText(act, helpText, Toast.LENGTH_LONG).show();
+				AlertDialog dialog = new AlertDialog.Builder(act).create();
+				dialog.setTitle(helpTitle);
+				dialog.setMessage(helpText);
+								
+				dialog.show();
 				return true;
 			} else if(itemID.compareTo("Schedule") == 0){
 				act.startActivity(rootIntent.calendarIntent);
@@ -50,11 +55,12 @@ public interface MenuInterface {
 			}
 		}
 		
-		
 		private String helpText;
+		private String helpTitle;
 		
-		public void setHelpText(CharSequence charSequence) {
-			this.helpText = (String) charSequence;
+		public void setHelpText(CharSequence title, CharSequence text) {
+			this.helpTitle = (String) title;
+			this.helpText = (String) text;
 		}
 		
 		public void initIntents(Activity act) {

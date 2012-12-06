@@ -97,7 +97,7 @@ public class HVACActivity extends Activity implements MenuInterface {
 
 		// this sets the help string for the current activity.
 		// copy paste
-		rootIntent.setHelpText(getText(R.string.main_help));
+		rootIntent.setHelpText("Thermostat Home", getText(R.string.main_help));
 
 		initIntents();
 
@@ -114,6 +114,8 @@ public class HVACActivity extends Activity implements MenuInterface {
 		String displayTemp = "" + temp;
 		TextView textView = (TextView) findViewById(R.id.currentSysTemp);
 		textView.setText(displayTemp);
+		
+		rootIntent.setHelpText("Thermostat Home", getText(R.string.main_help));
 
 	}
 

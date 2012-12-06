@@ -107,7 +107,7 @@ public class CalendarActivity extends Activity implements MenuInterface, EventCo
 
 		//this sets the help string for the current activity.
 		//copy paste 
-		rootIntent.setHelpText(getText(R.string.calendar_help));
+		rootIntent.setHelpText("Thermostat Schedule", getText(R.string.calendar_help));
 
 		tabHost =  (TabHost)findViewById(android.R.id.tabhost);
 		tabHost.setup();
